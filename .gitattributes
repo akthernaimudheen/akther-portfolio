@@ -1,0 +1,6 @@
+*.pdf binary
+*.png binary
+*.webp binary
+*.jpg binary
+*.jpeg binary
+*.cmd text eol=crlf
