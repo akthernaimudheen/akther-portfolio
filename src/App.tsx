@@ -1,292 +1,420 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import {
-  AnimatePresence,
-  motion,
-  useMotionValue,
-  useMotionValueEvent,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from 'framer-motion';
-import Lenis from 'lenis';
-import {
-  ArrowLeft,
-  ArrowRight,
-  ArrowUpRight,
-  Braces,
-  ChartNoAxesCombined,
-  Download,
-  Mail,
-  MapPin,
-  Menu,
-  Search,
-  Sparkles,
-  X,
-} from 'lucide-react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Download, Mail, MapPin, Menu, X } from 'lucide-react';
 import { BrowserRouter, Link, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom';
-import { Parallax, Reveal, ScrollMarquee, ScrollProgress } from '@/components/ScrollMotion';
-import { ProfileCard } from '@/components/ui/profile-card';
+import { CountUp } from '@/components/CountUp';
+import { CursorFollower } from '@/components/CursorFollower';
+import { ProjectGallery } from '@/components/ProjectGallery';
+import { Reveal } from '@/components/ScrollMotion';
+import { PersonStructuredData, Seo } from '@/components/Seo';
 import { ProjectVisualScene } from '@/components/ui/project-visual-scene';
+import { usePointerDrift } from '@/lib/pointer';
 import { projects } from '@/data/projects';
+import { capabilities, journey, profile } from '@/data/profile';
+import {
+  aboutMeta,
+  contactMeta,
+  homeMeta,
+  notFoundMeta,
+  projectMeta,
+  workMeta,
+  type RouteMeta,
+} from '@/lib/seo';
 
-const FishBackground = lazy(() =>
-  import('@/components/three/FishBackground').then((module) => ({ default: module.FishBackground })),
-);
-const ProjectGallery = lazy(() =>
-  import('@/components/ProjectGallery').then((module) => ({ default: module.ProjectGallery })),
-);
+const navigation = [
+  ['Home', '/'],
+  ['About', '/about'],
+  ['Work', '/work'],
+  ['Contact', '/contact'],
+] as const;
 
-function useEnhancedBackground() {
-  const [enabled, setEnabled] = useState(false);
-  useEffect(() => {
-    const media = window.matchMedia('(min-width: 900px) and (prefers-reduced-motion: no-preference)');
-    const update = () => setEnabled(media.matches);
-    update();
-    media.addEventListener('change', update);
-    return () => media.removeEventListener('change', update);
-  }, []);
-  return enabled;
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+/**
+ * The portrait's own entrance: it rises, overshoots once and settles. Kept
+ * separate from the copy's tween because the cutout is the piece the eye lands
+ * on, and a spring reads as weight rather than as a fade-in.
+ */
+const PORTRAIT_ENTRANCE = {
+  type: 'spring',
+  stiffness: 180,
+  damping: 15,
+  mass: 0.9,
+  delay: 0.3,
+} as const;
+
+/**
+ * Entrance step for the hero. The whole stagger — copy, yellow field, portrait —
+ * lands inside 450ms, and collapses to nothing under reduced motion.
+ */
+function useHeroStep() {
+  const reduced = useReducedMotion() ?? false;
+  return (delay: number) => ({
+    initial: reduced ? false : ({ opacity: 0, y: 18 } as const),
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: reduced ? 0 : 0.36, delay: reduced ? 0 : delay, ease: EASE },
+  });
 }
 
-const journey = [
-  { year: '2018', title: 'Computer Engineering', text: 'A technical foundation at Maharajas Technological Institute, Thrissur.' },
-  { year: '2021', title: 'Diploma completed', text: 'Practical grounding in computing, systems and technology.' },
-  { year: '2022', title: 'Quality-sensitive digital work', text: 'Medical scribing training, structured documentation and attention to detail.' },
-  { year: '2022—23', title: 'DeepScribe AI / QA', text: 'Reviewed AI-generated medical documentation through disciplined quality processes.' },
-  { year: '2023—24', title: 'Wisedocs / OCR', text: 'Worked with accurate OCR-based documentation under strict turnaround requirements.' },
-  { year: '2026', title: 'Digital marketing', text: 'Developed practical skills across SEO, social media, paid campaigns and web.' },
-  { year: 'NOW', title: 'Connected digital experiences', text: 'Bringing development, search, marketing and AI-assisted workflows together.' },
-];
-
-const capabilities = [
-  { icon: Braces, number: '01', title: 'Build', text: 'Responsive websites, landing pages, WordPress and practical front-end development.' },
-  { icon: Search, number: '02', title: 'Discover', text: 'SEO, Local SEO, on-page structure and search-focused website planning.' },
-  { icon: ChartNoAxesCombined, number: '03', title: 'Grow', text: 'Meta Ads, Google Ads, content, campaign reporting and lead-generation thinking.' },
-  { icon: Sparkles, number: '04', title: 'Automate', text: 'AI-assisted development, research, optimization and smarter digital workflows.' },
-];
-
-function SmoothScroll() {
-  const reducedMotion = useReducedMotion();
+/** Flips once the page has left the hero, so the header can pick up a backdrop. */
+function useScrolled(threshold = 32) {
+  const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    if (reducedMotion) return;
-    const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
     let frame = 0;
-    const raf = (time: number) => { lenis.raf(time); frame = requestAnimationFrame(raf); };
-    frame = requestAnimationFrame(raf);
-    return () => { cancelAnimationFrame(frame); lenis.destroy(); };
-  }, [reducedMotion]);
-  return null;
+    const read = () => {
+      frame = 0;
+      setScrolled(window.scrollY > threshold);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(read);
+    };
+    read();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [threshold]);
+  return scrolled;
 }
 
 function SiteHeader() {
   const [open, setOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const reducedMotion = useReducedMotion() ?? false;
-  const { scrollY } = useScroll();
-  useMotionValueEvent(scrollY, 'change', (current) => {
-    const previous = scrollY.getPrevious() ?? 0;
-    setHidden(current > previous && current > 150 && !open);
-  });
-  const links = [['Home', '/'], ['About', '/about'], ['Work', '/work'], ['Contact', '/contact']];
+  const scrolled = useScrolled();
+  const location = useLocation();
+
+  useEffect(() => setOpen(false), [location.pathname]);
+
   return (
-    <motion.header
-      className="premium-header"
-      animate={{ y: hidden && !reducedMotion ? '-130%' : 0 }}
-      transition={{ type: 'spring', stiffness: 280, damping: 30 }}
-    >
-      <Link to="/" className="premium-brand" aria-label="Akther V N home">AKTHER<span>.</span></Link>
-      <nav className="premium-nav" aria-label="Primary navigation">
-        {links.map(([label, href]) => <NavLink key={href} to={href} end={href === '/'}>{label}</NavLink>)}
+    <header className={`site-header${scrolled ? ' is-stuck' : ''}`}>
+      <div className="site-header__bar">
+        <Link to="/" className="brand" aria-label={`${profile.name}, home`}>
+          AKTHER<span aria-hidden="true">.</span>
+        </Link>
+        <nav className="desktop-nav" aria-label="Primary">
+          {navigation.map(([label, href]) => (
+            <NavLink key={href} to={href} end={href === '/'}>
+              {label}
+            </NavLink>
+          ))}
+        </nav>
+        <button
+          className="menu-button"
+          type="button"
+          onClick={() => setOpen((value) => !value)}
+          aria-expanded={open}
+          aria-controls="mobile-navigation"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+        >
+          {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+        </button>
+      </div>
+      <nav id="mobile-navigation" className={`mobile-nav${open ? ' is-open' : ''}`} aria-label="Mobile">
+        {navigation.map(([label, href]) => (
+          <NavLink key={href} to={href} end={href === '/'} onClick={() => setOpen(false)}>
+            {label}
+          </NavLink>
+        ))}
+        <a href={`mailto:${profile.email}`}>Email</a>
       </nav>
-      <Link to="/contact" className="header-cta">Start a project <ArrowUpRight aria-hidden="true" /></Link>
-      <button className="premium-menu" type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="premium-mobile-nav" aria-label={open ? 'Close menu' : 'Open menu'}>
-        {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-      </button>
-      <nav id="premium-mobile-nav" className={`premium-mobile-nav${open ? ' is-open' : ''}`} aria-label="Mobile navigation">
-        {links.map(([label, href]) => <NavLink key={href} to={href} onClick={() => setOpen(false)}>{label}</NavLink>)}
-      </nav>
-    </motion.header>
+    </header>
   );
 }
 
-function PageFrame({ children }: { children: React.ReactNode }) {
+function SiteFooter() {
+  return (
+    <footer className="site-footer" data-cursor-invert>
+      <div className="site-footer__inner">
+        <div className="site-footer__mark">
+          <Link to="/" className="brand" aria-label={`${profile.name}, home`}>
+            AKTHER<span aria-hidden="true">.</span>
+          </Link>
+          <p>
+            Web development, SEO and digital campaigns. Currently a Digital Marketing Intern at
+            {' '}{profile.employer}.
+          </p>
+          <a className="link-underline" href={`mailto:${profile.email}`}>
+            {profile.email} <ArrowUpRight aria-hidden="true" />
+          </a>
+        </div>
+
+        <nav className="site-footer__col" aria-label="Footer pages">
+          <p className="eyebrow">Pages</p>
+          <ul>
+            {navigation.map(([label, href]) => (
+              <li key={href}>
+                <Link to={href}>{label}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav className="site-footer__col" aria-label="Footer projects">
+          <p className="eyebrow">Projects</p>
+          <ul>
+            {projects.map((project) => (
+              <li key={project.id}>
+                <Link to={`/work/${project.id}`}>{project.title}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="site-footer__col">
+          <p className="eyebrow">Details</p>
+          <ul>
+            <li>
+              <a href={profile.resumeUrl} download>
+                Résumé (PDF)
+              </a>
+            </li>
+            <li>
+              <span>{profile.location}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="site-footer__rail">
+        <span>© {new Date().getFullYear()} {profile.name}</span>
+        <span>Built with React, TypeScript and Tailwind</span>
+      </div>
+    </footer>
+  );
+}
+
+interface PageFrameProps {
+  /** This route's metadata. Rendered outside the transition — see below. */
+  meta: RouteMeta;
+  /** Site-relative path, used for the canonical and og:url. */
+  path: string;
+  children: ReactNode;
+}
+
+/**
+ * Route metadata is deliberately rendered here rather than inside `children`.
+ *
+ * React 19 hoists `<title>` and `<meta>` into `<head>` and keeps one of each.
+ * With `AnimatePresence mode="wait"` the outgoing and incoming pages are both
+ * mounted for the length of the exit, so two subtrees claim the same hoisted
+ * tags — and on a transition between two routes that render the *same*
+ * component (project page to project page) the outgoing page's title, canonical
+ * and og:url were the ones left behind. Keeping exactly one `<Seo>` outside the
+ * animated subtree means the collision cannot happen.
+ */
+function PageFrame({ meta, path, children }: PageFrameProps) {
   const location = useLocation();
-  const reducedMotion = useReducedMotion();
-  const renderFish = useEnhancedBackground();
-  useEffect(() => { window.scrollTo(0, 0); }, [location.pathname]);
+  const reduced = useReducedMotion() ?? false;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <>
-      <SmoothScroll />
-      <ScrollProgress />
-      {renderFish ? (
-        <Suspense fallback={<div className="fish-canvas fish-canvas--fallback" aria-hidden="true" />}>
-          <FishBackground reducedMotion={reducedMotion ?? false} />
-        </Suspense>
-      ) : <div className="fish-canvas fish-canvas--fallback" aria-hidden="true" />}
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
+      <Seo {...meta} path={path} />
+      <PersonStructuredData />
       <SiteHeader />
       <AnimatePresence mode="wait">
         <motion.main
           id="main-content"
           key={location.pathname}
-          className="premium-main"
-          initial={reducedMotion ? false : { opacity: 0, y: 30, filter: 'blur(10px)', clipPath: 'inset(0 0 5% 0)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)', clipPath: 'inset(0 0 0% 0)' }}
-          exit={reducedMotion ? undefined : { opacity: 0, y: -24, filter: 'blur(8px)', clipPath: 'inset(5% 0 0 0)' }}
-          transition={{ duration: reducedMotion ? 0 : 0.62, ease: [0.16, 1, 0.3, 1] }}
+          initial={reduced ? false : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={reduced ? undefined : { opacity: 0, y: -8 }}
+          transition={{ duration: reduced ? 0 : 0.28, ease: EASE }}
         >
           {children}
         </motion.main>
       </AnimatePresence>
+      <SiteFooter />
     </>
   );
 }
 
-function HomePage() {
-  const reducedMotion = useReducedMotion() ?? false;
-  const heroRef = useRef<HTMLElement>(null);
-  const portraitStageRef = useRef<HTMLDivElement>(null);
-  const portraitZoomTarget = useMotionValue(1);
-  const portraitShiftXTarget = useMotionValue(0);
-  const portraitShiftYTarget = useMotionValue(0);
-  const portraitZoom = useSpring(portraitZoomTarget, { stiffness: 150, damping: 22, mass: 0.45 });
-  const portraitShiftX = useSpring(portraitShiftXTarget, { stiffness: 140, damping: 24, mass: 0.45 });
-  const portraitShiftY = useSpring(portraitShiftYTarget, { stiffness: 140, damping: 24, mass: 0.45 });
-  const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const copyY = useTransform(heroProgress, [0, 1], reducedMotion ? [0, 0] : [0, -110]);
-  const copyScale = useTransform(heroProgress, [0, 1], reducedMotion ? [1, 1] : [1, 0.94]);
-  const copyOpacity = useTransform(heroProgress, [0, 0.76, 1], reducedMotion ? [1, 1, 1] : [1, 0.76, 0.18]);
-  const portraitY = useTransform(heroProgress, [0, 1], reducedMotion ? [0, 0] : [0, 145]);
-  const portraitScale = useTransform(heroProgress, [0, 1], reducedMotion ? [1, 1] : [1, 1.08]);
-  const blueOrbY = useTransform(heroProgress, [0, 1], reducedMotion ? [0, 0] : [0, 190]);
-  const peachOrbY = useTransform(heroProgress, [0, 1], reducedMotion ? [0, 0] : [0, -125]);
+/* ------------------------------------------------------------------ home --- */
 
-  const resetPortraitProximity = () => {
-    portraitZoomTarget.set(1);
-    portraitShiftXTarget.set(0);
-    portraitShiftYTarget.set(0);
-  };
+function HomeHero() {
+  const step = useHeroStep();
+  const reduced = useReducedMotion() ?? false;
+  const fieldRef = useRef<HTMLSpanElement>(null);
+  const portraitRef = useRef<HTMLImageElement>(null);
+  const leadRef = useRef<HTMLSpanElement>(null);
+  const subRef = useRef<HTMLSpanElement>(null);
 
-  const handleHeroPointerMove = (event: React.PointerEvent<HTMLElement>) => {
-    if (reducedMotion || event.pointerType === 'touch' || !portraitStageRef.current) return;
-    const rect = portraitStageRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const dx = event.clientX - centerX;
-    const dy = event.clientY - centerY;
-    const distance = Math.hypot(dx, dy);
-    const radius = Math.max(rect.width, rect.height) * 0.9;
-    const proximity = Math.max(0, Math.min(1, 1 - distance / radius));
-
-    portraitZoomTarget.set(1 + proximity * 0.16);
-    portraitShiftXTarget.set((dx / Math.max(rect.width, 1)) * proximity * 9);
-    portraitShiftYTarget.set((dy / Math.max(rect.height, 1)) * proximity * 6);
-  };
+  /* Restrained depth, deepest layer first: the yellow field travels furthest,
+     the portrait barely tilts (a side profile shows rotation far more than a
+     front view does), and the headline moves least of all. */
+  usePointerDrift(fieldRef, { x: 12, y: 10 });
+  usePointerDrift(portraitRef, { x: 6, y: 4, rotate: 0.8 });
+  usePointerDrift(leadRef, { x: 6, y: 4 });
+  usePointerDrift(subRef, { x: 3, y: 2 });
 
   return (
-    <PageFrame>
-      <section
-        ref={heroRef}
-        className="glass-hero editorial-hero"
-        aria-labelledby="home-title"
-        onPointerMove={handleHeroPointerMove}
-        onPointerLeave={resetPortraitProximity}
+    <section className="hero" aria-labelledby="home-title">
+      <motion.p className="eyebrow hero__eyebrow" {...step(0)}>
+        Web development · SEO · Digital campaigns
+      </motion.p>
+
+      <motion.h1 className="hero__title" id="home-title" {...step(0.06)}>
+        <span className="hero__title-lead" ref={leadRef}>
+          <span>I build</span>
+          <span>the page.</span>
+        </span>
+        <span className="hero__title-sub" ref={subRef}>
+          <span>Then I help</span>
+          <span>people find it.</span>
+        </span>
+      </motion.h1>
+
+      {/* The yellow field sits below the headline and the portrait above it, so
+          the type reads as black-on-yellow while the face stays clear. */}
+      <motion.div className="hero__field" aria-hidden="true" {...step(0.12)}>
+        <span ref={fieldRef} />
+      </motion.div>
+
+      {/* Entrance lives on the figure; usePointerDrift owns the inner <img>
+          transform, so Framer Motion and the pointer loop never write to the
+          same node. */}
+      <motion.figure
+        className="hero__figure"
+        initial={reduced ? false : { opacity: 0, y: 80, scale: 0.96 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={reduced ? { duration: 0 } : PORTRAIT_ENTRANCE}
       >
-        <motion.div className="glass-orb glass-orb--blue" style={{ y: blueOrbY }} aria-hidden="true" />
-        <motion.div className="glass-orb glass-orb--peach" style={{ y: peachOrbY }} aria-hidden="true" />
-        <div className="glass-grid" aria-hidden="true" />
-        <motion.div
-          className="glass-copy-card"
-          style={{ y: copyY, scale: copyScale, opacity: copyOpacity }}
-          initial={reducedMotion ? false : { opacity: 0, y: 30, scale: .98 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: reducedMotion ? 0 : .7, delay: .12, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className="glass-availability"><span /> Available for selected opportunities</div>
-          <h1 id="home-title"><span>WEB</span><strong>DEVELOPER</strong><i aria-hidden="true">*</i></h1>
-          <p className="glass-role">I BUILD DIGITAL EXPERIENCES<br /><strong>THAT CONNECT AND PERFORM.</strong></p>
-          <p className="glass-summary">I connect technology and marketing to build useful digital experiences around real business goals.</p>
-          <div className="editorial-actions">
-            <span className="glass-cta" aria-hidden="true"><ArrowRight /></span>
-            <Link className="editorial-text-link" to="/work">View selected work <ArrowUpRight aria-hidden="true" /></Link>
-          </div>
-        </motion.div>
+        <img
+          ref={portraitRef}
+          src={profile.portraitCutout.src}
+          srcSet={profile.portraitCutout.srcSet}
+          sizes="(max-width: 900px) 78vw, 30vw"
+          width={profile.portraitCutout.width}
+          height={profile.portraitCutout.height}
+          alt={profile.portraitCutout.alt}
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+        />
+      </motion.figure>
 
-        <motion.div
-          ref={portraitStageRef}
-          className="glass-portrait-stage"
-          style={{ y: portraitY, scale: portraitScale }}
-          initial={reducedMotion ? false : { opacity: 0, y: 140, scale: .92 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ type: reducedMotion ? 'tween' : 'spring', duration: reducedMotion ? 0 : undefined, stiffness: 92, damping: 16, delay: .18 }}
-        >
-          <motion.div className="glass-portrait-float" animate={reducedMotion ? undefined : { y: [0, -10, 0] }} transition={{ duration: 5.8, repeat: Infinity, ease: 'easeInOut' }}>
-            <div className="glass-portrait-halo" aria-hidden="true" />
-            <motion.img
-              src="/akther-hero-cutout.png"
-              alt="Side-profile portrait of Akther V N"
-              style={{ scale: portraitZoom, x: portraitShiftX, y: portraitShiftY }}
-            />
-            <div className="glass-identity-chip"><span>AVAILABLE</span><small>FOR SELECTED PROJECTS</small></div>
-          </motion.div>
-        </motion.div>
-        <div className="glass-scroll">Move near portrait / scroll <span>↓</span></div>
-        <div className="editorial-skill-strip" aria-label="Core disciplines">
-          <span><strong>01</strong><small>Web<br />Development</small></span>
-          <span><strong>02</strong><small>Search Engine<br />Optimization</small></span>
-          <span><strong>03</strong><small>Digital<br />Marketing</small></span>
-          <span><strong>04</strong><small>AI-Assisted<br />Workflows</small></span>
+      <motion.div className="hero__intro" {...step(0.16)}>
+        <p>
+          I’m Akther V N, a digital marketing intern at Orestes Technology and a web developer in
+          Kerala. I work across responsive websites, local search, content and paid campaigns.
+        </p>
+        <div className="hero__actions">
+          <Link className="btn" to="/work">
+            View my work <ArrowRight aria-hidden="true" />
+          </Link>
+          <a className="link-underline" href={`mailto:${profile.email}`}>
+            Email me <ArrowUpRight aria-hidden="true" />
+          </a>
         </div>
-      </section>
+      </motion.div>
 
-      <ScrollMarquee />
+      <div className="hero__rail">
+        <span>{profile.employer}</span>
+        <span>Digital Marketing Intern</span>
+        <span>{profile.location}</span>
+      </div>
+    </section>
+  );
+}
 
-      <section className="premium-section home-work">
-        <Reveal className="premium-heading" amount={0.35}>
-          <p>01 / SELECTED WORK</p>
-          <h2>Built where systems<br />meet <em>attention.</em></h2>
-          <Link to="/work">View every project <ArrowUpRight aria-hidden="true" /></Link>
+function HomePage() {
+  const featured = projects.slice(0, 3);
+
+  return (
+    <PageFrame meta={homeMeta} path="/">
+      <HomeHero />
+
+      <section className="section" aria-labelledby="home-work-title">
+        <Reveal className="section-head">
+          <p className="eyebrow">Selected work</p>
+          <h2 id="home-work-title">
+            Projects with
+            <br />a job to get done.
+          </h2>
+          <p className="lede">
+            Websites, search work and campaigns, each presented with the scope, my contribution and
+            the evidence that exists.
+          </p>
         </Reveal>
-        <div className="featured-grid">
-          {projects.slice(0, 2).map((project, index) => (
-            <motion.div
-              className="featured-card-shell"
+
+        <div className="feature-list">
+          {featured.map((project, index) => (
+            <Reveal
               key={project.id}
-              style={{ top: `calc(7rem + ${index * 1.25}rem)` }}
-              initial={reducedMotion ? false : { opacity: 0, y: 90, rotateX: 6, scale: 0.96 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: reducedMotion ? 0 : 0.85, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className={`feature feature--${index + 1}`}
+              amount={0.15}
+              delay={index * 0.05}
             >
-              <Link to={`/work/${project.id}`} className="featured-card">
-                <div className={`featured-visual featured-visual--${project.kind}`}>
-                  <ProjectVisualScene
-                    src={project.visual}
-                    alt={project.visualAlt}
-                    kind={project.kind}
-                    index={project.index}
-                    eager={index === 0}
-                  />
+              <Link to={`/work/${project.id}`}>
+                <ProjectVisualScene
+                  src={project.visual}
+                  alt={project.visualAlt}
+                  interactive
+                  eager={index === 0}
+                />
+                <div className="feature__meta">
+                  <p>{project.eyebrow}</p>
+                  <h3>{project.title}</h3>
+                  <span className="link-underline">
+                    Open project <ArrowUpRight aria-hidden="true" />
+                  </span>
                 </div>
-                <div><p>{project.eyebrow}</p><h3>{project.title}</h3><span>Open case study <ArrowUpRight aria-hidden="true" /></span></div>
               </Link>
-            </motion.div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Link className="wide-link" to="/work">
+          <span>See the full project index</span>
+          <ArrowRight aria-hidden="true" />
+        </Link>
+      </section>
+
+      <section className="section split-section" aria-labelledby="home-capability-title">
+        <Reveal className="section-head section-head--sticky">
+          <p className="eyebrow">How I work</p>
+          <h2 id="home-capability-title">
+            The website
+            <br />
+            and the way
+            <br />
+            people reach it.
+          </h2>
+        </Reveal>
+        <div className="capability-list">
+          {capabilities.map(({ title, text }, index) => (
+            <Reveal className="capability-row" key={title} amount={0.3} delay={index * 0.05}>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </Reveal>
           ))}
         </div>
       </section>
 
-      <section className="premium-section capability-stage">
-        <Reveal className="premium-heading"><p>02 / CAPABILITIES</p><h2>One connected<br /><em>approach.</em></h2></Reveal>
-        <div className="capability-orbit-grid">
-          {capabilities.map(({ icon: Icon, number, title, text }, index) => (
-            <motion.article
-              key={number}
-              initial={reducedMotion ? false : { opacity: 0, y: 70, rotateY: index % 2 ? -8 : 8 }}
-              whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
-              viewport={{ once: true, amount: 0.35 }}
-              transition={{ duration: reducedMotion ? 0 : 0.72, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-            ><span>{number}</span><Icon aria-hidden="true" /><h3>{title}</h3><p>{text}</p></motion.article>
-          ))}
+      <section className="ink-panel" data-cursor-invert aria-labelledby="home-role-title">
+        <div className="ink-panel__inner">
+          <Reveal>
+            <p className="eyebrow">Current role</p>
+            <h2 id="home-role-title">
+              Digital Marketing Intern
+              <br />
+              at Orestes Technology.
+            </h2>
+          </Reveal>
+          <Reveal className="ink-panel__copy" direction="right">
+            <p>
+              My current work covers SEO, social media, paid campaigns and website-related digital
+              work. I bring a technical background to each brief.
+            </p>
+            <Link className="link-underline" to="/about">
+              Read about my path <ArrowUpRight aria-hidden="true" />
+            </Link>
+          </Reveal>
         </div>
       </section>
 
@@ -295,142 +423,355 @@ function HomePage() {
   );
 }
 
-function JourneyTimeline() {
-  const ref = useRef<HTMLOListElement>(null);
-  const reducedMotion = useReducedMotion() ?? false;
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 78%', 'end 42%'] });
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 28, mass: 0.35 });
-
-  return (
-    <div className="journey-timeline">
-      <div className="journey-progress-track" aria-hidden="true"><motion.i style={{ scaleY: progress }} /></div>
-      <ol ref={ref}>
-      {journey.map((item, index) => (
-        <motion.li
-          key={`${item.year}-${item.title}`}
-          initial={reducedMotion ? false : { opacity: 0, x: index % 2 ? 60 : -60, filter: 'blur(8px)' }}
-          whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-          viewport={{ once: true, amount: 0.42 }}
-          transition={{ duration: reducedMotion ? 0 : 0.72, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <span>{item.year}</span><div className="timeline-node" /><div><h3>{item.title}</h3><p>{item.text}</p></div>
-        </motion.li>
-      ))}
-      </ol>
-    </div>
-  );
-}
+/* ----------------------------------------------------------------- about --- */
 
 function AboutPage() {
+  const fieldRef = useRef<HTMLSpanElement>(null);
+  const portraitRef = useRef<HTMLImageElement>(null);
+  usePointerDrift(fieldRef, { x: 12, y: 10 });
+  usePointerDrift(portraitRef, { x: 5, y: 4, rotate: 1.2 });
+
   return (
-    <PageFrame>
-      <section className="page-hero about-page-hero">
-        <Reveal className="page-hero-motion" amount={0.5}>
-          <p className="premium-kicker">ABOUT / JOURNEY</p>
-          <h1>A technical mind<br />with a <em>marketing lens.</em></h1>
-          <p className="page-lead">My path is not a straight line. Every stage added another layer: systems thinking, quality discipline, AI-assisted workflows, search, marketing and web development.</p>
+    <PageFrame meta={aboutMeta} path="/about">
+
+      <section className="about-hero" aria-labelledby="about-title">
+        <div className="about-hero__copy">
+          <p className="eyebrow">About Akther</p>
+          <h1 id="about-title">
+            <span>I came to</span>
+            <span>marketing through</span>
+            <span>systems, accuracy</span>
+            <span>and code.</span>
+          </h1>
+          <p className="lede">
+            I build websites and support the search, content and campaigns that bring people to
+            them.
+          </p>
+          <p>
+            I’m based in Kochi, Kerala. My background includes computer engineering, quality-focused
+            documentation work and digital marketing at Orestes Technology, where I work as a
+            Digital Marketing Intern.
+          </p>
+          <a className="link-underline" href={profile.resumeUrl} download>
+            Download résumé <Download aria-hidden="true" />
+          </a>
+        </div>
+
+        <figure className="about-hero__figure">
+          <span className="about-hero__field" ref={fieldRef} aria-hidden="true" />
+          <img
+            ref={portraitRef}
+            src={profile.portrait.src}
+            srcSet={profile.portrait.srcSet}
+            sizes="(max-width: 900px) 84vw, 36vw"
+            width={profile.portrait.width}
+            height={profile.portrait.height}
+            alt={profile.portrait.alt}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </figure>
+      </section>
+
+      <section className="ink-panel ink-panel--statement" data-cursor-invert>
+        <div className="ink-panel__inner">
+          <Reveal>
+            <p className="eyebrow">The connection</p>
+            <h2>
+              I understand the build, then I look at the search path, the message and the business
+              goal.
+            </h2>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section split-section" aria-labelledby="about-experience-title">
+        <Reveal className="section-head section-head--sticky">
+          <p className="eyebrow">Experience</p>
+          <h2 id="about-experience-title">
+            A technical path
+            <br />
+            into digital work.
+          </h2>
+          <p className="lede">
+            Each role strengthened the same habits: clear structure, careful review and work that
+            holds up under use.
+          </p>
         </Reveal>
+        <div className="experience-list">
+          {journey.map((item, index) => (
+            <Reveal
+              className="experience-row"
+              key={`${item.year}-${item.title}`}
+              amount={0.3}
+              delay={Math.min(index, 4) * 0.05}
+            >
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </Reveal>
+          ))}
+        </div>
       </section>
-      <section className="story-grid premium-section">
-        <Parallax className="story-profile" distance={55}><ProfileCard /></Parallax>
-        <Reveal direction="right"><p className="premium-kicker">THE INTERSECTION</p><h2>I understand how digital systems are built—and how they create value.</h2><p>I combine practical development with SEO and digital marketing, keeping the final experience clear for the person using it and useful for the business behind it.</p></Reveal>
-      </section>
-      <section className="about-visual-chapter premium-section">
-        <Reveal direction="left"><p className="premium-kicker">SYSTEMS / STORY / MOTION</p><h2>Different skills.<br />One <em>connected system.</em></h2></Reveal>
-        <ProjectVisualScene
-          src={projects[2].visual}
-          alt={projects[2].visualAlt}
-          kind={projects[2].kind}
-          index="A / 03"
-        />
-      </section>
-      <section className="journey-path premium-section">
-        <Reveal className="premium-heading"><p>THE JOURNEY</p><h2>From accuracy<br />to <em>impact.</em></h2></Reveal>
-        <JourneyTimeline />
-      </section>
+
       <CtaSection />
     </PageFrame>
   );
 }
 
+/* ------------------------------------------------------------------ work --- */
+
 function WorkPage() {
+  const featured = projects[0];
+
   return (
-    <PageFrame>
-      <section className="page-hero work-page-hero">
-        <Reveal className="page-hero-motion" amount={0.5}>
-          <p className="premium-kicker">WORK / CASE STUDIES</p>
-          <h1>Digital work<br />with <em>depth.</em></h1>
-          <p className="page-lead">Web, local search, paid media and experiments—presented as dedicated project worlds instead of compressed accordions.</p>
-        </Reveal>
+    <PageFrame meta={workMeta} path="/work">
+
+      <section className="work-hero" aria-labelledby="work-title">
+        <div className="work-hero__copy">
+          <p className="eyebrow">Selected work</p>
+          <h1 id="work-title">
+            <span>Websites, search</span>
+            <span>and campaigns</span>
+            <span>under one roof.</span>
+          </h1>
+          <p className="lede">
+            Each project states the scope, my contribution and the evidence available. Nothing is
+            claimed beyond what the project material supports.
+          </p>
+        </div>
+        <Link className="work-hero__lead" to={`/work/${featured.id}`}>
+          <ProjectVisualScene src={featured.visual} alt={featured.visualAlt} interactive eager />
+          <div>
+            <span>Featured — {featured.status}</span>
+            <strong>{featured.title}</strong>
+            <ArrowUpRight aria-hidden="true" />
+          </div>
+        </Link>
       </section>
-      <section className="premium-section work-index">
-        <Suspense fallback={<div className="project-loading">Loading project worlds…</div>}><ProjectGallery /></Suspense>
+
+      <section className="section work-index" aria-label="Project index">
+        <ProjectGallery />
       </section>
+
       <CtaSection />
     </PageFrame>
   );
 }
+
+/* --------------------------------------------------------------- project --- */
 
 function ProjectPage() {
   const { slug } = useParams();
   const project = projects.find((item) => item.id === slug);
-  const reducedMotion = useReducedMotion() ?? false;
+  const reduced = useReducedMotion() ?? false;
+
   if (!project) return <NotFound />;
+
+  const nextProject = projects[(projects.indexOf(project) + 1) % projects.length];
+
   return (
-    <PageFrame>
-      <section className={`project-page-hero project-page-hero--${project.kind}`}>
-        <Link to="/work" className="back-link"><ArrowLeft aria-hidden="true" /> All work</Link>
-        <motion.div initial={reducedMotion ? false : { opacity: 0, x: -70 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: reducedMotion ? 0 : 0.78, ease: [0.16, 1, 0.3, 1] }}><p className="premium-kicker">{project.eyebrow}</p><h1>{project.title}</h1><p>{project.summary}</p></motion.div>
-        <motion.div className="case-visual" initial={reducedMotion ? false : { opacity: 0, scale: 0.88, rotateY: -10 }} animate={{ opacity: 1, scale: 1, rotateY: 0 }} transition={{ duration: reducedMotion ? 0 : 0.9, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}>
-          <ProjectVisualScene src={project.visual} alt={project.visualAlt} kind={project.kind} index={project.index} eager />
+    <PageFrame meta={projectMeta(project)} path={`/work/${project.id}`}>
+
+      <section className="project-hero" aria-labelledby="project-title">
+        <Link to="/work" className="back-link">
+          <ArrowLeft aria-hidden="true" /> All work
+        </Link>
+        <motion.div
+          className="project-hero__copy"
+          initial={reduced ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: reduced ? 0 : 0.36, ease: EASE }}
+        >
+          <p className="eyebrow">
+            {project.eyebrow} — {project.status}
+          </p>
+          <h1 id="project-title">{project.title}</h1>
+          <p className="lede">{project.summary}</p>
+          <div className="tag-list" aria-label="Responsibilities">
+            {project.areas.map((area) => (
+              <span key={area}>{area}</span>
+            ))}
+          </div>
         </motion.div>
       </section>
-      <section className="case-body premium-section">
-        <Reveal direction="left"><p className="premium-kicker">PROJECT VIEW</p><h2>A connected digital system.</h2></Reveal>
-        <Reveal className="case-copy" direction="right" delay={0.08}><p>{project.summary}</p><div className="project-tags">{project.areas.map((area) => <span key={area}>{area}</span>)}</div>{project.note && <p className="case-note">{project.note}</p>}</Reveal>
+
+      <motion.div
+        className="project-plate"
+        initial={reduced ? false : { opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: reduced ? 0 : 0.4, delay: reduced ? 0 : 0.08, ease: EASE }}
+      >
+        <ProjectVisualScene src={project.visual} alt={project.visualAlt} interactive eager />
+      </motion.div>
+
+      <section className="section split-section" aria-labelledby="case-title">
+        <Reveal className="section-head section-head--sticky">
+          <p className="eyebrow">Project view</p>
+          <h2 id="case-title">{project.caseHeading}</h2>
+        </Reveal>
+        <Reveal className="case-copy" direction="right" delay={0.05}>
+          {project.caseStudy.map((section) => (
+            <div className="case-section" key={section.heading}>
+              <h3>{section.heading}</h3>
+              {section.body && <p>{section.body}</p>}
+              {section.items && (
+                <ul>
+                  {section.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+          {project.note && <p className="case-note">{project.note}</p>}
+        </Reveal>
       </section>
-      {project.result && <section className="metrics-stage premium-section"><motion.p className="premium-kicker" initial={reducedMotion ? false : { opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.6 }} transition={{ duration: reducedMotion ? 0 : .6 }}>REPORTED SIGNALS</motion.p><div>{project.result.map((result, index) => <motion.article key={result.label} initial={reducedMotion ? false : { opacity: 0, y: 55, scale: 0.94 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, amount: 0.45 }} transition={{ duration: reducedMotion ? 0 : 0.62, delay: index * 0.08 }}><strong>{result.value}</strong><span>{result.label}</span></motion.article>)}</div></section>}
-      <section className="next-project"><Link to={`/work/${projects[(projects.indexOf(project) + 1) % projects.length].id}`}><span>NEXT PROJECT</span><strong>{projects[(projects.indexOf(project) + 1) % projects.length].title}</strong><ArrowRight aria-hidden="true" /></Link></section>
+
+      {project.result && (
+        <section className="section results-section" aria-labelledby="results-title">
+          <Reveal>
+            <p className="eyebrow" id="results-title">
+              Reported results
+            </p>
+          </Reveal>
+          <div className="results-grid">
+            {project.result.map((result) => (
+              <article key={result.label}>
+                <strong><CountUp value={result.value} /></strong>
+                <span>{result.label}</span>
+              </article>
+            ))}
+          </div>
+          {project.note && <p className="case-note">{project.note}</p>}
+        </section>
+      )}
+
+      <section className="ink-panel ink-panel--next" data-cursor-invert>
+        <Link className="ink-panel__inner" to={`/work/${nextProject.id}`}>
+          <span>Next project</span>
+          <strong>{nextProject.title}</strong>
+          <ArrowRight aria-hidden="true" />
+        </Link>
+      </section>
     </PageFrame>
   );
 }
 
+/* --------------------------------------------------------------- contact --- */
+
 function ContactPage() {
-  const reducedMotion = useReducedMotion() ?? false;
   return (
-    <PageFrame>
-      <section className="contact-page">
-        <motion.div className="contact-orb-premium" aria-hidden="true" initial={reducedMotion ? false : { opacity: 0, scale: 0.72, rotate: -18 }} animate={{ opacity: .46, scale: 1, rotate: 0 }} transition={{ duration: reducedMotion ? 0 : 1.1, ease: [0.16, 1, 0.3, 1] }} />
-        <div className="contact-layout">
-          <div className="contact-copy">
-            <motion.p className="premium-kicker" initial={reducedMotion ? false : { opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : .6 }}>CONTACT / START A CONVERSATION</motion.p>
-            <motion.h1 initial={reducedMotion ? false : { opacity: 0, y: 65, filter: 'blur(10px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} transition={{ duration: reducedMotion ? 0 : .85, delay: .08, ease: [0.16, 1, 0.3, 1] }}>Let’s build something<br /><em>useful.</em></motion.h1>
-            <motion.p initial={reducedMotion ? false : { opacity: 0, y: 34 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : .65, delay: .2 }}>Have a website, marketing system or digital idea in mind? Tell me what you’re working on.</motion.p>
-            <motion.div className="contact-page-actions" initial={reducedMotion ? false : { opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? 0 : .6, delay: .3 }}>
-              <a className="orb-button" href="mailto:akthernaimudheen0@gmail.com">Email Akther <Mail aria-hidden="true" /></a>
-              <a className="quiet-link" href="/Akther-V-N-Resume.pdf" download>Download résumé <Download aria-hidden="true" /></a>
-            </motion.div>
-            <motion.div className="contact-details" initial={reducedMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: reducedMotion ? 0 : .7, delay: .4 }}><span><Mail aria-hidden="true" /> akthernaimudheen0@gmail.com</span><span><MapPin aria-hidden="true" /> Thrissur, Kerala, India</span></motion.div>
+    <PageFrame meta={contactMeta} path="/contact">
+      <section className="contact" data-cursor-invert aria-labelledby="contact-title">
+        <div className="contact__image">
+          <img
+            src={profile.cinematicPortrait.src}
+            srcSet={profile.cinematicPortrait.srcSet}
+            sizes="(max-width: 900px) 100vw, 52vw"
+            width={profile.cinematicPortrait.width}
+            height={profile.cinematicPortrait.height}
+            alt={profile.cinematicPortrait.alt}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </div>
+        <div className="contact__panel">
+          <p className="eyebrow">Contact</p>
+          <h1 id="contact-title">
+            <span>Tell me what</span>
+            <span>you’re building.</span>
+          </h1>
+          <p className="lede">
+            Send the brief, the problem or the unfinished idea. I work across websites, search and
+            digital campaigns.
+          </p>
+          <div className="contact__actions">
+            <a className="btn btn--signal" href={`mailto:${profile.email}`}>
+              Email Akther <Mail aria-hidden="true" />
+            </a>
+            <a className="link-underline" href={profile.resumeUrl} download>
+              Download résumé <Download aria-hidden="true" />
+            </a>
           </div>
-          <ProfileCard compact />
+          <dl className="contact__details">
+            <div>
+              <dt>
+                <Mail aria-hidden="true" /> Email
+              </dt>
+              <dd>
+                <a href={`mailto:${profile.email}`}>{profile.email}</a>
+              </dd>
+            </div>
+            <div>
+              <dt>
+                <MapPin aria-hidden="true" /> Location
+              </dt>
+              <dd>{profile.location}</dd>
+            </div>
+          </dl>
         </div>
       </section>
     </PageFrame>
   );
 }
 
+/* ---------------------------------------------------------------- shared --- */
+
 function CtaSection() {
-  return <section className="premium-cta"><Parallax className="cta-glow" distance={90}><span /></Parallax><Reveal className="premium-cta__content" direction="scale" amount={0.45}><p>HAVE AN IDEA?</p><h2>Let’s make it<br /><em>matter.</em></h2><Link className="orb-button" to="/contact">Start a conversation <ArrowUpRight aria-hidden="true" /></Link></Reveal></section>;
+  return (
+    <section className="section cta-band" aria-labelledby="cta-title">
+      <Reveal>
+        <p className="eyebrow">Have a project in mind?</p>
+        <h2 id="cta-title">
+          Start with the brief.
+          <br />
+          We’ll find the next step.
+        </h2>
+        <Link className="btn" to="/contact">
+          Contact Akther <ArrowUpRight aria-hidden="true" />
+        </Link>
+      </Reveal>
+    </section>
+  );
 }
 
 function NotFound() {
-  return <PageFrame><section className="contact-page"><p className="premium-kicker">404 / NOT FOUND</p><h1>This path<br /><em>drifted away.</em></h1><Link className="orb-button" to="/">Return home <ArrowLeft aria-hidden="true" /></Link></section></PageFrame>;
+  return (
+    <PageFrame meta={notFoundMeta} path="/404">
+      <section className="not-found">
+        <p className="eyebrow">Page not found</p>
+        <h1>
+          <span>This address</span>
+          <span>has no page.</span>
+        </h1>
+        <Link className="btn" to="/">
+          <ArrowLeft aria-hidden="true" /> Return home
+        </Link>
+      </section>
+    </PageFrame>
+  );
 }
 
 function AppRoutes() {
-  return <Routes><Route path="/" element={<HomePage />} /><Route path="/about" element={<AboutPage />} /><Route path="/work" element={<WorkPage />} /><Route path="/work/:slug" element={<ProjectPage />} /><Route path="/contact" element={<ContactPage />} /><Route path="*" element={<NotFound />} /></Routes>;
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/work" element={<WorkPage />} />
+      <Route path="/work/:slug" element={<ProjectPage />} />
+      <Route path="/contact" element={<ContactPage />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
 }
 
 export default function App() {
-  return <BrowserRouter><AppRoutes /></BrowserRouter>;
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+      <CursorFollower />
+    </BrowserRouter>
+  );
 }

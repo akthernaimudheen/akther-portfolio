@@ -1,92 +1,112 @@
-import { useRef, type PointerEvent as ReactPointerEvent } from 'react';
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from 'framer-motion';
-import type { ProjectKind } from '@/data/projects';
+import { useEffect, useRef, type RefObject } from 'react';
 import { cn } from '@/lib/utils';
+import { pointerEffectsEnabled, watchPointerEffects } from '@/lib/pointer';
 
 interface ProjectVisualSceneProps {
   src: string;
   alt: string;
-  kind: ProjectKind;
-  index?: string;
   className?: string;
   eager?: boolean;
+  /** Adds the pointer-following highlight. Off for purely decorative thumbnails. */
+  interactive?: boolean;
+}
+
+const SCENE_WIDTH = 1536;
+const SCENE_HEIGHT = 864;
+const SRCSET_STEPS = [768, 1152];
+const SCENE_SIZES = '(max-width: 780px) 92vw, (max-width: 1280px) 70vw, 76rem';
+
+function sceneSrcSet(src: string) {
+  if (!src.endsWith('.webp')) return undefined;
+  const base = src.slice(0, -'.webp'.length);
+  return [...SRCSET_STEPS.map((width) => `${base}-${width}.webp ${width}w`), `${src} ${SCENE_WIDTH}w`].join(', ');
+}
+
+/**
+ * Tracks the pointer across one figure and publishes its position as two CSS
+ * custom properties, which the stylesheet turns into a soft highlight.
+ *
+ * Writes are coalesced into one `requestAnimationFrame` per frame and go
+ * straight to the node — no React state is touched while the pointer moves.
+ * Nothing is attached on touch devices or under reduced motion.
+ */
+function useHighlight(ref: RefObject<HTMLElement | null>, active: boolean) {
+  useEffect(() => {
+    if (!active) return;
+
+    let detach: (() => void) | undefined;
+
+    const attach = (enabled: boolean) => {
+      detach?.();
+      detach = undefined;
+
+      const node = ref.current;
+      if (!node || !enabled) return;
+
+      let frame = 0;
+      let nextX = 50;
+      let nextY = 50;
+
+      const write = () => {
+        frame = 0;
+        node.style.setProperty('--highlight-x', `${nextX.toFixed(1)}%`);
+        node.style.setProperty('--highlight-y', `${nextY.toFixed(1)}%`);
+      };
+
+      const onMove = (event: PointerEvent) => {
+        if (event.pointerType === 'touch') return;
+        const rect = node.getBoundingClientRect();
+        nextX = ((event.clientX - rect.left) / rect.width) * 100;
+        nextY = ((event.clientY - rect.top) / rect.height) * 100;
+        if (!frame) frame = requestAnimationFrame(write);
+      };
+
+      node.addEventListener('pointermove', onMove, { passive: true });
+      detach = () => {
+        node.removeEventListener('pointermove', onMove);
+        if (frame) cancelAnimationFrame(frame);
+        node.style.removeProperty('--highlight-x');
+        node.style.removeProperty('--highlight-y');
+      };
+    };
+
+    attach(pointerEffectsEnabled());
+    const stopWatching = watchPointerEffects(attach);
+
+    return () => {
+      stopWatching();
+      detach?.();
+    };
+  }, [ref, active]);
 }
 
 export function ProjectVisualScene({
   src,
   alt,
-  kind,
-  index,
   className,
   eager = false,
+  interactive = false,
 }: ProjectVisualSceneProps) {
-  const sceneRef = useRef<HTMLElement>(null);
-  const reducedMotion = useReducedMotion() ?? false;
-  const pointerX = useSpring(useMotionValue(0), { stiffness: 150, damping: 20, mass: 0.35 });
-  const pointerY = useSpring(useMotionValue(0), { stiffness: 150, damping: 20, mass: 0.35 });
-  const { scrollYProgress } = useScroll({
-    target: sceneRef,
-    offset: ['start end', 'end start'],
-  });
-
-  const imageY = useTransform(scrollYProgress, [0, 1], reducedMotion ? ['0%', '0%'] : ['-4%', '4%']);
-  const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], reducedMotion ? [1.05, 1.05, 1.05] : [1.14, 1.04, 1.13]);
-  const depthY = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [34, -34]);
-  const orbitRotate = useTransform(scrollYProgress, [0, 1], reducedMotion ? [0, 0] : [-22, 34]);
-  const glowX = useTransform(scrollYProgress, [0, 1], reducedMotion ? ['0%', '0%'] : ['-18%', '22%']);
-
-  const handlePointerMove = (event: ReactPointerEvent<HTMLElement>) => {
-    if (reducedMotion || event.pointerType === 'touch') return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    pointerX.set(((event.clientX - rect.left) / rect.width - 0.5) * 8);
-    pointerY.set(((event.clientY - rect.top) / rect.height - 0.5) * -7);
-  };
-
-  const resetPointer = () => {
-    pointerX.set(0);
-    pointerY.set(0);
-  };
+  const srcSet = sceneSrcSet(src);
+  const figureRef = useRef<HTMLElement>(null);
+  useHighlight(figureRef, interactive);
 
   return (
-    <motion.figure
-      ref={sceneRef}
-      className={cn('ai-scene', `ai-scene--${kind}`, className)}
-      onPointerMove={handlePointerMove}
-      onPointerLeave={resetPointer}
-      style={{ rotateX: pointerY, rotateY: pointerX, transformPerspective: 1200 }}
+    <figure
+      ref={figureRef}
+      className={cn('project-image', interactive && 'project-image--interactive', className)}
     >
-      <motion.div className="ai-scene__depth ai-scene__depth--back" style={{ y: depthY }} aria-hidden="true">
-        <img src={src} alt="" loading="lazy" decoding="async" />
-      </motion.div>
-
-      <div className="ai-scene__frame">
-        <motion.img
-          className="ai-scene__image"
-          src={src}
-          alt={alt}
-          loading={eager ? 'eager' : 'lazy'}
-          fetchPriority={eager ? 'high' : 'auto'}
-          decoding="async"
-          style={{ y: imageY, scale: imageScale }}
-        />
-        <div className="ai-scene__grade" aria-hidden="true" />
-        <motion.div className="ai-scene__light" style={{ x: glowX }} aria-hidden="true" />
-      </div>
-
-      <motion.div className="ai-scene__orbit" style={{ rotate: orbitRotate }} aria-hidden="true">
-        <i />
-        <i />
-      </motion.div>
-      <div className="ai-scene__corner ai-scene__corner--one" aria-hidden="true" />
-      <div className="ai-scene__corner ai-scene__corner--two" aria-hidden="true" />
-      {index && <figcaption><span>{index}</span><small>SCROLL / MOVE</small></figcaption>}
-    </motion.figure>
+      <img
+        src={src}
+        srcSet={srcSet}
+        sizes={srcSet ? SCENE_SIZES : undefined}
+        width={SCENE_WIDTH}
+        height={SCENE_HEIGHT}
+        alt={alt}
+        loading={eager ? 'eager' : 'lazy'}
+        fetchPriority={eager ? 'high' : 'auto'}
+        decoding="async"
+      />
+    </figure>
   );
 }

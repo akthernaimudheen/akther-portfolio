@@ -3,21 +3,61 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#08090b" />
+    <meta name="theme-color" content="#f7f5ef" />
+
+    <!-- Persistent: never carries data-static-seo, so Seo.tsx leaves these alone. -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!--
+      Defaults for the initial document, so link scrapers that never execute
+      JavaScript still get a usable preview. Every tag below is marked
+      data-static-seo: src/components/Seo.tsx renders the real per-route title,
+      description, Open Graph and Twitter tags and removes this static set once
+      the app has mounted, which keeps exactly one of each tag in the live DOM.
+      The canonical and og:url below are the homepage's, which is the only
+      route a scraper can reach without executing JavaScript; Seo.tsx replaces
+      them with the real per-route values once the app mounts.
+    -->
     <meta
+      data-static-seo
       name="description"
-      content="Portfolio of Akther V N, a web developer and digital marketing professional based in Thrissur, Kerala."
+      content="Akther V N connects technology and marketing to build useful digital experiences around real business goals: web development, SEO and digital marketing."
     />
-    <title>Akther V N — Digital Experiences</title>
+    <title data-static-seo>Akther V N — AI-Enabled Digital Marketing &amp; Web Developer</title>
+    <meta data-static-seo property="og:title" content="Akther V N — AI-Enabled Digital Marketing &amp; Web Developer" />
+    <meta
+      data-static-seo
+      property="og:description"
+      content="Akther V N connects technology and marketing to build useful digital experiences around real business goals: web development, SEO and digital marketing."
+    />
+    <meta data-static-seo property="og:type" content="profile" />
+    <meta data-static-seo property="og:url" content="https://akthernaimudheen.in/" />
+    <meta data-static-seo property="og:image" content="https://akthernaimudheen.in/og-image.jpg" />
+    <meta data-static-seo property="og:image:width" content="1200" />
+    <meta data-static-seo property="og:image:height" content="630" />
+    <meta data-static-seo property="og:site_name" content="Akther V N — Portfolio" />
+    <meta data-static-seo property="og:locale" content="en" />
+    <meta data-static-seo name="twitter:card" content="summary_large_image" />
+    <meta data-static-seo name="twitter:image" content="https://akthernaimudheen.in/og-image.jpg" />
+    <meta data-static-seo name="twitter:title" content="Akther V N — AI-Enabled Digital Marketing &amp; Web Developer" />
+    <meta
+      data-static-seo
+      name="twitter:description"
+      content="Akther V N connects technology and marketing to build useful digital experiences around real business goals: web development, SEO and digital marketing."
+    />
+    <link data-static-seo rel="canonical" href="https://akthernaimudheen.in/" />
     <style>
       .direct-open-message { display: none; }
-      body.direct-open { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #08090b; color: #f7f7f3; font-family: Arial, sans-serif; }
+      body.direct-open { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #f7f5ef; color: #0a0a0a; font-family: Archivo, Arial, sans-serif; }
       body.direct-open .skip-link { display: none; }
-      body.direct-open .direct-open-message { display: block; width: min(560px, calc(100vw - 32px)); padding: 36px; border: 1px solid #34363d; border-radius: 24px; background: #111318; box-shadow: 0 30px 80px rgba(0,0,0,.4); }
-      .direct-open-message span { color: #d8ff00; font-size: 12px; font-weight: 800; letter-spacing: .15em; }
+      body.direct-open .direct-open-message { display: block; width: min(560px, calc(100vw - 32px)); padding: 36px; border: 1px solid rgba(10,10,10,.18); background: #ffffff; box-shadow: none; }
+      .direct-open-message span { color: #0a0a0a; background: #ffd21f; padding: 4px 8px; font-size: 12px; font-weight: 800; letter-spacing: .15em; }
       .direct-open-message h1 { margin: 14px 0 12px; font-size: clamp(32px, 7vw, 54px); line-height: .95; letter-spacing: -.05em; }
-      .direct-open-message p { margin: 0; color: #b5b8c0; font-size: 17px; line-height: 1.65; }
-      .direct-open-message strong { color: #fff; }
+      .direct-open-message p { margin: 0; color: #595959; font-size: 17px; line-height: 1.65; }
+      .direct-open-message strong { color: #0a0a0a; }
     </style>
   </head>
   <body>
@@ -27,9 +67,9 @@
     <a class="skip-link" href="#main-content">Skip to content</a>
     <div id="root">
       <main class="direct-open-message">
-        <span>ONE QUICK STEP</span>
+        <span>LOCAL PREVIEW</span>
         <h1>Open the portfolio with its launcher.</h1>
-        <p>Close this tab, return to the portfolio folder and double-click <strong>Start Portfolio.cmd</strong>. The launcher starts the local 3D website and opens it automatically.</p>
+        <p>Close this tab, return to the portfolio folder and double-click <strong>Start Portfolio.cmd</strong>. The launcher starts the local website and opens it automatically.</p>
       </main>
     </div>
     <script type="module" src="/src/main.tsx"></script>

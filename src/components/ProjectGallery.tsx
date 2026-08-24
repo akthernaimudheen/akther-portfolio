@@ -4,49 +4,56 @@ import { Link } from 'react-router-dom';
 import { ProjectVisualScene } from '@/components/ui/project-visual-scene';
 import { projects, type Project } from '@/data/projects';
 
-function ProjectDivision({ project, index }: { project: Project; index: number }) {
+/**
+ * One row of the editorial project index: a large photograph first, then the
+ * title with its role, scope and status. Rows alternate their offset so the
+ * index reads as a staggered spread rather than a stack of identical cards.
+ */
+function ProjectRow({ project, position }: { project: Project; position: number }) {
   const reducedMotion = useReducedMotion() ?? false;
 
   return (
     <motion.article
-      className="project-division"
-      initial={reducedMotion ? false : { opacity: 0, y: 90, scale: 0.94 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.2, margin: '0px 0px -8% 0px' }}
-      transition={{ duration: reducedMotion ? 0 : 0.82, delay: index * 0.07, ease: [0.16, 1, 0.3, 1] }}
+      className={`index-row index-row--${position % 2 === 0 ? 'lead' : 'offset'}`}
+      initial={reducedMotion ? false : { opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.18 }}
+      transition={{ duration: reducedMotion ? 0 : 0.42, ease: [0.22, 1, 0.36, 1] }}
     >
-      <div className="project-topline">
-        <span>{project.index}</span>
-        <span className="project-status">{project.status}</span>
-      </div>
-
-      <div className="project-artifact-wrap">
-        <ProjectVisualScene
-          src={project.visual}
-          alt={project.visualAlt}
-          kind={project.kind}
-          index={project.index}
-        />
-      </div>
-
-      <div className="project-copy">
-        <p className="project-eyebrow">{project.eyebrow}</p>
-        <h3>{project.title}</h3>
-        <p>{project.summary}</p>
-        <div className="project-tags" aria-label="Project areas">
-          {project.areas.map((area) => <span key={area}>{area}</span>)}
+      <Link to={`/work/${project.id}`}>
+        <ProjectVisualScene src={project.visual} alt={project.visualAlt} interactive />
+        <div className="index-row__body">
+          <h2>{project.title}</h2>
+          <p className="index-row__summary">{project.summary}</p>
+          <dl className="index-row__facts">
+            <div>
+              <dt>Role</dt>
+              <dd>{project.role}</dd>
+            </div>
+            <div>
+              <dt>Scope</dt>
+              <dd>{project.areas.join(', ')}</dd>
+            </div>
+            <div>
+              <dt>Status</dt>
+              <dd>{project.status}</dd>
+            </div>
+          </dl>
+          <span className="link-underline">
+            View project <ArrowUpRight aria-hidden="true" />
+          </span>
         </div>
-
-        <Link className="project-toggle" to={`/work/${project.id}`}>Enter project world <ArrowUpRight aria-hidden="true" /></Link>
-      </div>
+      </Link>
     </motion.article>
   );
 }
 
 export function ProjectGallery() {
   return (
-    <div className="project-grid">
-      {projects.map((project, index) => <ProjectDivision key={project.id} project={project} index={index} />)}
+    <div className="project-index">
+      {projects.map((project, index) => (
+        <ProjectRow key={project.id} project={project} position={index} />
+      ))}
     </div>
   );
 }
