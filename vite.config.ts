@@ -2,8 +2,8 @@ import { fileURLToPath, URL } from 'node:url';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
-import { projects } from './src/data/projects';
-import { SITE_URL, STATIC_ROUTES } from './src/lib/site';
+import { projects } from './src/data/projects.ts';
+import { SITE_URL, STATIC_ROUTES } from './src/lib/site.ts';
 
 /**
  * Emits sitemap.xml and robots.txt at build time.
