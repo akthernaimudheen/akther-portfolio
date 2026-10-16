@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%" style="background: #f7f5ef; font-family: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <style>
+      .card { fill: #ffffff; stroke: rgba(10, 10, 10, 0.15); stroke-width: 1.5; }
+      .text-head { font-family: 'Bricolage Grotesque', 'Archivo', sans-serif; font-weight: 800; font-size: 20px; fill: #0a0a0a; letter-spacing: -0.03em; }
+      .text-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; fill: #595959; }
+      .text-desc { font-size: 12px; fill: #595959; line-height: 1.5; }
+      .text-code { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 10px; fill: #0a0a0a; }
+      .badge-yellow { fill: #ffd21f; }
+      .badge-ink { fill: #0a0a0a; }
+      .line { stroke: #0a0a0a; stroke-width: 1.5; fill: none; }
+      .grid-line { stroke: rgba(10, 10, 10, 0.08); stroke-width: 1; }
+    </style>
+  </defs>
+
+  <!-- Editorial Grid Lines -->
+  <line x1="600" y1="40" x2="600" y2="635" class="grid-line" stroke-dasharray="4 4" />
+  <line x1="40" y1="90" x2="1160" y2="90" class="grid-line" />
+
+  <!-- Top Metadata Bar -->
+  <g transform="translate(50, 48)">
+    <rect x="0" y="0" width="160" height="22" rx="2" class="badge-ink" />
+    <text x="10" y="15" font-size="9px" font-weight="700" fill="#ffd21f" letter-spacing="0.1em">ENGINEERING PORTFOLIO</text>
+    <text x="175" y="16" class="text-tag">AI SYSTEMS · FULL-STACK ARCHITECTURE · VERIFIED TEST SUITES</text>
+    <text x="960" y="16" class="text-tag">AKTHER V N · 2026</text>
+  </g>
+
+  <!-- Left Column: iScribe Clinical Documentation Pipeline (520px wide) -->
+  <g transform="translate(50, 115)">
+    <rect x="0" y="0" width="520" height="495" rx="6" class="card" />
+
+    <!-- Header -->
+    <g transform="translate(28, 30)">
+      <rect x="0" y="0" width="85" height="18" rx="2" fill="rgba(10,10,10,0.08)" />
+      <text x="6" y="13" class="text-tag" fill="#0a0a0a">PROJECT 01</text>
+      <text x="0" y="46" class="text-head">iScribe · Clinical Documentation</text>
+      <text x="0" y="68" class="text-desc">Ambient consultation speech processing, clinical entity extraction,</text>
+      <text x="0" y="86" class="text-desc">multi-stage schema validation, and structured SOAP note generation.</text>
+    </g>
+
+    <!-- Schematic Visual -->
+    <g transform="translate(28, 140)">
+      <!-- Audio Waveform Input -->
+      <rect x="0" y="0" width="464" height="68" rx="4" fill="#faf9f5" stroke="rgba(10,10,10,0.1)" />
+      <path d="M 20 34 Q 30 14, 40 34 T 60 34 T 80 10 T 100 48 T 120 20 T 140 44 T 160 34 T 180 34 T 200 8 T 220 54 T 240 24 T 260 40 T 280 34 T 300 34 T 320 18 T 340 46 T 360 34 T 380 34 T 400 24 T 420 40 T 440 34" fill="none" stroke="#0a0a0a" stroke-width="1.8" />
+      <rect x="16" y="10" width="130" height="16" rx="2" class="badge-yellow" />
+      <text x="22" y="22" font-size="8px" font-weight="700" fill="#0a0a0a">SPEECH INGESTION</text>
+      <text x="320" y="22" class="text-tag" font-size="8px">MALAYALAM + EN</text>
+
+      <!-- Flow Arrow -->
+      <line x1="232" y1="68" x2="232" y2="92" class="line" />
+      <polygon points="228 90, 236 90, 232 96" fill="#0a0a0a" />
+
+      <!-- Structured Extraction & Schema Checks -->
+      <rect x="0" y="96" width="464" height="114" rx="4" fill="#ffffff" stroke="rgba(10,10,10,0.15)" />
+      <rect x="16" y="108" width="140" height="16" rx="2" fill="#0a0a0a" />
+      <text x="22" y="120" font-size="8px" font-weight="700" fill="#ffffff">SCHEMA &amp; ENTITY PARSING</text>
+      <text x="16" y="146" class="text-code">• Chief Complaint &amp; HPI extraction</text>
+      <text x="16" y="164" class="text-code">• Dosage normalization (mg/ml, BID, TID)</text>
+      <text x="16" y="182" class="text-code">• Negation parsing &amp; temporal anchor detection</text>
+      <text x="16" y="200" class="text-code">• Zod / Pydantic JSON schema guardrails</text>
+
+      <!-- Flow Arrow -->
+      <line x1="232" y1="210" x2="232" y2="234" class="line" />
+      <polygon points="228 232, 236 232, 232 238" fill="#0a0a0a" />
+
+      <!-- Final Review & SOAP Output -->
+      <rect x="0" y="238" width="464" height="74" rx="4" fill="#faf9f5" stroke="#0a0a0a" stroke-width="1.2" />
+      <rect x="16" y="248" width="130" height="16" rx="2" class="badge-yellow" />
+      <text x="22" y="260" font-size="8px" font-weight="700" fill="#0a0a0a">CLINICIAN REVIEW REQUIRED</text>
+      <text x="16" y="284" class="text-desc" font-weight="600" fill="#0a0a0a">Deterministic SOAP output with flagged ambiguities</text>
+      <text x="16" y="300" class="text-desc" font-size="10px">Human sign-off boundary prevents hallucinated EHR commits</text>
+    </g>
+  </g>
+
+  <!-- Right Column: RShorts Automated Video Generation (520px wide) -->
+  <g transform="translate(630, 115)">
+    <rect x="0" y="0" width="520" height="495" rx="6" class="card" />
+
+    <!-- Header -->
+    <g transform="translate(28, 30)">
+      <rect x="0" y="0" width="85" height="18" rx="2" fill="rgba(10,10,10,0.08)" />
+      <text x="6" y="13" class="text-tag" fill="#0a0a0a">PROJECT 02</text>
+      <text x="0" y="46" class="text-head">RShorts · Video Generation Pipeline</text>
+      <text x="0" y="68" class="text-desc">Long-form transcript parsing, viral hook detection, scene planning,</text>
+      <text x="0" y="86" class="text-desc">Deepgram TTS synthesis, kinetic captions, and FFmpeg assembly.</text>
+    </g>
+
+    <!-- Schematic Visual -->
+    <g transform="translate(28, 140)">
+      <!-- Workspace Wireframe Layout -->
+      <rect x="0" y="0" width="464" height="312" rx="4" fill="#faf9f5" stroke="rgba(10,10,10,0.15)" />
+
+      <!-- Mini Topbar -->
+      <rect x="0" y="0" width="464" height="24" rx="4" fill="#f0eee6" />
+      <circle cx="14" cy="12" r="3.5" fill="#ff5f56" />
+      <circle cx="24" cy="12" r="3.5" fill="#ffbd2e" />
+      <circle cx="34" cy="12" r="3.5" fill="#27c93f" />
+      <text x="50" y="15" font-size="9px" font-weight="600" fill="#595959">rshorts_compositor_v2</text>
+      <rect x="360" y="4" width="94" height="16" rx="2" class="badge-ink" />
+      <text x="368" y="15" font-size="8px" font-weight="700" fill="#ffd21f">160+ UNIT TESTS</text>
+
+      <!-- Left inner: Hook selection -->
+      <g transform="translate(14, 36)">
+        <text x="0" y="10" class="text-tag" font-size="8px">HOOK EXTRACTION</text>
+        <rect x="0" y="16" width="230" height="60" rx="3" fill="#ffffff" stroke="#ffd21f" stroke-width="1.5" />
+        <rect x="6" y="22" width="70" height="12" rx="2" class="badge-yellow" />
+        <text x="10" y="31" font-size="7px" font-weight="800" fill="#0a0a0a">RETENTION HOOK</text>
+        <text x="6" y="48" class="text-code" font-size="9px">00:15 - 00:54 · Score 94/100</text>
+        <text x="6" y="62" class="text-code" font-size="8px" fill="#595959">"LLMs generate text, not logic."</text>
+
+        <!-- Media Matching -->
+        <text x="0" y="96" class="text-tag" font-size="8px">B-ROLL RETRIEVAL</text>
+        <rect x="0" y="102" width="230" height="52" rx="3" fill="#ffffff" stroke="rgba(10,10,10,0.1)" />
+        <text x="8" y="122" class="text-code" font-size="8px">• Semantic tag: "architecture_neural"</text>
+        <text x="8" y="138" class="text-code" font-size="8px">• Resolution: 1080x1920 @ 60fps</text>
+      </g>
+
+      <!-- Right inner: 9:16 Canvas Mockup -->
+      <g transform="translate(266, 36)">
+        <text x="0" y="10" class="text-tag" font-size="8px">9:16 CANVAS</text>
+        <rect x="25" y="16" width="130" height="150" rx="6" fill="#141414" stroke="#0a0a0a" stroke-width="1.5" />
+        <!-- Video screen -->
+        <circle cx="90" cy="65" r="18" fill="#333333" />
+        <path d="M 70 100 Q 90 85 110 100" fill="#333333" />
+        <!-- Captions -->
+        <rect x="40" y="115" width="100" height="24" rx="2" fill="rgba(0,0,0,0.7)" />
+        <text x="48" y="127" font-size="7px" font-weight="700" fill="#ffffff">LLM GENERATION</text>
+        <rect x="46" y="129" width="56" height="8" rx="1" class="badge-yellow" />
+        <text x="48" y="136" font-size="6px" font-weight="900" fill="#0a0a0a">IS NOT LOGIC</text>
+      </g>
+
+      <!-- Bottom inner: Multi-track timeline -->
+      <g transform="translate(14, 210)">
+        <text x="0" y="10" class="text-tag" font-size="8px">AUTOMATED COMPOSITOR TIMELINE</text>
+        <rect x="0" y="16" width="436" height="14" rx="2" fill="#e8e5dc" />
+        <rect x="0" y="16" width="140" height="14" rx="2" fill="#ffffff" stroke="rgba(10,10,10,0.2)" />
+        <text x="6" y="26" class="text-code" font-size="7px">A-Roll: Host</text>
+        <rect x="145" y="16" width="180" height="14" rx="2" class="badge-yellow" stroke="#0a0a0a" stroke-width="0.8" />
+        <text x="151" y="26" class="text-code" font-size="7px" font-weight="700">B-Roll: Synced Visuals</text>
+        <rect x="330" y="16" width="106" height="14" rx="2" fill="#ffffff" stroke="rgba(10,10,10,0.2)" />
+        <text x="336" y="26" class="text-code" font-size="7px">A-Roll: Outro</text>
+
+        <rect x="0" y="34" width="436" height="14" rx="2" fill="#e8e5dc" />
+        <rect x="0" y="34" width="436" height="14" rx="2" class="badge-ink" />
+        <text x="6" y="44" class="text-code" font-size="7px" fill="#ffffff">Audio: Deepgram TTS + Voice Normalization (-14 LUFS)</text>
+
+        <rect x="0" y="52" width="436" height="14" rx="2" fill="#e8e5dc" />
+        <rect x="60" y="52" width="280" height="14" rx="2" class="badge-yellow" />
+        <text x="66" y="62" class="text-code" font-size="7px" font-weight="700">Subtitles: Word-Level ASS Highlight Engine (&lt;12ms drift)</text>
+      </g>
+    </g>
+  </g>
+</svg>

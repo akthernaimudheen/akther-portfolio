@@ -1,0 +1,217 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="100%" height="100%" style="background: #f7f5ef; font-family: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <style>
+      .bg-panel { fill: #ffffff; stroke: rgba(10, 10, 10, 0.15); stroke-width: 1.5; }
+      .bg-zone { fill: rgba(10, 10, 10, 0.02); stroke: rgba(10, 10, 10, 0.12); stroke-width: 1; stroke-dasharray: 4 4; }
+      .text-title { font-size: 14px; font-weight: 700; fill: #0a0a0a; letter-spacing: -0.02em; }
+      .text-sub { font-size: 11px; fill: #595959; line-height: 1.4; }
+      .text-code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; fill: #0a0a0a; }
+      .text-eyebrow { font-size: 10px; font-weight: 700; fill: #595959; letter-spacing: 0.12em; text-transform: uppercase; }
+      .text-badge { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+      .badge-yellow { fill: #ffd21f; }
+      .badge-ink { fill: #0a0a0a; }
+      .track-bg { fill: #f0eee6; stroke: rgba(10, 10, 10, 0.1); stroke-width: 1; }
+      .track-clip-yellow { fill: #ffd21f; stroke: #0a0a0a; stroke-width: 1.2; }
+      .track-clip-ink { fill: #0a0a0a; stroke: #0a0a0a; stroke-width: 1.2; }
+      .track-clip-white { fill: #ffffff; stroke: rgba(10, 10, 10, 0.3); stroke-width: 1; }
+      .arrow { stroke: #0a0a0a; stroke-width: 1.5; fill: none; }
+    </style>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#0a0a0a" />
+    </marker>
+  </defs>
+
+  <!-- Title & Header -->
+  <g transform="translate(40, 36)">
+    <rect x="0" y="0" width="130" height="20" rx="2" class="badge-ink" />
+    <text x="8" y="14" class="text-badge" fill="#ffd21f">RSHORTS PIPELINE</text>
+    <text x="140" y="15" class="text-title" font-size="16px">Automated Long-Form to Short-Form Video Transformation</text>
+    <text x="0" y="38" class="text-sub">Transcript parsing, viral hook extraction, asset synchronization, dynamic captioning, and FFmpeg assembly</text>
+  </g>
+
+  <!-- Left Column: Pipeline Stages (420px wide) -->
+  <g transform="translate(40, 95)">
+    <!-- Stage 1: Ingestion & Segmentation -->
+    <rect x="0" y="0" width="410" height="96" rx="4" class="bg-panel" />
+    <rect x="14" y="12" width="70" height="16" rx="2" fill="rgba(10, 10, 10, 0.08)" />
+    <text x="19" y="24" class="text-badge" fill="#0a0a0a">STAGE 01</text>
+    <text x="94" y="24" class="text-title">Transcript Ingestion &amp; Chunking</text>
+    <text x="14" y="48" class="text-sub">• Ingests podcast/lecture audio or full text transcript</text>
+    <text x="14" y="64" class="text-sub">• Word-level timestamp alignment via Deepgram STT</text>
+    <text x="14" y="80" class="text-sub">• Sentence boundary detection and pause segmentation</text>
+
+    <!-- Connector -->
+    <path d="M 205 96 L 205 116" class="arrow" marker-end="url(#arrow)" />
+
+    <!-- Stage 2: Hook Detection & Scene Planning -->
+    <rect x="0" y="116" width="410" height="110" rx="4" class="bg-panel" />
+    <rect x="14" y="128" width="70" height="16" rx="2" class="badge-yellow" />
+    <text x="19" y="140" class="text-badge" fill="#0a0a0a">STAGE 02</text>
+    <text x="94" y="140" class="text-title">LLM Hook Detection &amp; Beat Planning</text>
+    <text x="14" y="164" class="text-sub">• Few-shot prompt isolates high-retention 30–60s segments</text>
+    <text x="14" y="180" class="text-sub">• Evaluates curiosity gap, opening hook strength, and punchline</text>
+    <text x="14" y="196" class="text-sub">• Generates JSON scene script with visual query tags and pacing</text>
+    <text x="14" y="212" class="text-sub">• Verifies word timing against target short-form duration bounds</text>
+
+    <!-- Connector -->
+    <path d="M 205 226 L 205 246" class="arrow" marker-end="url(#arrow)" />
+
+    <!-- Stage 3: Asset Retrieval & Speech Synthesis -->
+    <rect x="0" y="246" width="410" height="100" rx="4" class="bg-panel" />
+    <rect x="14" y="258" width="70" height="16" rx="2" fill="rgba(10, 10, 10, 0.08)" />
+    <text x="19" y="270" class="text-badge" fill="#0a0a0a">STAGE 03</text>
+    <text x="94" y="270" class="text-title">Media Retrieval &amp; Audio Synthesis</text>
+    <text x="14" y="294" class="text-sub">• Matches semantic scene tags against local b-roll / stock assets</text>
+    <text x="14" y="310" class="text-sub">• Deepgram Aura / ElevenLabs natural voice synthesis fallback</text>
+    <text x="14" y="326" class="text-sub">• Generates word-level ASS caption file with highlight colors</text>
+
+    <!-- Connector -->
+    <path d="M 205 346 L 205 366" class="arrow" marker-end="url(#arrow)" />
+
+    <!-- Stage 4: FFmpeg Assembly Engine -->
+    <rect x="0" y="366" width="410" height="96" rx="4" class="bg-panel" />
+    <rect x="14" y="378" width="70" height="16" rx="2" fill="#0a0a0a" />
+    <text x="19" y="390" class="text-badge" fill="#ffffff">STAGE 04</text>
+    <text x="94" y="390" class="text-title">FFmpeg Video Compositor</text>
+    <text x="14" y="414" class="text-sub">• Dynamic 9:16 vertical crop &amp; smart face-centering</text>
+    <text x="14" y="430" class="text-sub">• Multi-layer composite: Video + Overlay + B-roll + Audio</text>
+    <text x="14" y="446" class="text-sub">• GPU-accelerated rendering with frame-accurate transitions</text>
+  </g>
+
+  <!-- Middle & Right: Studio Editor Composition (690px wide) -->
+  <g transform="translate(480, 95)">
+    <!-- Studio Shell -->
+    <rect x="0" y="0" width="680" height="462" rx="6" class="bg-panel" />
+    
+    <!-- Workspace Header -->
+    <rect x="0" y="0" width="680" height="38" rx="6" fill="#f0eee6" />
+    <circle cx="20" cy="19" r="5" fill="#ff5f56" />
+    <circle cx="36" cy="19" r="5" fill="#ffbd2e" />
+    <circle cx="52" cy="19" r="5" fill="#27c93f" />
+    <text x="76" y="24" class="text-eyebrow">RShorts Editor · Project: AI_Architecture_Explainer_01.mp4</text>
+    <rect x="580" y="8" width="86" height="22" rx="2" class="badge-ink" />
+    <text x="590" y="23" class="text-badge" fill="#ffd21f">160+ TESTS</text>
+
+    <!-- Left side of editor: Transcript & Hook segmenter (260px) -->
+    <g transform="translate(16, 52)">
+      <text x="0" y="14" class="text-eyebrow">SOURCE TRANSCRIPT</text>
+      
+      <!-- Chunk 1 (skipped) -->
+      <rect x="0" y="24" width="260" height="54" rx="3" fill="#faf9f5" stroke="rgba(10,10,10,0.1)" />
+      <text x="8" y="40" class="text-code" fill="#8c8c8c">00:00 - 00:14 · Intro banters</text>
+      <text x="8" y="56" class="text-sub" font-size="10px" fill="#8c8c8c">"Hey everyone, welcome back to the podcast..."</text>
+      <text x="210" y="40" class="text-badge" fill="#8c8c8c">SKIP</text>
+
+      <!-- Chunk 2 (SELECTED VIRAL HOOK) -->
+      <rect x="0" y="86" width="260" height="96" rx="3" fill="#ffffff" stroke="#ffd21f" stroke-width="2" />
+      <rect x="8" y="96" width="90" height="16" rx="2" class="badge-yellow" />
+      <text x="13" y="108" class="text-badge" fill="#0a0a0a">HOOK SELECTED</text>
+      <text x="110" y="108" class="text-code">00:15 - 00:54</text>
+      <text x="8" y="128" class="text-sub" font-weight="600" fill="#0a0a0a">"The mistake people make with LLMs</text>
+      <text x="8" y="144" class="text-sub" font-weight="600" fill="#0a0a0a">is treating text generation as logic."</text>
+      <text x="8" y="162" class="text-sub" font-size="10px" fill="#595959">Score: 94/100 · Retention Hook: High</text>
+
+      <!-- Chunk 3 -->
+      <rect x="0" y="190" width="260" height="54" rx="3" fill="#faf9f5" stroke="rgba(10,10,10,0.1)" />
+      <text x="8" y="206" class="text-code" fill="#8c8c8c">00:55 - 01:30 · Deep Dive</text>
+      <text x="8" y="222" class="text-sub" font-size="10px" fill="#8c8c8c">"When you add deterministic schema checks..."</text>
+      <text x="195" y="206" class="text-badge" fill="#0a0a0a">NEXT CUT</text>
+    </g>
+
+    <!-- Center/Right of editor: 9:16 Video Canvas Preview (160px wide, 284px tall) -->
+    <g transform="translate(296, 52)">
+      <text x="0" y="14" class="text-eyebrow">9:16 PREVIEW (1080×1920)</text>
+      
+      <!-- Phone Canvas Frame -->
+      <rect x="10" y="24" width="160" height="284" rx="8" fill="#141414" stroke="#0a0a0a" stroke-width="2" />
+      
+      <!-- Video Content Wireframe -->
+      <!-- Speaker B-roll -->
+      <rect x="18" y="44" width="144" height="130" rx="4" fill="#262626" />
+      <circle cx="90" cy="95" r="28" fill="#3a3a3a" />
+      <path d="M 62 145 Q 90 125 118 145" fill="#3a3a3a" />
+      
+      <!-- Dynamic Word Highlight Overlay -->
+      <rect x="24" y="190" width="132" height="42" rx="4" fill="rgba(0,0,0,0.7)" />
+      <text x="32" y="206" font-size="10px" font-weight="800" fill="#ffffff">LLM GENERATION</text>
+      <rect x="30" y="212" width="70" height="14" rx="2" class="badge-yellow" />
+      <text x="34" y="223" font-size="9px" font-weight="900" fill="#0a0a0a">IS NOT LOGIC</text>
+
+      <!-- Progress bar -->
+      <line x1="20" y1="298" x2="160" y2="298" stroke="#333333" stroke-width="3" stroke-linecap="round" />
+      <line x1="20" y1="298" x2="85" y2="298" stroke="#ffd21f" stroke-width="3" stroke-linecap="round" />
+    </g>
+
+    <!-- Right Side: QA & Metric Inspectors -->
+    <g transform="translate(486, 52)">
+      <text x="0" y="14" class="text-eyebrow">PIPELINE METRICS</text>
+
+      <rect x="0" y="24" width="178" height="74" rx="4" class="track-bg" />
+      <text x="12" y="44" class="text-sub" font-size="10px">Audio Sync Drift</text>
+      <text x="12" y="66" class="text-title" font-size="18px">&lt; 12 ms</text>
+      <text x="96" y="66" class="text-badge" fill="#22863a">VERIFIED</text>
+
+      <rect x="0" y="106" width="178" height="74" rx="4" class="track-bg" />
+      <text x="12" y="126" class="text-sub" font-size="10px">Scene Transition Unit Tests</text>
+      <text x="12" y="148" class="text-title" font-size="18px">160+ Passing</text>
+      <text x="122" y="148" class="text-badge" fill="#0a0a0a">PYTEST</text>
+
+      <rect x="0" y="188" width="178" height="120" rx="4" class="track-bg" />
+      <text x="12" y="208" class="text-sub" font-size="10px">Validation Boundaries</text>
+      <text x="12" y="228" class="text-sub" font-size="10px">• Scene duration [15s - 60s]</text>
+      <text x="12" y="244" class="text-sub" font-size="10px">• Text safe zone (top/bottom)</text>
+      <text x="12" y="260" class="text-sub" font-size="10px">• Audio LUFS loudness norm</text>
+      <text x="12" y="276" class="text-sub" font-size="10px">• Bitrate: 1080x1920 @ 60fps</text>
+    </g>
+
+    <!-- Bottom of Editor: Multi-Track Timeline (648px wide) -->
+    <g transform="translate(16, 350)">
+      <text x="0" y="10" class="text-eyebrow">COMPOSITOR TIMELINE (00:00 - 00:45)</text>
+
+      <!-- Ruler -->
+      <line x1="0" y1="18" x2="648" y2="18" stroke="rgba(10,10,10,0.2)" stroke-width="1" />
+      <text x="0" y="28" class="text-code" font-size="8px">00:00</text>
+      <text x="160" y="28" class="text-code" font-size="8px">00:15 (Hook)</text>
+      <text x="320" y="28" class="text-code" font-size="8px">00:30</text>
+      <text x="480" y="28" class="text-code" font-size="8px">00:45 (Outro)</text>
+
+      <!-- Track 1: Video Base -->
+      <rect x="0" y="32" width="648" height="18" rx="2" class="track-bg" />
+      <rect x="0" y="32" width="220" height="18" rx="2" class="track-clip-white" />
+      <text x="8" y="44" class="text-code" font-size="9px">A-Roll: Host Cam</text>
+      <rect x="225" y="32" width="240" height="18" rx="2" class="track-clip-yellow" />
+      <text x="233" y="44" class="text-code" font-size="9px" font-weight="700">B-Roll: Neural Net Arch Diagram</text>
+      <rect x="470" y="32" width="178" height="18" rx="2" class="track-clip-white" />
+      <text x="478" y="44" class="text-code" font-size="9px">A-Roll: Host Conclusion</text>
+
+      <!-- Track 2: Subtitles (Dynamic ASS) -->
+      <rect x="0" y="54" width="648" height="18" rx="2" class="track-bg" />
+      <rect x="0" y="54" width="140" height="18" rx="2" class="track-clip-ink" />
+      <text x="8" y="66" class="text-code" font-size="9px" fill="#ffffff">Sub: Word Timings</text>
+      <rect x="145" y="54" width="180" height="18" rx="2" class="track-clip-yellow" />
+      <text x="153" y="66" class="text-code" font-size="9px" font-weight="700">Sub: Hook Highlights</text>
+      <rect x="330" y="54" width="318" height="18" rx="2" class="track-clip-ink" />
+      <text x="338" y="66" class="text-code" font-size="9px" fill="#ffffff">Sub: Kinetic Text Synced</text>
+
+      <!-- Track 3: Audio / SFX -->
+      <rect x="0" y="76" width="648" height="18" rx="2" class="track-bg" />
+      <rect x="0" y="76" width="648" height="18" rx="2" class="track-clip-white" />
+      <text x="8" y="88" class="text-code" font-size="9px">Audio: Voice Master (-14 LUFS) + Ambient Ducker</text>
+
+      <!-- Playhead -->
+      <line x1="225" y1="18" x2="225" y2="98" stroke="#ff5f56" stroke-width="2" />
+      <polygon points="220 18, 230 18, 225 24" fill="#ff5f56" />
+    </g>
+  </g>
+
+  <!-- Bottom Legend & Quality Attributes -->
+  <g transform="translate(40, 570)">
+    <rect x="0" y="0" width="1120" height="70" rx="4" class="bg-panel" />
+    <text x="24" y="28" class="text-sub" font-weight="600" fill="#0a0a0a">
+      Engineered Pipeline Attributes:
+    </text>
+    <text x="24" y="46" class="text-sub" fill="#595959">
+      Deterministic beat mapping eliminates random audio cuts. Automated test harness with 160+ unit/integration tests verifies timing precision, subtitle sync within 12ms, and FFmpeg filtergraph construction without manual video editing intervention.
+    </text>
+  </g>
+</svg>

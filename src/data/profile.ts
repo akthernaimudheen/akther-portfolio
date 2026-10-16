@@ -2,7 +2,10 @@ export type CapabilityIcon = 'build' | 'discover' | 'grow' | 'automate';
 
 export interface JourneyEntry {
   year: string;
+  category: 'employment' | 'education' | 'certification' | 'projects';
+  categoryLabel: string;
   title: string;
+  roleOrCompany: string;
   text: string;
 }
 
@@ -17,8 +20,10 @@ export const profile = {
   /* Single source for the professional positioning. Drives the hero H1's
      accessible name and every route title, so the visible heading and the
      semantic/SEO name can never drift apart. */
-  positioning: 'AI-Enabled Digital Marketing & Web Developer',
+  positioning: 'AI Application Developer | Generative AI & Full-Stack Projects | Healthcare Documentation QA',
   email: 'akthernaimudheen0@gmail.com',
+  githubUrl: 'https://github.com/akthernaimudheen',
+  linkedinUrl: 'https://www.linkedin.com/in/akther-naimudheen-3bbb24197/',
   location: 'Kochi, Kerala, India',
   locationShort: 'Kochi, India',
   /* The same professional base as `location` above, split into its parts so the
@@ -29,11 +34,6 @@ export const profile = {
   seoCountry: 'India',
   employer: 'Orestes Technology',
   resumeUrl: '/Akther-V-N-Resume.pdf',
-  /* One photograph, one asset family, two presentations. The hero crops it as a
-     tall editorial photograph and the About profile card as a conventional
-     headshot, both from these same files — so nobody downloads the portrait
-     twice. Widths match scripts/convert-project-images.py; 1023 is the master's
-     native width, so there is no upscaled variant to ship. */
   portrait: {
     src: '/akther-portrait.webp',
     srcSet: '/akther-portrait-512.webp 512w, /akther-portrait-768.webp 768w, /akther-portrait.webp 1023w',
@@ -41,14 +41,8 @@ export const profile = {
     height: 1537,
     alt: 'Portrait of Akther V N',
   },
-  /* Right-facing transparent side profile used by the gaze-led homepage hero.
-     The supplied cutout is preserved without a flip or a replacement matte;
-     scripts/build-side-profile-variants.py only creates responsive WebP sizes. */
   portraitCutout: {
     src: '/akther-side-profile-cutout.webp',
-    /* Two steps, not three: scripts/build-side-profile-variants.py trims the
-       transparent margin down to a 718w master, and refuses to upscale, so a
-       768w step would be invented pixels. */
     srcSet:
       '/akther-side-profile-cutout-512.webp 512w, /akther-side-profile-cutout.webp 718w',
     width: 718,
@@ -72,18 +66,74 @@ export const profile = {
 } as const;
 
 export const journey: JourneyEntry[] = [
-  { year: '2018', title: 'Computer Engineering', text: 'A technical foundation at Maharajas Technological Institute, Thrissur.' },
-  { year: '2021', title: 'Diploma completed', text: 'Practical grounding in computing, systems and technology.' },
-  { year: '2022', title: 'Quality-sensitive digital work', text: 'Medical scribing training, structured documentation and attention to detail.' },
-  { year: '2022—23', title: 'DeepScribe AI / QA', text: 'Reviewed AI-generated medical documentation through disciplined quality processes.' },
-  { year: '2023—24', title: 'Wisedocs / OCR', text: 'Worked with accurate OCR-based documentation under strict turnaround requirements.' },
-  { year: '2026', title: 'Digital marketing', text: 'Digital Marketing Intern at Orestes Technology, Infopark. Developed practical skills across SEO, social media, paid campaigns and web.' },
-  { year: 'NOW', title: 'Connected digital experiences', text: 'Bringing development, search, marketing and AI-assisted workflows together.' },
+  /* Employment */
+  {
+    year: '2026 — Present',
+    category: 'employment',
+    categoryLabel: 'Professional Employment & Industry Experience',
+    title: 'Web Development & Digital Systems',
+    roleOrCompany: 'Orestes Technology, Infopark',
+    text: 'Developing responsive web applications, modular frontend components, technical SEO architecture, and automation workflows.',
+  },
+  {
+    year: 'Dec 2023 — Mar 2024',
+    category: 'employment',
+    categoryLabel: 'Professional Employment & Industry Experience',
+    title: 'OCR Pipeline QA Specialist',
+    roleOrCompany: 'Wisedocs',
+    text: 'Executed quality assurance and verification on OCR-extracted medical records, ensuring entity classification accuracy under strict turnaround requirements.',
+  },
+  {
+    year: 'Nov 2022 — Nov 2023',
+    category: 'employment',
+    categoryLabel: 'Professional Employment & Industry Experience',
+    title: 'AI Clinical Documentation QA',
+    roleOrCompany: 'Ritesource Infosystems · DeepScribe AI Project',
+    text: 'Reviewed and audited ambient AI-generated clinical documentation for terminology precision, hallucination detection, schema compliance, and clinical narrative consistency.',
+  },
+
+  /* Education */
+  {
+    year: '2018 — 2021',
+    category: 'education',
+    categoryLabel: 'Technical Education',
+    title: 'Diploma in Computer Engineering',
+    roleOrCompany: 'Maharajas Technological Institute, Thrissur',
+    text: '3-year State Board technical program providing practical foundations in computing, data structures, digital electronics, database systems, and software fundamentals.',
+  },
+
+  /* Certifications */
+  {
+    year: '2022',
+    category: 'certification',
+    categoryLabel: 'Certifications & Training',
+    title: 'Certified Program in Medical Scribing',
+    roleOrCompany: 'Luminis School of Medical Scribing, Thrissur',
+    text: 'Comprehensive clinical documentation training covering medical terminology, anatomical systems, EHR workflow structures, and clinical note formatting.',
+  },
+  {
+    year: '2026',
+    category: 'certification',
+    categoryLabel: 'Certifications & Training',
+    title: 'Digital Marketing & Web Systems',
+    roleOrCompany: 'InterSmart EduTech, Ernakulam',
+    text: 'Certification program covering search optimization, digital analytics, web delivery, and performance measurement.',
+  },
+
+  /* Self-directed projects */
+  {
+    year: '2026',
+    category: 'projects',
+    categoryLabel: 'Self-Directed AI Engineering',
+    title: 'AI Systems: iScribe & RShorts',
+    roleOrCompany: 'Independent Engineering',
+    text: 'Engineered iScribe (clinical documentation pipeline with multi-stage schema validation) and RShorts (automated vertical video pipeline with 160+ passing tests).',
+  },
 ];
 
 export const capabilities: Capability[] = [
-  { icon: 'build', title: 'Build', text: 'Responsive websites, landing pages, WordPress and practical front-end development.' },
-  { icon: 'discover', title: 'Discover', text: 'SEO, Local SEO, on-page structure and search-focused website planning.' },
-  { icon: 'grow', title: 'Grow', text: 'Meta Ads, Google Ads, content, campaign reporting and lead-generation thinking.' },
-  { icon: 'automate', title: 'Automate', text: 'AI-assisted development, research, optimization and smarter digital workflows.' },
+  { icon: 'build', title: 'Full-Stack Applications', text: 'Building responsive, modular web applications with TypeScript, React, Next.js, and Firebase.' },
+  { icon: 'discover', title: 'AI & LLM Integration', text: 'Integrating generative AI APIs, prompt engineering, structured JSON extraction, and speech-to-text pipelines.' },
+  { icon: 'grow', title: 'QA & Verification', text: 'Applying structured quality checks, schema validation, error analysis, and regression test suites.' },
+  { icon: 'automate', title: 'Systems & Delivery', text: 'Frontend performance, Core Web Vitals, CI/CD automation, and maintainable component architectures.' },
 ];

@@ -1,0 +1,206 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="100%" height="100%" style="background: #f7f5ef; font-family: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <style>
+      .bg-card { fill: #ffffff; stroke: rgba(10, 10, 10, 0.15); stroke-width: 1.5; }
+      .bg-zone { fill: rgba(10, 10, 10, 0.02); stroke: rgba(10, 10, 10, 0.12); stroke-width: 1; stroke-dasharray: 4 4; }
+      .text-title { font-size: 14px; font-weight: 700; fill: #0a0a0a; letter-spacing: -0.02em; }
+      .text-sub { font-size: 11px; fill: #595959; line-height: 1.4; }
+      .text-eyebrow { font-size: 10px; font-weight: 700; fill: #595959; letter-spacing: 0.12em; text-transform: uppercase; }
+      .text-badge { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+      .arrow { stroke: #0a0a0a; stroke-width: 1.5; fill: none; }
+      .arrow-accent { stroke: #ffd21f; stroke-width: 2; fill: none; }
+      .arrow-dashed { stroke: #8c8c8c; stroke-width: 1.5; stroke-dasharray: 4 4; fill: none; }
+      .badge-yellow { fill: #ffd21f; }
+      .badge-ink { fill: #0a0a0a; }
+      .pill { rx: 3; }
+    </style>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#0a0a0a" />
+    </marker>
+    <marker id="arrowhead-warn" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#8c8c8c" />
+    </marker>
+  </defs>
+
+  <!-- Title & Context Header -->
+  <g transform="translate(40, 36)">
+    <rect x="0" y="0" width="105" height="20" rx="2" class="badge-ink" />
+    <text x="8" y="14" class="text-badge" fill="#ffd21f">IScribe PIPELINE</text>
+    <text x="116" y="15" class="text-title" font-size="16px">Clinical Documentation Architecture &amp; Verification Flow</text>
+    <text x="0" y="38" class="text-sub">Bilingual transcription, deterministic schema validation, and mandatory clinician review boundaries</text>
+  </g>
+
+  <!-- Zone 1: Audio & Ingestion -->
+  <g transform="translate(40, 95)">
+    <rect x="0" y="0" width="230" height="430" rx="6" class="bg-zone" />
+    <text x="16" y="26" class="text-eyebrow">STAGE 01 · INGESTION</text>
+
+    <!-- Node 1A: Audio Source -->
+    <rect x="16" y="44" width="198" height="88" rx="4" class="bg-card" />
+    <rect x="26" y="58" width="54" height="16" rx="2" fill="rgba(10, 10, 10, 0.08)" />
+    <text x="31" y="70" class="text-badge" fill="#0a0a0a">INPUT</text>
+    <text x="26" y="93" class="text-title">Consultation Audio</text>
+    <text x="26" y="112" class="text-sub">Physician-patient dialogue</text>
+    <text x="26" y="124" class="text-sub">Malayalam &amp; English mix</text>
+
+    <!-- Connector -->
+    <path d="M 115 132 L 115 160" class="arrow" marker-end="url(#arrowhead)" />
+
+    <!-- Node 1B: STT Pipeline -->
+    <rect x="16" y="160" width="198" height="106" rx="4" class="bg-card" />
+    <rect x="26" y="174" width="70" height="16" rx="2" fill="rgba(10, 10, 10, 0.08)" />
+    <text x="31" y="186" class="text-badge" fill="#0a0a0a">STT ENGINE</text>
+    <text x="26" y="209" class="text-title">Speech-to-Text</text>
+    <text x="26" y="228" class="text-sub">Chunked audio streams</text>
+    <text x="26" y="242" class="text-sub">Punctuation &amp; diarization cues</text>
+    <text x="26" y="256" class="text-sub">Bilingual phonetic mapping</text>
+
+    <!-- Connector -->
+    <path d="M 115 266 L 115 294" class="arrow" marker-end="url(#arrowhead)" />
+
+    <!-- Node 1C: Raw Transcript -->
+    <rect x="16" y="294" width="198" height="96" rx="4" class="bg-card" />
+    <text x="26" y="322" class="text-title">Raw Transcript</text>
+    <text x="26" y="342" class="text-sub">Unstructured clinical prose</text>
+    <text x="26" y="358" class="text-sub">Includes ambient noise,</text>
+    <text x="26" y="372" class="text-sub">false starts &amp; colloquialisms</text>
+  </g>
+
+  <!-- Arrow Zone 1 to Zone 2 -->
+  <path d="M 270 300 L 320 300" class="arrow" marker-end="url(#arrowhead)" />
+
+  <!-- Zone 2: LLM Information Extraction -->
+  <g transform="translate(320, 95)">
+    <rect x="0" y="0" width="250" height="430" rx="6" class="bg-zone" />
+    <text x="16" y="26" class="text-eyebrow">STAGE 02 · EXTRACTION</text>
+
+    <!-- Node 2A: Prompt & Parser -->
+    <rect x="16" y="44" width="218" height="150" rx="4" class="bg-card" />
+    <rect x="26" y="58" width="86" height="16" rx="2" class="badge-yellow" />
+    <text x="31" y="70" class="text-badge" fill="#0a0a0a">AI REASONING</text>
+    <text x="26" y="94" class="text-title">Clinical Fact Extraction</text>
+    <text x="26" y="114" class="text-sub">• Few-shot structured prompt</text>
+    <text x="26" y="130" class="text-sub">• Chief complaints identification</text>
+    <text x="26" y="146" class="text-sub">• Medication name &amp; dose parsing</text>
+    <text x="26" y="162" class="text-sub">• Symptoms timeline &amp; history</text>
+    <text x="26" y="178" class="text-sub">• Negation detection (e.g. "no fever")</text>
+
+    <!-- Connector -->
+    <path d="M 125 194 L 125 228" class="arrow" marker-end="url(#arrowhead)" />
+
+    <!-- Node 2B: Normalization -->
+    <rect x="16" y="228" width="218" height="162" rx="4" class="bg-card" />
+    <rect x="26" y="242" width="94" height="16" rx="2" fill="rgba(10, 10, 10, 0.08)" />
+    <text x="31" y="254" class="text-badge" fill="#0a0a0a">NORMALIZATION</text>
+    <text x="26" y="278" class="text-title">Entity Normalization</text>
+    <text x="26" y="298" class="text-sub">• Standardized dosage units</text>
+    <text x="26" y="314" class="text-sub">• Frequency parsing (BID, TID, PRN)</text>
+    <text x="26" y="330" class="text-sub">• Current vs historical condition tag</text>
+    <text x="26" y="346" class="text-sub">• Uncertainty classification</text>
+    <text x="26" y="362" class="text-sub">  ("suspected", "rule out", "denied")</text>
+  </g>
+
+  <!-- Arrow Zone 2 to Zone 3 -->
+  <path d="M 570 300 L 620 300" class="arrow" marker-end="url(#arrowhead)" />
+
+  <!-- Zone 3: Deterministic Validation -->
+  <g transform="translate(620, 95)">
+    <rect x="0" y="0" width="270" height="430" rx="6" class="bg-zone" />
+    <text x="16" y="26" class="text-eyebrow">STAGE 03 · DETERMINISTIC GUARDRAILS</text>
+
+    <!-- Node 3A: Schema Check -->
+    <rect x="16" y="44" width="238" height="150" rx="4" class="bg-card" />
+    <rect x="26" y="58" width="102" height="16" rx="2" fill="#0a0a0a" />
+    <text x="31" y="70" class="text-badge" fill="#ffffff">STRICT VALIDATION</text>
+    <text x="26" y="94" class="text-title">JSON Schema &amp; Type Safety</text>
+    <text x="26" y="114" class="text-sub">• Zod / Pydantic contract validation</text>
+    <text x="26" y="130" class="text-sub">• Field completeness (HPI, ROS, PE)</text>
+    <text x="26" y="146" class="text-sub">• Range checks on vitals (BP, HR, SpO2)</text>
+    <text x="26" y="162" class="text-sub">• Allergy conflict &amp; duplicate check</text>
+    <text x="26" y="178" class="text-sub">• Malformed JSON instant rejection</text>
+
+    <!-- Branch Paths -->
+    <!-- Valid Pass path -->
+    <path d="M 135 194 L 135 240" class="arrow" marker-end="url(#arrowhead)" />
+    <rect x="95" y="206" width="80" height="18" rx="2" fill="#e2f5ea" stroke="#22863a" stroke-width="1" />
+    <text x="105" y="219" font-size="9px" font-weight="700" fill="#22863a">PASS SCHEMA</text>
+
+    <!-- Node 3B: Structured Note Output -->
+    <rect x="16" y="240" width="238" height="76" rx="4" class="bg-card" />
+    <text x="26" y="266" class="text-title">Structured Clinical Note</text>
+    <text x="26" y="284" class="text-sub">Standard SOAP note structure:</text>
+    <text x="26" y="298" class="text-sub">Subjective · Objective · Assessment · Plan</text>
+
+    <!-- Exception Path -->
+    <path d="M 135 316 L 135 344" class="arrow-dashed" marker-end="url(#arrowhead-warn)" />
+
+    <!-- Node 3C: Ambiguity Handler -->
+    <rect x="16" y="344" width="238" height="66" rx="4" class="bg-card" stroke="#ffd21f" stroke-width="1.5" />
+    <text x="26" y="366" class="text-title" fill="#a47200">Ambiguity &amp; Conflict Flags</text>
+    <text x="26" y="384" class="text-sub">Missing required fields or dosage conflicts</text>
+    <text x="26" y="398" class="text-sub">routed with visual warning banners</text>
+  </g>
+
+  <!-- Arrow Zone 3 to Zone 4 -->
+  <path d="M 890 278 L 940 278" class="arrow" marker-end="url(#arrowhead)" />
+  <path d="M 890 377 L 940 377" class="arrow-dashed" marker-end="url(#arrowhead-warn)" />
+
+  <!-- Zone 4: Clinician Review & Human-in-the-Loop -->
+  <g transform="translate(940, 95)">
+    <rect x="0" y="0" width="220" height="430" rx="6" class="bg-zone" />
+    <text x="16" y="26" class="text-eyebrow">STAGE 04 · CLINICAL REVIEW</text>
+
+    <!-- Node 4A: Clinician UI -->
+    <rect x="16" y="44" width="188" height="210" rx="4" class="bg-card" />
+    <rect x="26" y="58" width="94" height="16" rx="2" class="badge-yellow" />
+    <text x="31" y="70" class="text-badge" fill="#0a0a0a">HUMAN SIGN-OFF</text>
+    <text x="26" y="94" class="text-title">Clinician Review UI</text>
+    <text x="26" y="114" class="text-sub">• Side-by-side audio playback</text>
+    <text x="26" y="130" class="text-sub">• Highlighted fact citations</text>
+    <text x="26" y="146" class="text-sub">• One-click fact correction</text>
+    <text x="26" y="162" class="text-sub">• Ambiguity resolution prompt</text>
+    <text x="26" y="180" class="text-sub">• Final provider signature &amp;</text>
+    <text x="26" y="194" class="text-sub">  EHR export authorization</text>
+    <rect x="26" y="212" width="168" height="26" rx="2" fill="#0a0a0a" />
+    <text x="36" y="229" font-size="10px" font-weight="700" fill="#ffd21f">CLINICIAN APPROVAL REQ.</text>
+
+    <!-- Node 4B: Disclaimer -->
+    <rect x="16" y="270" width="188" height="140" rx="4" fill="#ffffff" stroke="#0a0a0a" stroke-width="1" />
+    <text x="26" y="294" class="text-eyebrow" fill="#0a0a0a">SYSTEM BOUNDARY</text>
+    <text x="26" y="316" class="text-sub" font-weight="600" fill="#0a0a0a">Safety Rule:</text>
+    <text x="26" y="332" class="text-sub">Valid JSON does not mean</text>
+    <text x="26" y="346" class="text-sub">clinical accuracy. AI output</text>
+    <text x="26" y="360" class="text-sub">is never auto-committed to</text>
+    <text x="26" y="374" class="text-sub">EHR without human review.</text>
+    <text x="26" y="394" class="text-sub" font-size="10px" fill="#8c8c8c">Synthetic test data only.</text>
+  </g>
+
+  <!-- Bottom Global Pipeline Legend & Quality Attributes -->
+  <g transform="translate(40, 545)">
+    <rect x="0" y="0" width="1120" height="95" rx="4" class="bg-card" />
+    
+    <!-- Legend item 1 -->
+    <line x1="24" y1="28" x2="60" y2="28" class="arrow" />
+    <text x="70" y="32" class="text-sub" font-weight="600" fill="#0a0a0a">Deterministic Pipeline Path</text>
+    
+    <!-- Legend item 2 -->
+    <line x1="280" y1="28" x2="316" y2="28" class="arrow-dashed" />
+    <text x="326" y="32" class="text-sub" font-weight="600" fill="#0a0a0a">Ambiguity &amp; Fallback Routing</text>
+
+    <!-- Legend item 3 -->
+    <rect x="540" y="20" width="16" height="16" rx="2" class="badge-yellow" />
+    <text x="566" y="32" class="text-sub" font-weight="600" fill="#0a0a0a">AI / LLM Transformation Step</text>
+
+    <!-- Legend item 4 -->
+    <rect x="800" y="20" width="16" height="16" rx="2" fill="#0a0a0a" />
+    <text x="826" y="32" class="text-sub" font-weight="600" fill="#0a0a0a">Deterministic Validation Boundary</text>
+
+    <!-- Verification note -->
+    <text x="24" y="65" class="text-sub" fill="#595959">
+      Pipeline Evaluation: Tested against synthetic clinical dialogue scenarios. Measures exact schema conformance, negation handling, and medication dosage extraction accuracy.
+    </text>
+    <text x="24" y="80" class="text-sub" fill="#595959">
+      All examples sanitized; no patient PHI, live hospital data, or unverified regulatory compliance claimed.
+    </text>
+  </g>
+</svg>

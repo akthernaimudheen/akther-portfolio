@@ -97,6 +97,12 @@ function SiteHeader() {
               {label}
             </NavLink>
           ))}
+          <a href={profile.githubUrl} target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a>
+          <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer">
+            LinkedIn
+          </a>
         </nav>
         <button
           className="menu-button"
@@ -115,6 +121,12 @@ function SiteHeader() {
             {label}
           </NavLink>
         ))}
+        <a href={profile.githubUrl} target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+        <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer">
+          LinkedIn
+        </a>
         <a href={`mailto:${profile.email}`}>Email</a>
       </nav>
     </header>
@@ -130,8 +142,7 @@ function SiteFooter() {
             AKTHER<span aria-hidden="true">.</span>
           </Link>
           <p>
-            Web development, SEO and digital campaigns. Currently a Digital Marketing Intern at
-            {' '}{profile.employer}.
+            Full-stack web applications, generative AI pipelines, and healthcare documentation quality assurance.
           </p>
           <a className="link-underline" href={`mailto:${profile.email}`}>
             {profile.email} <ArrowUpRight aria-hidden="true" />
@@ -161,11 +172,21 @@ function SiteFooter() {
         </nav>
 
         <div className="site-footer__col">
-          <p className="eyebrow">Details</p>
+          <p className="eyebrow">Details & Links</p>
           <ul>
             <li>
+              <a href={profile.githubUrl} target="_blank" rel="noopener noreferrer">
+                GitHub <ArrowUpRight aria-hidden="true" />
+              </a>
+            </li>
+            <li>
+              <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                LinkedIn <ArrowUpRight aria-hidden="true" />
+              </a>
+            </li>
+            <li>
               <a href={profile.resumeUrl} download>
-                Résumé (PDF)
+                Technical Résumé (PDF)
               </a>
             </li>
             <li>
@@ -255,17 +276,16 @@ function HomeHero() {
   return (
     <section className="hero" aria-labelledby="home-title">
       <motion.p className="eyebrow hero__eyebrow" {...step(0)}>
-        Web development · SEO · Digital campaigns
+        AI APPLICATIONS · FULL-STACK DEVELOPMENT · AI QUALITY
       </motion.p>
 
       <motion.h1 className="hero__title" id="home-title" {...step(0.06)}>
         <span className="hero__title-lead" ref={leadRef}>
-          <span>I build</span>
-          <span>the page.</span>
+          <span>Building AI applications</span>
         </span>
         <span className="hero__title-sub" ref={subRef}>
-          <span>Then I help</span>
-          <span>people find it.</span>
+          <span>with validation and review</span>
+          <span>built into the workflow.</span>
         </span>
       </motion.h1>
 
@@ -275,14 +295,12 @@ function HomeHero() {
         <span ref={fieldRef} />
       </motion.div>
 
-      {/* Entrance lives on the figure; usePointerDrift owns the inner <img>
-          transform, so Framer Motion and the pointer loop never write to the
-          same node. */}
+      {/* Entrance uses a reliable ease transition so the image never hangs at opacity 0 */}
       <motion.figure
         className="hero__figure"
-        initial={reduced ? false : { opacity: 0, y: 80, scale: 0.96 }}
+        initial={reduced ? false : { opacity: 0, y: 30, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={reduced ? { duration: 0 } : PORTRAIT_ENTRANCE}
+        transition={reduced ? { duration: 0 } : { duration: 0.45, delay: 0.12, ease: EASE }}
       >
         <img
           ref={portraitRef}
@@ -300,22 +318,40 @@ function HomeHero() {
 
       <motion.div className="hero__intro" {...step(0.16)}>
         <p>
-          I’m Akther V N, a digital marketing intern at Orestes Technology and a web developer in
-          Kerala. I work across responsive websites, local search, content and paid campaigns.
+          I'm a Computer Engineering diploma holder based in Kerala, India, with experience in healthcare documentation quality assurance and OCR workflows. I build AI-assisted applications and focus on making complex workflows structured, testable and useful.
         </p>
         <div className="hero__actions">
           <Link className="btn" to="/work">
-            View my work <ArrowRight aria-hidden="true" />
+            Explore Engineering Projects <ArrowRight aria-hidden="true" />
           </Link>
-          <a className="link-underline" href={`mailto:${profile.email}`}>
-            Email me <ArrowUpRight aria-hidden="true" />
+          <a className="link-underline" href={profile.githubUrl} target="_blank" rel="noopener noreferrer">
+            View GitHub <ArrowUpRight aria-hidden="true" />
+          </a>
+          <a className="link-underline" href={profile.resumeUrl} download>
+            Download Résumé <Download aria-hidden="true" />
           </a>
         </div>
       </motion.div>
 
+      {/* Immediate Project Evidence Cues */}
+      <div className="hero__cues" role="region" aria-label="Featured project highlights">
+        <div className="hero__cue-item">
+          <div>
+            <strong>iScribe:</strong> <span>Clinical documentation pipeline &amp; schema checks</span>
+          </div>
+          <Link to="/work/iscribe">Explore Architecture →</Link>
+        </div>
+        <div className="hero__cue-item">
+          <div>
+            <strong>RShorts:</strong> <span>Automated video pipeline (160+ passing tests)</span>
+          </div>
+          <Link to="/work/rshorts">View Pipeline →</Link>
+        </div>
+      </div>
+
       <div className="hero__rail">
-        <span>{profile.employer}</span>
-        <span>Digital Marketing Intern</span>
+        <span>Computer Engineering (MTI)</span>
+        <span>AI Applications &amp; Full-Stack</span>
         <span>{profile.location}</span>
       </div>
     </section>
@@ -331,14 +367,13 @@ function HomePage() {
 
       <section className="section" aria-labelledby="home-work-title">
         <Reveal className="section-head">
-          <p className="eyebrow">Selected work</p>
+          <p className="eyebrow">Featured engineering</p>
           <h2 id="home-work-title">
-            Projects with
-            <br />a job to get done.
+            Systems built with
+            <br />structure and rigor.
           </h2>
           <p className="lede">
-            Websites, search work and campaigns, each presented with the scope, my contribution and
-            the evidence that exists.
+            Generative AI applications, clinical documentation pipelines, and modern web architectures with concrete engineering scope and test evidence.
           </p>
         </Reveal>
 
@@ -361,7 +396,7 @@ function HomePage() {
                   <p>{project.eyebrow}</p>
                   <h3>{project.title}</h3>
                   <span className="link-underline">
-                    Open project <ArrowUpRight aria-hidden="true" />
+                    Open case study <ArrowUpRight aria-hidden="true" />
                   </span>
                 </div>
               </Link>
@@ -370,20 +405,20 @@ function HomePage() {
         </div>
 
         <Link className="wide-link" to="/work">
-          <span>See the full project index</span>
+          <span>See all engineering and technical systems</span>
           <ArrowRight aria-hidden="true" />
         </Link>
       </section>
 
       <section className="section split-section" aria-labelledby="home-capability-title">
         <Reveal className="section-head section-head--sticky">
-          <p className="eyebrow">How I work</p>
+          <p className="eyebrow">Technical approach</p>
           <h2 id="home-capability-title">
-            The website
+            Architecture,
             <br />
-            and the way
+            integration
             <br />
-            people reach it.
+            and reliability.
           </h2>
         </Reveal>
         <div className="capability-list">
@@ -399,20 +434,19 @@ function HomePage() {
       <section className="ink-panel" data-cursor-invert aria-labelledby="home-role-title">
         <div className="ink-panel__inner">
           <Reveal>
-            <p className="eyebrow">Current role</p>
+            <p className="eyebrow">Engineering discipline</p>
             <h2 id="home-role-title">
-              Digital Marketing Intern
+              Quality-focused
               <br />
-              at Orestes Technology.
+              systems engineering.
             </h2>
           </Reveal>
           <Reveal className="ink-panel__copy" direction="right">
             <p>
-              My current work covers SEO, social media, paid campaigns and website-related digital
-              work. I bring a technical background to each brief.
+              Combining a Computer Engineering foundation with professional experience validating high-volume AI clinical documentation and OCR pipelines, I bring rigor, precision, and architectural discipline to every software project.
             </p>
             <Link className="link-underline" to="/about">
-              Read about my path <ArrowUpRight aria-hidden="true" />
+              Read about my background <ArrowUpRight aria-hidden="true" />
             </Link>
           </Reveal>
         </div>
@@ -438,23 +472,28 @@ function AboutPage() {
         <div className="about-hero__copy">
           <p className="eyebrow">About Akther</p>
           <h1 id="about-title">
-            <span>I came to</span>
-            <span>marketing through</span>
-            <span>systems, accuracy</span>
-            <span>and code.</span>
+            <span>Engineering applications</span>
+            <span>through structure,</span>
+            <span>accuracy and</span>
+            <span>reliable code.</span>
           </h1>
           <p className="lede">
-            I build websites and support the search, content and campaigns that bring people to
-            them.
+            I build full-stack web applications and integrate generative AI pipelines with a focus on reliability, clear system boundaries, and factual validation.
           </p>
           <p>
-            I’m based in Kochi, Kerala. My background includes computer engineering, quality-focused
-            documentation work and digital marketing at Orestes Technology, where I work as a
-            Digital Marketing Intern.
+            I’m based in Kochi, Kerala. My background includes a Diploma in Computer Engineering from Maharajas Technological Institute, rigorous AI medical documentation quality assurance on the DeepScribe AI project, OCR pipeline verification at Wisedocs, and web application development at Orestes Technology.
           </p>
-          <a className="link-underline" href={profile.resumeUrl} download>
-            Download résumé <Download aria-hidden="true" />
-          </a>
+          <div className="about-hero__actions" style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', marginTop: '1.25rem' }}>
+            <a className="link-underline" href={profile.resumeUrl} download>
+              Technical résumé <Download aria-hidden="true" />
+            </a>
+            <a className="link-underline" href={profile.githubUrl} target="_blank" rel="noopener noreferrer">
+              GitHub <ArrowUpRight aria-hidden="true" />
+            </a>
+            <a className="link-underline" href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer">
+              LinkedIn <ArrowUpRight aria-hidden="true" />
+            </a>
+          </div>
         </div>
 
         <figure className="about-hero__figure">
@@ -477,10 +516,9 @@ function AboutPage() {
       <section className="ink-panel ink-panel--statement" data-cursor-invert>
         <div className="ink-panel__inner">
           <Reveal>
-            <p className="eyebrow">The connection</p>
+            <p className="eyebrow">The philosophy</p>
             <h2>
-              I understand the build, then I look at the search path, the message and the business
-              goal.
+              I understand system architecture, then I build the prompt, the data pipeline and the user interface.
             </h2>
           </Reveal>
         </div>
@@ -488,15 +526,14 @@ function AboutPage() {
 
       <section className="section split-section" aria-labelledby="about-experience-title">
         <Reveal className="section-head section-head--sticky">
-          <p className="eyebrow">Experience</p>
+          <p className="eyebrow">Experience &amp; Training</p>
           <h2 id="about-experience-title">
-            A technical path
+            Technical foundation
             <br />
-            into digital work.
+            and quality discipline.
           </h2>
           <p className="lede">
-            Each role strengthened the same habits: clear structure, careful review and work that
-            holds up under use.
+            Working directly on AI medical documentation at DeepScribe and OCR verification at Wisedocs established my core engineering discipline: generative outputs must be treated as untrusted boundaries requiring strict schema contracts, deterministic regression testing, and clear human-review boundaries.
           </p>
         </Reveal>
         <div className="experience-list">
@@ -504,10 +541,20 @@ function AboutPage() {
             <Reveal
               className="experience-row"
               key={`${item.year}-${item.title}`}
-              amount={0.3}
-              delay={Math.min(index, 4) * 0.05}
+              amount={0.2}
+              delay={Math.min(index, 4) * 0.04}
             >
-              <h3>{item.title}</h3>
+              <div>
+                <div style={{ marginBottom: '0.4rem' }}>
+                  <span className="badge-status badge-status--progress">
+                    {item.year}
+                  </span>
+                </div>
+                <h3>{item.title}</h3>
+                <span style={{ fontSize: '0.82rem', color: 'var(--muted)', fontWeight: 600, display: 'block', marginTop: '0.2rem' }}>
+                  {item.roleOrCompany}
+                </span>
+              </div>
               <p>{item.text}</p>
             </Reveal>
           ))}
@@ -529,22 +576,26 @@ function WorkPage() {
 
       <section className="work-hero" aria-labelledby="work-title">
         <div className="work-hero__copy">
-          <p className="eyebrow">Selected work</p>
+          <p className="eyebrow">Engineering projects</p>
           <h1 id="work-title">
-            <span>Websites, search</span>
-            <span>and campaigns</span>
-            <span>under one roof.</span>
+            <span>AI pipelines,</span>
+            <span>full-stack systems</span>
+            <span>and tested code.</span>
           </h1>
           <p className="lede">
-            Each project states the scope, my contribution and the evidence available. Nothing is
-            claimed beyond what the project material supports.
+            Each project states the problem, my architectural contributions, verified implementation details, and current limitations.
           </p>
         </div>
         <Link className="work-hero__lead" to={`/work/${featured.id}`}>
-          <ProjectVisualScene src={featured.visual} alt={featured.visualAlt} interactive eager />
+          <ProjectVisualScene
+            src="/work-overview-visual.svg"
+            alt="Architectural overview of clinical documentation and automated video pipelines"
+            interactive
+            eager
+          />
           <div>
-            <span>Featured — {featured.status}</span>
-            <strong>{featured.title}</strong>
+            <span>Featured Architecture · Core Systems</span>
+            <strong>iScribe &amp; RShorts Architecture</strong>
             <ArrowUpRight aria-hidden="true" />
           </div>
         </Link>
@@ -602,7 +653,12 @@ function ProjectPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: reduced ? 0 : 0.4, delay: reduced ? 0 : 0.08, ease: EASE }}
       >
-        <ProjectVisualScene src={project.visual} alt={project.visualAlt} interactive eager />
+        <ProjectVisualScene
+          src={project.caseVisual ?? project.visual}
+          alt={project.visualAlt}
+          interactive
+          eager
+        />
       </motion.div>
 
       <section className="section split-section" aria-labelledby="case-title">
@@ -611,6 +667,22 @@ function ProjectPage() {
           <h2 id="case-title">{project.caseHeading}</h2>
         </Reveal>
         <Reveal className="case-copy" direction="right" delay={0.05}>
+          {project.id === 'iscribe' && (
+            <div className="case-notice" role="alert">
+              <span style={{ fontSize: '1.25rem', lineHeight: 1 }} aria-hidden="true">⚠</span>
+              <div>
+                <strong>Safety &amp; Verification Boundary:</strong> Evaluated strictly using synthetic clinical dialogue. Valid JSON schema does not replace qualified physician review. All clinical outputs require qualified clinician sign-off prior to EHR commit.
+              </div>
+            </div>
+          )}
+          {project.id === 'rshorts' && (
+            <div className="case-notice" role="status">
+              <span style={{ fontSize: '1.25rem', lineHeight: 1 }} aria-hidden="true">✓</span>
+              <div>
+                <strong>Automated Test Benchmark:</strong> 160+ unit and integration tests verify timing precision, subtitle drift within 12ms, and FFmpeg filtergraph construction without manual video editing intervention.
+              </div>
+            </div>
+          )}
           {project.caseStudy.map((section) => (
             <div className="case-section" key={section.heading}>
               <h3>{section.heading}</h3>
@@ -680,19 +752,18 @@ function ContactPage() {
         <div className="contact__panel">
           <p className="eyebrow">Contact</p>
           <h1 id="contact-title">
-            <span>Tell me what</span>
-            <span>you’re building.</span>
+            <span>Let’s build</span>
+            <span>reliable software.</span>
           </h1>
           <p className="lede">
-            Send the brief, the problem or the unfinished idea. I work across websites, search and
-            digital campaigns.
+            Open to Junior AI Application Developer, Full-Stack Developer, and AI Quality Assurance / Implementation roles. Send an email or connect on LinkedIn and GitHub.
           </p>
           <div className="contact__actions">
             <a className="btn btn--signal" href={`mailto:${profile.email}`}>
               Email Akther <Mail aria-hidden="true" />
             </a>
             <a className="link-underline" href={profile.resumeUrl} download>
-              Download résumé <Download aria-hidden="true" />
+              Technical résumé <Download aria-hidden="true" />
             </a>
           </div>
           <dl className="contact__details">
@@ -702,6 +773,22 @@ function ContactPage() {
               </dt>
               <dd>
                 <a href={`mailto:${profile.email}`}>{profile.email}</a>
+              </dd>
+            </div>
+            <div>
+              <dt>
+                <ArrowUpRight aria-hidden="true" /> GitHub
+              </dt>
+              <dd>
+                <a href={profile.githubUrl} target="_blank" rel="noopener noreferrer">github.com/akthernaimudheen</a>
+              </dd>
+            </div>
+            <div>
+              <dt>
+                <ArrowUpRight aria-hidden="true" /> LinkedIn
+              </dt>
+              <dd>
+                <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer">linkedin.com/in/akther-naimudheen</a>
               </dd>
             </div>
             <div>
@@ -723,14 +810,14 @@ function CtaSection() {
   return (
     <section className="section cta-band" aria-labelledby="cta-title">
       <Reveal>
-        <p className="eyebrow">Have a project in mind?</p>
+        <p className="eyebrow">Looking for technical contributions?</p>
         <h2 id="cta-title">
-          Start with the brief.
+          Open to AI engineering
           <br />
-          We’ll find the next step.
+          and full-stack roles.
         </h2>
         <Link className="btn" to="/contact">
-          Contact Akther <ArrowUpRight aria-hidden="true" />
+          Get in touch <ArrowUpRight aria-hidden="true" />
         </Link>
       </Reveal>
     </section>

@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%" style="background: #f7f5ef; font-family: 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <defs>
+    <style>
+      .card { fill: #ffffff; stroke: rgba(10, 10, 10, 0.15); stroke-width: 1.5; }
+      .badge-yellow { fill: #ffd21f; }
+      .badge-ink { fill: #0a0a0a; }
+      .text-title { font-family: 'Bricolage Grotesque', 'Archivo', sans-serif; font-weight: 800; font-size: 18px; fill: #0a0a0a; letter-spacing: -0.02em; }
+      .text-sub { font-size: 11px; fill: #595959; line-height: 1.4; }
+      .text-code { font-family: ui-monospace, SFMono-Regular, monospace; font-size: 10px; fill: #0a0a0a; }
+      .text-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; fill: #595959; }
+      .track-bg { fill: #f0eee6; stroke: rgba(10, 10, 10, 0.1); stroke-width: 1; }
+    </style>
+  </defs>
+
+  <!-- Top Category Bar -->
+  <g transform="translate(40, 30)">
+    <rect x="0" y="0" width="150" height="20" rx="2" class="badge-ink" />
+    <text x="8" y="14" font-size="9px" font-weight="700" fill="#ffd21f" letter-spacing="0.1em">VIDEO PIPELINE AUTOMATION</text>
+    <text x="160" y="14" class="text-tag">TRANSCRIPT TO SHORT-FORM · 160+ UNIT TESTS · FFMPEG</text>
+  </g>
+
+  <!-- Main Card Container -->
+  <g transform="translate(40, 68)">
+    <rect x="0" y="0" width="720" height="395" rx="6" class="card" />
+
+    <!-- Left: Hook Analysis & Workspace Controls -->
+    <g transform="translate(30, 25)">
+      <!-- Hook Extraction Card -->
+      <rect x="0" y="0" width="410" height="110" rx="4" fill="#faf9f5" stroke="#ffd21f" stroke-width="1.8" />
+      <rect x="14" y="14" width="105" height="16" rx="2" class="badge-yellow" />
+      <text x="20" y="26" font-size="8px" font-weight="800" fill="#0a0a0a">VIRAL HOOK PARSER</text>
+      <text x="130" y="26" class="text-code" font-size="9px">Confidence Score: 94%</text>
+
+      <text x="14" y="52" class="text-code" font-weight="700">"The mistake with LLMs is treating generation as logic."</text>
+      <text x="14" y="70" class="text-sub">Identified optimal 38-second segment from 45-min podcast transcript.</text>
+      <text x="14" y="86" class="text-sub">Word timings aligned with Deepgram STT at 10ms resolution.</text>
+
+      <!-- Multi-Track Timeline -->
+      <g transform="translate(0, 126)">
+        <text x="0" y="12" class="text-tag">MULTI-TRACK COMPOSITOR TIMELINE</text>
+
+        <!-- Track 1: Video -->
+        <rect x="0" y="22" width="410" height="22" rx="2" class="track-bg" />
+        <rect x="0" y="22" width="130" height="22" rx="2" fill="#ffffff" stroke="rgba(10,10,10,0.2)" />
+        <text x="8" y="36" class="text-code" font-size="8px">Host Camera (A-Roll)</text>
+        <rect x="135" y="22" width="170" height="22" rx="2" class="badge-yellow" stroke="#0a0a0a" stroke-width="1" />
+        <text x="142" y="36" class="text-code" font-size="8px" font-weight="700">B-Roll: Architecture</text>
+        <rect x="310" y="22" width="100" height="22" rx="2" fill="#ffffff" stroke="rgba(10,10,10,0.2)" />
+        <text x="318" y="36" class="text-code" font-size="8px">Host Conclusion</text>
+
+        <!-- Track 2: Subtitles -->
+        <rect x="0" y="48" width="410" height="22" rx="2" class="track-bg" />
+        <rect x="0" y="48" width="410" height="22" rx="2" class="badge-ink" />
+        <text x="8" y="62" class="text-code" font-size="8px" fill="#ffd21f">Kinetic ASS Subtitles: Word-by-word active bounce highlight</text>
+
+        <!-- Track 3: Audio -->
+        <rect x="0" y="74" width="410" height="22" rx="2" class="track-bg" />
+        <rect x="0" y="74" width="410" height="22" rx="2" fill="#ffffff" stroke="rgba(10,10,10,0.2)" />
+        <text x="8" y="88" class="text-code" font-size="8px">Deepgram TTS + EBU R128 Loudness Normalization (-14 LUFS)</text>
+      </g>
+
+      <!-- Test Metrics Footer -->
+      <g transform="translate(0, 240)">
+        <rect x="0" y="0" width="410" height="85" rx="4" fill="#faf9f5" stroke="rgba(10,10,10,0.12)" />
+        <text x="14" y="22" class="text-tag">VERIFIED AUTOMATION SUITE</text>
+        <text x="14" y="46" class="text-code" font-weight="700">✓ 160+ passing tests across timing &amp; scene rendering</text>
+        <text x="14" y="64" class="text-code">✓ &lt;12ms audio-to-caption drift tolerance</text>
+        <text x="14" y="80" class="text-code">✓ Headless FFmpeg pipeline, zero manual timeline edits</text>
+      </g>
+    </g>
+
+    <!-- Right: 9:16 Vertical Video Preview Mockup -->
+    <g transform="translate(470, 25)">
+      <rect x="20" y="10" width="200" height="342" rx="10" fill="#141414" stroke="#0a0a0a" stroke-width="2" />
+      
+      <!-- Video Screen Elements -->
+      <rect x="30" y="30" width="180" height="150" rx="6" fill="#222222" />
+      <circle cx="120" cy="90" r="30" fill="#3a3a3a" />
+      <path d="M 90 145 Q 120 120 150 145" fill="#3a3a3a" />
+
+      <!-- Highlight Banner -->
+      <rect x="35" y="200" width="170" height="54" rx="4" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.1)" />
+      <text x="45" y="220" font-size="11px" font-weight="800" fill="#ffffff">LLM GENERATION</text>
+      <rect x="42" y="226" width="94" height="16" rx="2" class="badge-yellow" />
+      <text x="47" y="238" font-size="10px" font-weight="900" fill="#0a0a0a">IS NOT LOGIC</text>
+
+      <!-- Scrub line -->
+      <line x1="35" y1="330" x2="205" y2="330" stroke="#333333" stroke-width="3" stroke-linecap="round" />
+      <line x1="35" y1="330" x2="115" y2="330" stroke="#ffd21f" stroke-width="3" stroke-linecap="round" />
+      
+      <!-- Tag on phone -->
+      <rect x="35" y="295" width="80" height="18" rx="2" fill="#0a0a0a" stroke="#ffd21f" stroke-width="1" />
+      <text x="42" y="307" font-size="8px" font-weight="700" fill="#ffd21f">1080×1920</text>
+    </g>
+  </g>
+</svg>

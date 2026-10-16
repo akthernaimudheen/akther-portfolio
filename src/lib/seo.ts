@@ -17,7 +17,7 @@ export const OG_IMAGE = {
   path: '/og-image.jpg',
   width: 1200,
   height: 630,
-  alt: 'Akther V N in profile on a yellow field, beside the words “I build the page. Then I help people find it.”',
+  alt: 'Akther V N — AI Application Developer & Full-Stack Projects',
 } as const;
 
 /** Absolute URL for a site-relative path, or undefined while SITE_URL is unset. */
@@ -47,30 +47,30 @@ function clampDescription(text: string): string {
 }
 
 export const homeMeta: RouteMeta = {
-  title: `${profile.name} — ${profile.positioning}`,
+  title: `${profile.name} | AI Application Developer & Full-Stack Projects`,
   description:
-    'Akther V N connects technology and marketing to build useful digital experiences around real business goals: web development, SEO and digital marketing.',
+    'Explore AI application projects, full-stack development, clinical documentation workflows, and technical QA work by Akther V N, based in Kerala, India.',
   type: 'profile',
 };
 
 export const aboutMeta: RouteMeta = {
   title: `About — ${TITLE_SUFFIX}`,
   description:
-    'The journey behind the work: systems thinking, quality discipline, AI-assisted workflows, search, marketing and web development.',
+    'Background in Computer Engineering, healthcare documentation quality assurance, OCR systems, and hands-on AI application development.',
   type: 'profile',
 };
 
 export const workMeta: RouteMeta = {
-  title: `Selected work — ${TITLE_SUFFIX}`,
+  title: `Engineering Projects — ${TITLE_SUFFIX}`,
   description:
-    'Selected projects across web development, local search, paid media and technical experiments, presented as dedicated project pages.',
+    'Selected engineering projects across generative AI applications, full-stack clinical documentation architecture, and modern web systems.',
   type: 'website',
 };
 
 export const contactMeta: RouteMeta = {
   title: `Contact — ${TITLE_SUFFIX}`,
   description:
-    'Start a conversation with Akther V N about a website, marketing system or digital idea.',
+    'Connect with Akther V N regarding junior AI engineering, full-stack development, or AI implementation roles.',
   type: 'website',
 };
 
@@ -117,14 +117,22 @@ export function personJsonLd(): string {
       '@type': 'Organization',
       name: profile.employer,
     },
+    sameAs: [
+      profile.githubUrl,
+      profile.linkedinUrl,
+    ],
     knowsAbout: [
-      'Web development',
-      'Search engine optimization',
-      'Local SEO',
-      'Digital marketing',
-      'Meta Ads',
-      'Google Ads',
-      'AI-assisted development',
+      'Generative AI Applications',
+      'Full-Stack Web Development',
+      'Clinical Documentation Systems',
+      'AI Quality Assurance & Evaluation',
+      'Speech-to-Text Pipelines',
+      'Prompt Engineering',
+      'TypeScript',
+      'React',
+      'Next.js',
+      'Firebase',
+      'Python',
     ],
     ...(url ? { url } : {}),
     ...(image ? { image } : {}),

@@ -6,11 +6,10 @@
  * imported would fail to resolve there. Keeping it dependency-free is what lets
  * the app and the build share one source of truth for the domain.
  *
- * The apex is primary; www redirects to it permanently at the edge. No trailing
- * slash. An empty string switches every canonical, og:url and sitemap entry off
- * rather than pointing them at a domain that does not exist.
+ * The production origin is www.akthernaimudheen.in, matching Vercel production
+ * domain routing where apex permanently redirects to www. No trailing slash.
  */
-export const SITE_URL = 'https://akthernaimudheen.in';
+export const SITE_URL = 'https://www.akthernaimudheen.in';
 
 /** Routes that belong in the sitemap. Project pages are appended at build time. */
 export const STATIC_ROUTES = ['/', '/about', '/work', '/contact'] as const;
