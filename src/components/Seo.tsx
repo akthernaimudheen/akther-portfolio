@@ -40,7 +40,7 @@ export function Seo({ title, description, type, noIndex, path }: SeoProps) {
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:type" content={type} />
-      <meta property="og:site_name" content={`${profile.name} — Portfolio`} />
+      <meta property="og:site_name" content="Akther Naimudheen Portfolio" />
       <meta property="og:locale" content="en" />
       {canonical && <meta property="og:url" content={canonical} />}
       {image && (
