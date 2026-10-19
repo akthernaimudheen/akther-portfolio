@@ -90,6 +90,64 @@ export function projectMeta(project: Project): RouteMeta {
   };
 }
 
+export const clinicalAiArticleMeta: RouteMeta = {
+  title: `Building AI Clinical Documentation Beyond Transcription — ${TITLE_SUFFIX}`,
+  description:
+    'An engineering deep dive into deterministic NLP guardrails, verbatim span tracking, and schema validation to solve LLM hallucinations in clinical documentation.',
+  type: 'article',
+};
+
+/**
+ * TechArticle structured data for the in-depth iScribe engineering study.
+ * Conforms to schema.org/TechArticle specification.
+ */
+export function articleJsonLd(): string {
+  const url = absoluteUrl('/blog/building-clinical-ai-beyond-transcription');
+  const authorUrl = absoluteUrl('/about');
+  const image = absoluteUrl(OG_IMAGE.path);
+
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: 'Building AI Clinical Documentation Beyond Transcription: Engineering Guardrails for Clinical Fact Extraction',
+    description: clinicalAiArticleMeta.description,
+    author: {
+      '@type': 'Person',
+      name: profile.name,
+      jobTitle: profile.positioning,
+      url: authorUrl,
+      sameAs: [profile.githubUrl, profile.linkedinUrl],
+    },
+    publisher: {
+      '@type': 'Person',
+      name: profile.name,
+      url: absoluteUrl('/'),
+    },
+    datePublished: '2026-10-18',
+    dateModified: '2026-10-19',
+    mainEntityOfPage: url,
+    image: image,
+    inLanguage: 'en',
+    proficiencyLevel: 'Expert',
+    about: [
+      { '@type': 'Thing', name: 'Clinical Natural Language Processing' },
+      { '@type': 'Thing', name: 'Artificial Intelligence in Healthcare' },
+      { '@type': 'Thing', name: 'Software Verification & Testing' },
+    ],
+    keywords: [
+      'Clinical NLP',
+      'Clinical Fact Extraction',
+      'Deterministic Guardrails',
+      'AI Medical Scribe',
+      'Speech-to-Text Pipeline',
+      'Schema Validation',
+      'Malayalam English Code-Switching',
+      'Pydantic',
+      'spaCy',
+    ],
+  });
+}
+
 /**
  * Person structured data. Every value is either supplied by the profile record
  * or derived from it — no invented URLs, social profiles, employer or client
@@ -138,3 +196,4 @@ export function personJsonLd(): string {
     ...(image ? { image } : {}),
   });
 }
+

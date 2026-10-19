@@ -12,4 +12,10 @@
 export const SITE_URL = 'https://www.akthernaimudheen.in';
 
 /** Routes that belong in the sitemap. Project pages are appended at build time. */
-export const STATIC_ROUTES = ['/', '/about', '/work', '/contact'] as const;
+export const STATIC_ROUTES = [
+  '/',
+  '/about',
+  '/work',
+  '/contact',
+  '/blog/building-clinical-ai-beyond-transcription',
+] as const;

@@ -11,6 +11,9 @@
       .line { stroke: #0a0a0a; stroke-width: 1.5; fill: none; }
       .grid-line { stroke: rgba(10, 10, 10, 0.08); stroke-width: 1; }
     </style>
+    <clipPath id="overview-audio-clip">
+      <rect x="2" y="2" width="460" height="64" rx="3" />
+    </clipPath>
   </defs>
 
   <!-- Editorial Grid Lines -->
@@ -42,10 +45,13 @@
     <g transform="translate(28, 140)">
       <!-- Audio Waveform Input -->
       <rect x="0" y="0" width="464" height="68" rx="4" fill="#faf9f5" stroke="rgba(10,10,10,0.1)" />
-      <path d="M 20 34 Q 30 14, 40 34 T 60 34 T 80 10 T 100 48 T 120 20 T 140 44 T 160 34 T 180 34 T 200 8 T 220 54 T 240 24 T 260 40 T 280 34 T 300 34 T 320 18 T 340 46 T 360 34 T 380 34 T 400 24 T 420 40 T 440 34" fill="none" stroke="#0a0a0a" stroke-width="1.8" />
-      <rect x="16" y="10" width="130" height="16" rx="2" class="badge-yellow" />
-      <text x="22" y="22" font-size="8px" font-weight="700" fill="#0a0a0a">SPEECH INGESTION</text>
-      <text x="320" y="22" class="text-tag" font-size="8px">MALAYALAM + EN</text>
+      <g clip-path="url(#overview-audio-clip)">
+        <path d="M 20 44 Q 30 38, 40 44 Q 50 50, 60 44 Q 70 36, 80 44 Q 90 52, 100 44 Q 110 32, 120 44 Q 130 54, 140 44 Q 150 36, 160 44 Q 170 50, 180 44 Q 190 30, 200 44 Q 210 56, 220 44 Q 230 34, 240 44 Q 250 52, 260 44 Q 270 36, 280 44 Q 290 50, 300 44 Q 310 35, 320 44 Q 330 51, 340 44 Q 350 36, 360 44 Q 370 50, 380 44 Q 390 38, 400 44 Q 410 48, 420 44 Q 430 41, 440 44" fill="none" stroke="#0a0a0a" stroke-width="1.8" />
+      </g>
+      <rect x="16" y="9" width="124" height="16" rx="2" class="badge-yellow" />
+      <text x="22" y="21" font-size="8px" font-weight="700" fill="#0a0a0a">SPEECH INGESTION</text>
+      <rect x="345" y="9" width="102" height="16" rx="2" fill="rgba(10,10,10,0.06)" />
+      <text x="353" y="21" class="text-tag" font-size="8px" font-weight="700">MALAYALAM + EN</text>
 
       <!-- Flow Arrow -->
       <line x1="232" y1="68" x2="232" y2="92" class="line" />

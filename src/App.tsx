@@ -6,13 +6,15 @@ import { CountUp } from '@/components/CountUp';
 import { CursorFollower } from '@/components/CursorFollower';
 import { ProjectGallery } from '@/components/ProjectGallery';
 import { Reveal } from '@/components/ScrollMotion';
-import { PersonStructuredData, Seo } from '@/components/Seo';
+import { ArticleStructuredData, PersonStructuredData, Seo } from '@/components/Seo';
 import { ProjectVisualScene } from '@/components/ui/project-visual-scene';
+import { ClinicalAiArticle } from '@/components/ClinicalAiArticle';
 import { usePointerDrift } from '@/lib/pointer';
 import { projects } from '@/data/projects';
 import { capabilities, journey, profile } from '@/data/profile';
 import {
   aboutMeta,
+  clinicalAiArticleMeta,
   contactMeta,
   homeMeta,
   notFoundMeta,
@@ -668,12 +670,28 @@ function ProjectPage() {
         </Reveal>
         <Reveal className="case-copy" direction="right" delay={0.05}>
           {project.id === 'iscribe' && (
-            <div className="case-notice" role="alert">
-              <span style={{ fontSize: '1.25rem', lineHeight: 1 }} aria-hidden="true">⚠</span>
-              <div>
-                <strong>Safety &amp; Verification Boundary:</strong> Evaluated strictly using synthetic clinical dialogue. Valid JSON schema does not replace qualified physician review. All clinical outputs require qualified clinician sign-off prior to EHR commit.
+            <>
+              <div className="case-notice" role="alert">
+                <span style={{ fontSize: '1.25rem', lineHeight: 1 }} aria-hidden="true">⚠</span>
+                <div>
+                  <strong>Safety &amp; Verification Boundary:</strong> Evaluated strictly using synthetic clinical dialogue. Valid JSON schema does not replace qualified physician review. All clinical outputs require qualified clinician sign-off prior to EHR commit.
+                </div>
               </div>
-            </div>
+              <div className="article-promo-card">
+                <div>
+                  <span className="eyebrow" style={{ color: 'var(--ink)' }}>In-Depth Technical Case Study</span>
+                  <h3 style={{ margin: '0.25rem 0 0.45rem', fontSize: '1.15rem' }}>
+                    Building AI Clinical Documentation Beyond Transcription
+                  </h3>
+                  <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--muted)' }}>
+                    Read the complete 14-minute engineering analysis covering deterministic extraction, our 12-case Ollama benchmark with 7 prohibited hallucinations, and verbatim provenance tracking.
+                  </p>
+                </div>
+                <Link className="btn btn--signal" to="/blog/building-clinical-ai-beyond-transcription">
+                  Read Case Study <ArrowRight aria-hidden="true" />
+                </Link>
+              </div>
+            </>
           )}
           {project.id === 'rshorts' && (
             <div className="case-notice" role="status">
@@ -824,6 +842,15 @@ function CtaSection() {
   );
 }
 
+function ClinicalAiArticlePage() {
+  return (
+    <PageFrame meta={clinicalAiArticleMeta} path="/blog/building-clinical-ai-beyond-transcription">
+      <ArticleStructuredData />
+      <ClinicalAiArticle />
+    </PageFrame>
+  );
+}
+
 function NotFound() {
   return (
     <PageFrame meta={notFoundMeta} path="/404">
@@ -848,6 +875,7 @@ function AppRoutes() {
       <Route path="/about" element={<AboutPage />} />
       <Route path="/work" element={<WorkPage />} />
       <Route path="/work/:slug" element={<ProjectPage />} />
+      <Route path="/blog/building-clinical-ai-beyond-transcription" element={<ClinicalAiArticlePage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
