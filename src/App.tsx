@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Download, Mail, MapPin, Menu, X } from 'lucide-react';
-import { BrowserRouter, Link, NavLink, Route, Routes, useLocation, useParams } from 'react-router-dom';
+import { BrowserRouter, Link, NavLink, Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { CountUp } from '@/components/CountUp';
 import { CursorFollower } from '@/components/CursorFollower';
 import { ProjectGallery } from '@/components/ProjectGallery';
@@ -27,6 +27,7 @@ const navigation = [
   ['Home', '/'],
   ['About', '/about'],
   ['Work', '/work'],
+  ['Blog', '/blog'],
   ['Contact', '/contact'],
 ] as const;
 
@@ -887,6 +888,7 @@ function AppRoutes() {
       <Route path="/about" element={<AboutPage />} />
       <Route path="/work" element={<WorkPage />} />
       <Route path="/work/:slug" element={<ProjectPage />} />
+      <Route path="/blog" element={<Navigate to="/blog/building-clinical-ai-beyond-transcription" replace />} />
       <Route path="/blog/building-clinical-ai-beyond-transcription" element={<ClinicalAiArticlePage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="*" element={<NotFound />} />
