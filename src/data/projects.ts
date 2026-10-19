@@ -33,6 +33,7 @@ export interface Project {
     value: string;
   }[];
   note?: string;
+  liveUrl?: string;
 }
 
 export const projects: Project[] = [
@@ -111,24 +112,25 @@ export const projects: Project[] = [
   },
   {
     id: 'rshorts',
-    title: 'RShorts / PromptToShort',
-    eyebrow: 'AI video pipeline · Automated content transformation',
+    title: 'PromptToShort',
+    eyebrow: 'AI video creation platform · Media pipeline',
     kind: 'ai',
     category: 'ai',
     categoryLabel: 'AI Applications & Pipeline Engineering',
     visual: '/rshorts-project-preview.svg',
     caseVisual: '/rshorts-pipeline.svg',
-    visualAlt: 'Overview of the RShorts automated video pipeline: script generation, TTS alignment, b-roll retrieval, and vertical video assembly.',
-    status: 'In progress',
-    role: 'AI application engineering & media pipeline',
+    visualAlt: 'Overview of the PromptToShort automated video pipeline: script generation, TTS alignment, b-roll retrieval, and vertical video assembly.',
+    status: 'Live product',
+    role: 'Creator & AI Pipeline Engineer',
+    liveUrl: 'https://prompttoshort.online/',
     summary:
-      'Engineered an automated pipeline converting long-form transcripts into vertical short-form video content with beat-level scene planning, speech synthesis, candidate footage ranking, and 160+ passing tests.',
+      'Engineered PromptToShort (originally RShorts), an automated AI video creation platform converting prompts and scripts into vertical short-form videos with Deepgram neural voiceover, beat-synced visual pacing, kinetic subtitles, and multi-track NLE timeline export.',
     caseHeading: 'Transcript segmentation, multi-provider footage selection, and audio-visual assembly.',
     areas: ['Python / FastAPI', 'LLM Prompt Engineering', 'Deepgram TTS', 'Multimodal Vision QA', 'FFmpeg Pipeline'],
     caseStudy: [
       {
         heading: 'Project Overview & Problem Scope',
-        body: 'Repurposing long-form podcast conversations and instructional transcripts into engaging 9:16 vertical shorts manually takes hours. RShorts automates the entire transformation pipeline: detecting narrative hooks, generating concise script beats, synchronizing natural TTS audio, querying relevant b-roll footage, and composing vertical video with kinetic captions.',
+        body: 'PromptToShort is an end-to-end generative AI product engineered by Akther Naimudheen to transform prompts and scripts into publish-ready 9:16 vertical short-form videos. The system automates narrative hook synthesis, neural voice narration, semantic footage ranking, kinetic subtitle compilation, and multi-track timeline export for DaVinci Resolve and Premiere Pro.',
       },
       {
         heading: 'Personal Contributions',
@@ -171,7 +173,7 @@ export const projects: Project[] = [
       },
       {
         heading: 'Current Status & Next Steps',
-        body: 'Current phase: Core pipeline, automated test suite (160+ passing tests), and CLI/worker engine operational. Next steps: web-based interactive timeline editor and local AI video generation model integration.',
+        body: 'Current phase: Live product operational at prompttoshort.online with automated test suite (160+ passing tests) and asynchronous worker engine. Next steps: web-based interactive timeline editor and local AI video generation model integration.',
       },
     ],
     result: [

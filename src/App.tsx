@@ -278,16 +278,16 @@ function HomeHero() {
   return (
     <section className="hero" aria-labelledby="home-title">
       <motion.p className="eyebrow hero__eyebrow" {...step(0)}>
-        AI APPLICATIONS · FULL-STACK DEVELOPMENT · AI QUALITY
+        AKTHER NAIMUDHEEN · AI APPLICATIONS &amp; SYSTEMS
       </motion.p>
 
       <motion.h1 className="hero__title" id="home-title" {...step(0.06)}>
         <span className="hero__title-lead" ref={leadRef}>
-          <span>Building AI applications</span>
+          <span>Akther Naimudheen</span>
         </span>
         <span className="hero__title-sub" ref={subRef}>
-          <span>with validation and review</span>
-          <span>built into the workflow.</span>
+          <span>AI Engineer &amp; Developer Portfolio</span>
+          <span>with validation and review built into every pipeline.</span>
         </span>
       </motion.h1>
 
@@ -320,7 +320,7 @@ function HomeHero() {
 
       <motion.div className="hero__intro" {...step(0.16)}>
         <p>
-          I'm a Computer Engineering diploma holder based in Kerala, India, with experience in healthcare documentation quality assurance and OCR workflows. I build AI-assisted applications and focus on making complex workflows structured, testable and useful.
+          I'm Akther Naimudheen, an AI Application Engineer and Full-Stack Developer based in Kerala, India. My background includes technical QA on clinical AI documentation pipelines, OCR verification, and developing generative AI tools and web systems.
         </p>
         <div className="hero__actions">
           <Link className="btn" to="/work">
@@ -472,7 +472,7 @@ function AboutPage() {
 
       <section className="about-hero" aria-labelledby="about-title">
         <div className="about-hero__copy">
-          <p className="eyebrow">About Akther</p>
+          <p className="eyebrow">About Akther Naimudheen</p>
           <h1 id="about-title">
             <span>Engineering applications</span>
             <span>through structure,</span>
@@ -646,6 +646,18 @@ function ProjectPage() {
               <span key={area}>{area}</span>
             ))}
           </div>
+          {project.liveUrl && (
+            <div style={{ marginTop: '1.5rem' }}>
+              <a
+                className="btn btn--signal"
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Launch {project.title} <ArrowUpRight aria-hidden="true" />
+              </a>
+            </div>
+          )}
         </motion.div>
       </section>
 
@@ -778,7 +790,7 @@ function ContactPage() {
           </p>
           <div className="contact__actions">
             <a className="btn btn--signal" href={`mailto:${profile.email}`}>
-              Email Akther <Mail aria-hidden="true" />
+              Email Akther Naimudheen <Mail aria-hidden="true" />
             </a>
             <a className="link-underline" href={profile.resumeUrl} download>
               Technical résumé <Download aria-hidden="true" />

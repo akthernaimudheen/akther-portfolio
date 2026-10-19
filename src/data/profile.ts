@@ -16,11 +16,12 @@ export interface Capability {
 }
 
 export const profile = {
-  name: 'Akther V N',
+  name: 'Akther Naimudheen',
+  alternateName: 'Akther V N',
   /* Single source for the professional positioning. Drives the hero H1's
      accessible name and every route title, so the visible heading and the
      semantic/SEO name can never drift apart. */
-  positioning: 'AI Application Developer | Generative AI & Full-Stack Projects | Healthcare Documentation QA',
+  positioning: 'AI Engineer & Full-Stack Developer Portfolio',
   email: 'akthernaimudheen0@gmail.com',
   githubUrl: 'https://github.com/akthernaimudheen',
   linkedinUrl: 'https://www.linkedin.com/in/akther-naimudheen-3bbb24197/',
@@ -39,7 +40,7 @@ export const profile = {
     srcSet: '/akther-portrait-512.webp 512w, /akther-portrait-768.webp 768w, /akther-portrait.webp 1023w',
     width: 1023,
     height: 1537,
-    alt: 'Portrait of Akther V N',
+    alt: 'Portrait of Akther Naimudheen',
   },
   portraitCutout: {
     src: '/akther-side-profile-cutout.webp',
@@ -47,21 +48,21 @@ export const profile = {
       '/akther-side-profile-cutout-512.webp 512w, /akther-side-profile-cutout.webp 718w',
     width: 718,
     height: 1279,
-    alt: 'Akther V N in profile, facing right',
+    alt: 'Akther Naimudheen in profile, facing right',
   },
   editorialPortrait: {
     src: '/akther-editorial-portrait.webp',
     srcSet: '/akther-editorial-portrait-512.webp 512w, /akther-editorial-portrait-768.webp 768w, /akther-editorial-portrait.webp 1024w',
     width: 1024,
     height: 1536,
-    alt: 'Editorial three-quarter portrait of Akther V N',
+    alt: 'Editorial three-quarter portrait of Akther Naimudheen',
   },
   cinematicPortrait: {
     src: '/akther-cinematic-portrait.webp',
     srcSet: '/akther-cinematic-portrait-768.webp 768w, /akther-cinematic-portrait-1152.webp 1152w, /akther-cinematic-portrait.webp 1536w',
     width: 1536,
     height: 1024,
-    alt: 'Cinematic side portrait of Akther V N',
+    alt: 'Cinematic side portrait of Akther Naimudheen',
   },
 } as const;
 
@@ -125,9 +126,9 @@ export const journey: JourneyEntry[] = [
     year: '2026',
     category: 'projects',
     categoryLabel: 'Self-Directed AI Engineering',
-    title: 'AI Systems: iScribe & RShorts',
+    title: 'AI Systems: iScribe & PromptToShort',
     roleOrCompany: 'Independent Engineering',
-    text: 'Engineered iScribe (clinical documentation pipeline with multi-stage schema validation) and RShorts (automated vertical video pipeline with 160+ passing tests).',
+    text: 'Engineered iScribe (clinical documentation pipeline with multi-stage schema validation) and PromptToShort (automated vertical video pipeline with 160+ passing tests).',
   },
 ];
 

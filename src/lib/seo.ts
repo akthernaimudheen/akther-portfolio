@@ -17,7 +17,7 @@ export const OG_IMAGE = {
   path: '/og-image.jpg',
   width: 1200,
   height: 630,
-  alt: 'Akther V N — AI Application Developer & Full-Stack Projects',
+  alt: 'Akther Naimudheen — AI Engineer & Developer Portfolio',
 } as const;
 
 /** Absolute URL for a site-relative path, or undefined while SITE_URL is unset. */
@@ -47,30 +47,30 @@ function clampDescription(text: string): string {
 }
 
 export const homeMeta: RouteMeta = {
-  title: `${profile.name} | AI Application Developer & Full-Stack Projects`,
+  title: `${profile.name} | AI Engineer & Developer Portfolio`,
   description:
-    'Explore AI application projects, full-stack development, clinical documentation workflows, and technical QA work by Akther V N, based in Kerala, India.',
+    'Personal portfolio of Akther Naimudheen, AI Engineer and Full-Stack Developer based in Kerala, India. Explore generative AI pipelines, clinical documentation QA, and web projects.',
   type: 'profile',
 };
 
 export const aboutMeta: RouteMeta = {
   title: `About — ${TITLE_SUFFIX}`,
   description:
-    'Background in Computer Engineering, healthcare documentation quality assurance, OCR systems, and hands-on AI application development.',
+    'Background of Akther Naimudheen in Computer Engineering, healthcare documentation quality assurance, OCR systems, and hands-on AI application development.',
   type: 'profile',
 };
 
 export const workMeta: RouteMeta = {
   title: `Engineering Projects — ${TITLE_SUFFIX}`,
   description:
-    'Selected engineering projects across generative AI applications, full-stack clinical documentation architecture, and modern web systems.',
+    'Selected engineering projects by Akther Naimudheen across generative AI applications, full-stack clinical documentation architecture, and modern web systems.',
   type: 'website',
 };
 
 export const contactMeta: RouteMeta = {
   title: `Contact — ${TITLE_SUFFIX}`,
   description:
-    'Connect with Akther V N regarding junior AI engineering, full-stack development, or AI implementation roles.',
+    'Connect with Akther Naimudheen regarding AI engineering, full-stack development, or AI implementation roles.',
   type: 'website',
 };
 
@@ -149,51 +149,74 @@ export function articleJsonLd(): string {
 }
 
 /**
- * Person structured data. Every value is either supplied by the profile record
- * or derived from it — no invented URLs, social profiles, employer or client
- * links, telephone numbers, ratings, or job titles. `url` and `image` appear
- * only once SITE_URL is configured, because both require an absolute origin.
+ * Structured data for WebSite and Person.
+ * Connects the personal identity "Akther Naimudheen" to canonical portfolio,
+ * LinkedIn, GitHub, and defines WebSite site-name identity for Google Search.
  */
-export function personJsonLd(): string {
+export function structuredDataJsonLd(): string {
   const url = absoluteUrl('/');
+  const personId = url ? `${url}#person` : undefined;
+  const websiteId = url ? `${url}#website` : undefined;
   const image = absoluteUrl(profile.portrait.src);
+
+  const graph: Record<string, unknown>[] = [
+    {
+      '@type': 'WebSite',
+      ...(websiteId ? { '@id': websiteId } : {}),
+      ...(url ? { url } : {}),
+      name: 'Akther Naimudheen Portfolio',
+      alternateName: ['Akther Naimudheen', 'Akther V N Portfolio'],
+      description: homeMeta.description,
+      ...(personId ? { publisher: { '@id': personId } } : {}),
+    },
+    {
+      '@type': 'Person',
+      ...(personId ? { '@id': personId } : {}),
+      name: profile.name,
+      alternateName: [profile.alternateName, 'Akther'],
+      jobTitle: 'AI Engineer & Developer',
+      description: homeMeta.description,
+      email: `mailto:${profile.email}`,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: profile.seoLocality,
+        addressRegion: profile.seoRegion,
+        addressCountry: profile.seoCountry,
+      },
+      worksFor: {
+        '@type': 'Organization',
+        name: profile.employer,
+      },
+      sameAs: [
+        profile.githubUrl,
+        profile.linkedinUrl,
+      ],
+      knowsAbout: [
+        'Generative AI Applications',
+        'Full-Stack Web Development',
+        'Clinical Documentation Systems',
+        'AI Quality Assurance & Evaluation',
+        'Speech-to-Text Pipelines',
+        'Prompt Engineering',
+        'TypeScript',
+        'React',
+        'Next.js',
+        'Firebase',
+        'Python',
+      ],
+      ...(url ? { url } : {}),
+      ...(image ? { image } : {}),
+    },
+  ];
 
   return JSON.stringify({
     '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: profile.name,
-    jobTitle: profile.positioning,
-    description: homeMeta.description,
-    email: `mailto:${profile.email}`,
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: profile.seoLocality,
-      addressRegion: profile.seoRegion,
-      addressCountry: profile.seoCountry,
-    },
-    worksFor: {
-      '@type': 'Organization',
-      name: profile.employer,
-    },
-    sameAs: [
-      profile.githubUrl,
-      profile.linkedinUrl,
-    ],
-    knowsAbout: [
-      'Generative AI Applications',
-      'Full-Stack Web Development',
-      'Clinical Documentation Systems',
-      'AI Quality Assurance & Evaluation',
-      'Speech-to-Text Pipelines',
-      'Prompt Engineering',
-      'TypeScript',
-      'React',
-      'Next.js',
-      'Firebase',
-      'Python',
-    ],
-    ...(url ? { url } : {}),
-    ...(image ? { image } : {}),
+    '@graph': graph,
   });
+}
+
+/** Retained for backward-compatibility with existing component imports. */
+export function personJsonLd(): string {
+  return structuredDataJsonLd();
 }
 
