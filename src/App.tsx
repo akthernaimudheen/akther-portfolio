@@ -560,7 +560,7 @@ function AboutPage() {
           <Reveal>
             <p className="eyebrow">The philosophy</p>
             <h2>
-              I understand system architecture, then I build the prompt, the data pipeline and the user interface.
+              Reliable software starts with sound architecture, clear interfaces and rigorous validation.
             </h2>
           </Reveal>
         </div>
