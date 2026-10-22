@@ -50,7 +50,7 @@ function clampDescription(text: string): string {
 export const homeMeta: RouteMeta = {
   title: `${profile.name} | Software Developer & AI Application Engineer`,
   description:
-    "Explore Akther Naimudheen's software projects in AI application engineering, full-stack web development, API integration, and reliable intelligent systems.",
+    'Software engineering projects, applied AI systems, technical architecture writing, and web development services by Akther Naimudheen.',
   type: 'profile',
 };
 

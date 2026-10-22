@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Download, Mail, MapPin, Menu, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Clock, Download, Mail, MapPin, Menu, Tag, X } from 'lucide-react';
 import { BrowserRouter, Link, NavLink, Navigate, Route, Routes, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { CountUp } from '@/components/CountUp';
 import { CursorFollower } from '@/components/CursorFollower';
@@ -21,7 +21,7 @@ import { ServicesPage } from '@/components/ServicesPage';
 import { usePointerDrift } from '@/lib/pointer';
 import { projects } from '@/data/projects';
 import { capabilities, journey, profile, skillCategories, verifiedTechnologies } from '@/data/profile';
-import { getArticleBySlug } from '@/data/articles';
+import { articles, getArticleBySlug } from '@/data/articles';
 import {
   aboutMeta,
   blogMeta,
@@ -396,6 +396,7 @@ function CredibilityStrip() {
 
 function HomePage() {
   const featured = projects.slice(0, 3);
+  const featuredArticles = articles.slice(0, 2);
 
   return (
     <PageFrame meta={homeMeta} path="/">
@@ -508,6 +509,132 @@ function HomePage() {
             </Reveal>
           ))}
         </div>
+      </section>
+
+      {/* Selected Technical Writing Section */}
+      <section className="section" aria-labelledby="home-writing-title">
+        <Reveal className="section-head">
+          <p className="eyebrow">Technical writing &amp; architecture notes</p>
+          <h2 id="home-writing-title">
+            Engineering essays on
+            <br />applied AI &amp; systems.
+          </h2>
+          <p className="lede">
+            In-depth architectural case studies and practical engineering notes exploring LLM verification, audio/video pipelines, and dependable software execution.
+          </p>
+        </Reveal>
+
+        <div className="home-writing__grid">
+          {featuredArticles.map((article, idx) => (
+            <Reveal key={article.slug} className="blog-card" delay={idx * 0.08}>
+              <div className="blog-card__header">
+                <div className="blog-card__badges">
+                  <span className="blog-card__category">{article.category}</span>
+                  <span
+                    className={`blog-card__status ${
+                      article.status === 'published-case-study'
+                        ? 'blog-card__status--case-study'
+                        : 'blog-card__status--note'
+                    }`}
+                  >
+                    {article.statusLabel}
+                  </span>
+                </div>
+                <div className="blog-card__meta">
+                  <Clock style={{ width: '0.85rem', height: '0.85rem' }} aria-hidden="true" />
+                  <span>{article.readTime}</span>
+                </div>
+              </div>
+
+              <h3 className="blog-card__title">
+                <Link to={`/blog/${article.slug}`}>{article.title}</Link>
+              </h3>
+
+              <p className="blog-card__desc">{article.description}</p>
+
+              <div className="blog-card__tags">
+                <Tag className="blog-card__tag-icon" aria-hidden="true" />
+                {article.tags.slice(0, 3).map((tag) => (
+                  <span key={tag} className="blog-card__tag">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <div className="blog-card__footer">
+                <Link to={`/blog/${article.slug}`} className="link-underline">
+                  Read article <ArrowUpRight aria-hidden="true" />
+                </Link>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Link className="wide-link" to="/blog">
+          <span>Explore all technical writing, case studies &amp; notes</span>
+          <ArrowRight aria-hidden="true" />
+        </Link>
+      </section>
+
+      {/* Services Bridge: Client Engineering & Search Foundations */}
+      <section className="section services-bridge" aria-labelledby="home-services-title">
+        <Reveal className="section-head">
+          <p className="eyebrow">Client Engineering &amp; Search Foundations</p>
+          <h2 id="home-services-title">
+            Engineering services for
+            <br />
+            web systems &amp; search.
+          </h2>
+          <p className="lede">
+            In addition to software product engineering, I provide scoped technical consulting and implementation for independent businesses, practices, and technical teams.
+          </p>
+        </Reveal>
+
+        <div className="services-bridge__grid">
+          <Reveal className="services-bridge__card" amount={0.05} delay={0.05}>
+            <div className="services-bridge__card-header">
+              <span className="services-bridge__num">01</span>
+              <h3>Business Website Development</h3>
+            </div>
+            <p>
+              Component-based frontend architecture, responsive layout, API integrations, and scoped production deployment setup without fragile site-builders.
+            </p>
+            <Link to="/services#business-website-development" className="link-underline">
+              View scope &amp; deliverables <ArrowUpRight aria-hidden="true" />
+            </Link>
+          </Reveal>
+
+          <Reveal className="services-bridge__card" amount={0.05} delay={0.1}>
+            <div className="services-bridge__card-header">
+              <span className="services-bridge__num">02</span>
+              <h3>Technical SEO Architecture</h3>
+            </div>
+            <p>
+              Crawlability diagnostics, indexing configuration, Schema.org structured data, XML sitemaps, and Core Web Vitals performance remediation.
+            </p>
+            <Link to="/services#technical-seo" className="link-underline">
+              View scope &amp; deliverables <ArrowUpRight aria-hidden="true" />
+            </Link>
+          </Reveal>
+
+          <Reveal className="services-bridge__card" amount={0.05} delay={0.15}>
+            <div className="services-bridge__card-header">
+              <span className="services-bridge__num">03</span>
+              <h3>Local Search Visibility</h3>
+            </div>
+            <p>
+              Google Business Profile optimization, NAP consistency auditing, LocalBusiness schema markup, and geographic relevance signals.
+            </p>
+            <Link to="/services#local-seo" className="link-underline">
+              View scope &amp; deliverables <ArrowUpRight aria-hidden="true" />
+            </Link>
+          </Reveal>
+        </div>
+
+        <Link className="wide-link" to="/services">
+          <span>Explore all services, deliverables &amp; scope boundaries</span>
+          <ArrowRight aria-hidden="true" />
+        </Link>
       </section>
 
       <CtaSection />
