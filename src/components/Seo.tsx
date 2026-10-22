@@ -1,6 +1,14 @@
 import { useEffect } from 'react';
 import { profile } from '@/data/profile';
-import { absoluteUrl, articleJsonLd, OG_IMAGE, personJsonLd, type RouteMeta } from '@/lib/seo';
+import type { Article } from '@/data/articles';
+import {
+  absoluteUrl,
+  articleJsonLd,
+  dynamicArticleJsonLd,
+  OG_IMAGE,
+  personJsonLd,
+  type RouteMeta,
+} from '@/lib/seo';
 
 interface SeoProps extends RouteMeta {
   /** Site-relative path for this route, used only when SITE_URL is configured. */
@@ -76,5 +84,12 @@ export function PersonStructuredData() {
  */
 export function ArticleStructuredData() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: articleJsonLd() }} />;
+}
+
+/**
+ * Dynamic TechArticle structured data for registry articles.
+ */
+export function DynamicArticleStructuredData({ article }: { article: Article }) {
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: dynamicArticleJsonLd(article) }} />;
 }
 

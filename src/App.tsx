@@ -6,14 +6,19 @@ import { CountUp } from '@/components/CountUp';
 import { CursorFollower } from '@/components/CursorFollower';
 import { ProjectGallery } from '@/components/ProjectGallery';
 import { Reveal } from '@/components/ScrollMotion';
-import { ArticleStructuredData, PersonStructuredData, Seo } from '@/components/Seo';
+import { ArticleStructuredData, DynamicArticleStructuredData, PersonStructuredData, Seo } from '@/components/Seo';
 import { ProjectVisualScene } from '@/components/ui/project-visual-scene';
 import { ClinicalAiArticle } from '@/components/ClinicalAiArticle';
+import { BlogIndex } from '@/components/BlogIndex';
+import { StructuredArticlePage } from '@/components/StructuredArticlePage';
 import { usePointerDrift } from '@/lib/pointer';
 import { projects } from '@/data/projects';
 import { capabilities, journey, profile, skillCategories, verifiedTechnologies } from '@/data/profile';
+import { getArticleBySlug } from '@/data/articles';
 import {
   aboutMeta,
+  blogMeta,
+  buildArticleMeta,
   clinicalAiArticleMeta,
   contactMeta,
   homeMeta,
@@ -934,11 +939,40 @@ function CtaSection() {
   );
 }
 
+function BlogPage() {
+  return (
+    <PageFrame meta={blogMeta} path="/blog">
+      <BlogIndex />
+    </PageFrame>
+  );
+}
+
 function ClinicalAiArticlePage() {
   return (
     <PageFrame meta={clinicalAiArticleMeta} path="/blog/building-clinical-ai-beyond-transcription">
       <ArticleStructuredData />
       <ClinicalAiArticle />
+    </PageFrame>
+  );
+}
+
+function DynamicArticlePage() {
+  const { slug } = useParams();
+  if (!slug) return <NotFound />;
+
+  const article = getArticleBySlug(slug);
+  if (!article) return <NotFound />;
+
+  // Flagship clinical article: exact preservation of custom component
+  if (article.slug === 'building-clinical-ai-beyond-transcription' || article.renderMode === 'component') {
+    return <ClinicalAiArticlePage />;
+  }
+
+  const meta = buildArticleMeta(article);
+  return (
+    <PageFrame meta={meta} path={`/blog/${article.slug}`}>
+      <DynamicArticleStructuredData article={article} />
+      <StructuredArticlePage article={article} />
     </PageFrame>
   );
 }
@@ -974,9 +1008,10 @@ function AppRoutes() {
       <Route path="/work/:slug" element={<ProjectPage />} />
       <Route path="/projects" element={<Navigate to="/work" replace />} />
       <Route path="/projects/:slug" element={<ProjectsSlugRedirect />} />
-      <Route path="/writing" element={<Navigate to="/blog/building-clinical-ai-beyond-transcription" replace />} />
-      <Route path="/blog" element={<Navigate to="/blog/building-clinical-ai-beyond-transcription" replace />} />
+      <Route path="/writing" element={<Navigate to="/blog" replace />} />
+      <Route path="/blog" element={<BlogPage />} />
       <Route path="/blog/building-clinical-ai-beyond-transcription" element={<ClinicalAiArticlePage />} />
+      <Route path="/blog/:slug" element={<DynamicArticlePage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

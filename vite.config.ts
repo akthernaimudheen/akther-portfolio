@@ -3,6 +3,7 @@ import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { projects } from './src/data/projects.ts';
+import { articles } from './src/data/articles.ts';
 import { SITE_URL, STATIC_ROUTES } from './src/lib/site.ts';
 
 /**
@@ -28,7 +29,12 @@ function seoFiles(): Plugin {
       }
 
       const lastmod = new Date().toISOString().slice(0, 10);
-      const routes = [...STATIC_ROUTES, ...projects.map((project) => `/work/${project.id}`)];
+      const rawRoutes = [
+        ...STATIC_ROUTES,
+        ...projects.map((project) => `/work/${project.id}`),
+        ...articles.map((article) => `/blog/${article.slug}`),
+      ];
+      const routes = Array.from(new Set(rawRoutes));
 
       const urls = routes
         .map((route) => `  <url>\n    <loc>${SITE_URL}${route}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`)

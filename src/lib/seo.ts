@@ -1,5 +1,6 @@
 import { profile } from '@/data/profile';
 import type { Project } from '@/data/projects';
+import type { Article } from '@/data/articles';
 import { SITE_URL } from '@/lib/site';
 
 /**
@@ -96,6 +97,54 @@ export const clinicalAiArticleMeta: RouteMeta = {
     'An engineering deep dive into deterministic NLP guardrails, verbatim span tracking, and schema validation to solve LLM hallucinations in clinical documentation.',
   type: 'article',
 };
+
+export const blogMeta: RouteMeta = {
+  title: `Technical Publication & Engineering Essays — ${TITLE_SUFFIX}`,
+  description:
+    'Technical case studies, systems architecture breakdowns, and practical engineering notes on applied AI, media automation, and dependable software.',
+  type: 'website',
+};
+
+export function buildArticleMeta(article: Article): RouteMeta {
+  return {
+    title: `${article.title} — ${TITLE_SUFFIX}`,
+    description: clampDescription(article.description),
+    type: 'article',
+  };
+}
+
+export function dynamicArticleJsonLd(article: Article): string {
+  const url = absoluteUrl(`/blog/${article.slug}`);
+  const authorUrl = absoluteUrl('/about');
+  const image = absoluteUrl(OG_IMAGE.path);
+
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: article.title,
+    description: article.description,
+    author: {
+      '@type': 'Person',
+      name: profile.name,
+      jobTitle: profile.positioning,
+      url: authorUrl,
+      sameAs: [profile.githubUrl, profile.linkedinUrl],
+    },
+    publisher: {
+      '@type': 'Person',
+      name: profile.name,
+      url: absoluteUrl('/'),
+    },
+    datePublished: article.publishedAt,
+    ...(article.updatedAt ? { dateModified: article.updatedAt } : {}),
+    mainEntityOfPage: url,
+    image: image,
+    inLanguage: 'en',
+    proficiencyLevel: 'Expert',
+    about: article.tags.map((tag) => ({ '@type': 'Thing', name: tag })),
+    keywords: article.tags,
+  });
+}
 
 /**
  * TechArticle structured data for the in-depth iScribe engineering study.
