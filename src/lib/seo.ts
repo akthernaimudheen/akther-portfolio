@@ -105,6 +105,13 @@ export const blogMeta: RouteMeta = {
   type: 'website',
 };
 
+export const servicesMeta: RouteMeta = {
+  title: `Web Engineering & Search Architecture Services — ${TITLE_SUFFIX}`,
+  description:
+    'Engineering-led business website development, technical SEO architecture, and local search visibility for independent businesses and technical teams.',
+  type: 'website',
+};
+
 export function buildArticleMeta(article: Article): RouteMeta {
   return {
     title: `${article.title} — ${TITLE_SUFFIX}`,
@@ -270,4 +277,78 @@ export function structuredDataJsonLd(): string {
 export function personJsonLd(): string {
   return structuredDataJsonLd();
 }
+
+/**
+ * Service structured data for the /services offerings.
+ * Conforms to schema.org/ItemList with nested schema.org/Service items.
+ */
+export function servicesJsonLd(): string {
+  const url = absoluteUrl('/services');
+  const providerUrl = absoluteUrl('/about');
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Technical Web & Search Services',
+    description:
+      'Engineering-led business website development, technical SEO architecture, and local search visibility.',
+    numberOfItems: 3,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Business Website Development',
+        item: {
+          '@type': 'Service',
+          name: 'Business Website Development',
+          serviceType: 'Web Application & Website Development',
+          provider: {
+            '@type': 'Person',
+            name: profile.name,
+            url: providerUrl,
+          },
+          description:
+            'Component-based frontend engineering, responsive implementation, API integration, and scoped deployment setup.',
+          url: url,
+        },
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Technical SEO Architecture',
+        item: {
+          '@type': 'Service',
+          name: 'Technical SEO Architecture',
+          serviceType: 'Technical SEO Consulting',
+          provider: {
+            '@type': 'Person',
+            name: profile.name,
+            url: providerUrl,
+          },
+          description:
+            'Crawlability auditing, indexing configuration, structured data, canonical tags, and Core Web Vitals remediation.',
+          url: url,
+        },
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: 'Local Search Visibility',
+        item: {
+          '@type': 'Service',
+          name: 'Local Search Visibility',
+          serviceType: 'Local Search Optimization',
+          provider: {
+            '@type': 'Person',
+            name: profile.name,
+            url: providerUrl,
+          },
+          description:
+            'Google Business Profile optimization, NAP consistency auditing, local schema markup, and geographic relevance signals.',
+          url: url,
+        },
+      },
+    ],
+  });
+}
+
 

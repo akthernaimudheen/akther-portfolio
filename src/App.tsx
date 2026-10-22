@@ -1,16 +1,23 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Download, Mail, MapPin, Menu, X } from 'lucide-react';
-import { BrowserRouter, Link, NavLink, Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom';
+import { BrowserRouter, Link, NavLink, Navigate, Route, Routes, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { CountUp } from '@/components/CountUp';
 import { CursorFollower } from '@/components/CursorFollower';
 import { ProjectGallery } from '@/components/ProjectGallery';
 import { Reveal } from '@/components/ScrollMotion';
-import { ArticleStructuredData, DynamicArticleStructuredData, PersonStructuredData, Seo } from '@/components/Seo';
+import {
+  ArticleStructuredData,
+  DynamicArticleStructuredData,
+  PersonStructuredData,
+  Seo,
+  ServicesStructuredData,
+} from '@/components/Seo';
 import { ProjectVisualScene } from '@/components/ui/project-visual-scene';
 import { ClinicalAiArticle } from '@/components/ClinicalAiArticle';
 import { BlogIndex } from '@/components/BlogIndex';
 import { StructuredArticlePage } from '@/components/StructuredArticlePage';
+import { ServicesPage } from '@/components/ServicesPage';
 import { usePointerDrift } from '@/lib/pointer';
 import { projects } from '@/data/projects';
 import { capabilities, journey, profile, skillCategories, verifiedTechnologies } from '@/data/profile';
@@ -24,6 +31,7 @@ import {
   homeMeta,
   notFoundMeta,
   projectMeta,
+  servicesMeta,
   workMeta,
   type RouteMeta,
 } from '@/lib/seo';
@@ -165,6 +173,9 @@ function SiteFooter() {
                 <Link to={href}>{label}</Link>
               </li>
             ))}
+            <li>
+              <Link to="/services">Services</Link>
+            </li>
           </ul>
         </nav>
 
@@ -837,6 +848,12 @@ function ProjectPage() {
 /* --------------------------------------------------------------- contact --- */
 
 function ContactPage() {
+  const [searchParams] = useSearchParams();
+  const subjectParam = searchParams.get('subject') || searchParams.get('service') || '';
+  const emailHref = subjectParam
+    ? `mailto:${profile.email}?subject=${encodeURIComponent(subjectParam)}`
+    : `mailto:${profile.email}`;
+
   return (
     <PageFrame meta={contactMeta} path="/contact">
       <section className="contact" data-cursor-invert aria-labelledby="contact-title">
@@ -862,8 +879,13 @@ function ContactPage() {
           <p className="lede">
             I'm interested in software development opportunities involving full-stack applications, applied AI, API integrations, and engineering-focused product development. If you're building something useful or looking for a developer who enjoys solving practical technical problems, let's connect.
           </p>
+          {subjectParam && (
+            <div style={{ marginBottom: '1.25rem', padding: '0.65rem 0.95rem', background: 'rgba(255,255,255,0.06)', border: '1px solid var(--hairline-dark)', borderRadius: '2px', fontSize: '0.84rem', color: 'var(--on-dark)' }}>
+              Enquiry focus: <strong>{subjectParam.replace(/^Enquiry:\s*/i, '')}</strong>
+            </div>
+          )}
           <div className="contact__actions">
-            <a className="btn btn--signal" href={`mailto:${profile.email}`}>
+            <a className="btn btn--signal" href={emailHref}>
               Email Akther Naimudheen <Mail aria-hidden="true" />
             </a>
             <a className="link-underline" href={profile.resumeUrl} download>
@@ -977,6 +999,15 @@ function DynamicArticlePage() {
   );
 }
 
+function ServicesRoutePage() {
+  return (
+    <PageFrame meta={servicesMeta} path="/services">
+      <ServicesStructuredData />
+      <ServicesPage />
+    </PageFrame>
+  );
+}
+
 function ProjectsSlugRedirect() {
   const { slug } = useParams();
   return <Navigate to={`/work/${slug ?? ''}`} replace />;
@@ -1012,6 +1043,7 @@ function AppRoutes() {
       <Route path="/blog" element={<BlogPage />} />
       <Route path="/blog/building-clinical-ai-beyond-transcription" element={<ClinicalAiArticlePage />} />
       <Route path="/blog/:slug" element={<DynamicArticlePage />} />
+      <Route path="/services" element={<ServicesRoutePage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

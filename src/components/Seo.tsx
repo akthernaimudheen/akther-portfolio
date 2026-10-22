@@ -7,6 +7,7 @@ import {
   dynamicArticleJsonLd,
   OG_IMAGE,
   personJsonLd,
+  servicesJsonLd,
   type RouteMeta,
 } from '@/lib/seo';
 
@@ -92,4 +93,12 @@ export function ArticleStructuredData() {
 export function DynamicArticleStructuredData({ article }: { article: Article }) {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: dynamicArticleJsonLd(article) }} />;
 }
+
+/**
+ * Service structured data for the /services route.
+ */
+export function ServicesStructuredData() {
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: servicesJsonLd() }} />;
+}
+
 
