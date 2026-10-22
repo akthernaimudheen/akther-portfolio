@@ -47,30 +47,30 @@ function clampDescription(text: string): string {
 }
 
 export const homeMeta: RouteMeta = {
-  title: `${profile.name} | AI Engineer & Developer Portfolio`,
+  title: `${profile.name} | Software Developer & AI Application Engineer`,
   description:
-    'Personal portfolio of Akther Naimudheen, AI Engineer and Full-Stack Developer based in Kerala, India. Explore generative AI pipelines, clinical documentation QA, and web projects.',
+    "Explore Akther Naimudheen's software projects in AI application engineering, full-stack web development, API integration, and reliable intelligent systems.",
   type: 'profile',
 };
 
 export const aboutMeta: RouteMeta = {
   title: `About — ${TITLE_SUFFIX}`,
   description:
-    'Background of Akther Naimudheen in Computer Engineering, healthcare documentation quality assurance, OCR systems, and hands-on AI application development.',
+    'Background of Akther Naimudheen: AI-focused software developer, full-stack web development, computer engineering diploma, and healthcare documentation QA.',
   type: 'profile',
 };
 
 export const workMeta: RouteMeta = {
-  title: `Engineering Projects — ${TITLE_SUFFIX}`,
+  title: `Software Projects — ${TITLE_SUFFIX}`,
   description:
-    'Selected engineering projects by Akther Naimudheen across generative AI applications, full-stack clinical documentation architecture, and modern web systems.',
+    'Software engineering projects by Akther Naimudheen across applied AI pipelines, clinical documentation research, full-stack web applications, and automated video workflows.',
   type: 'website',
 };
 
 export const contactMeta: RouteMeta = {
   title: `Contact — ${TITLE_SUFFIX}`,
   description:
-    'Connect with Akther Naimudheen regarding AI engineering, full-stack development, or AI implementation roles.',
+    'Connect with Akther Naimudheen for full-stack software development, applied AI engineering, API integrations, and product development opportunities.',
   type: 'website',
 };
 
@@ -174,7 +174,7 @@ export function structuredDataJsonLd(): string {
       ...(personId ? { '@id': personId } : {}),
       name: profile.name,
       alternateName: [profile.alternateName, 'Akther'],
-      jobTitle: 'AI Engineer & Developer',
+      jobTitle: 'Software Developer & AI Application Engineer',
       description: homeMeta.description,
       email: `mailto:${profile.email}`,
       address: {
@@ -192,16 +192,18 @@ export function structuredDataJsonLd(): string {
         profile.linkedinUrl,
       ],
       knowsAbout: [
-        'Generative AI Applications',
+        'Software Application Development',
+        'AI Application Engineering',
         'Full-Stack Web Development',
         'Clinical Documentation Systems',
-        'AI Quality Assurance & Evaluation',
+        'REST API Integration',
         'Speech-to-Text Pipelines',
-        'Prompt Engineering',
-        'TypeScript',
-        'React',
-        'Next.js',
-        'Firebase',
+        'Software Testing & Validation',
+        'TypeScript & JavaScript',
+        'React & Next.js',
+        'Tailwind CSS',
+        'FastAPI',
+        'PostgreSQL & Supabase',
         'Python',
       ],
       ...(url ? { url } : {}),

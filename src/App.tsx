@@ -11,7 +11,7 @@ import { ProjectVisualScene } from '@/components/ui/project-visual-scene';
 import { ClinicalAiArticle } from '@/components/ClinicalAiArticle';
 import { usePointerDrift } from '@/lib/pointer';
 import { projects } from '@/data/projects';
-import { capabilities, journey, profile } from '@/data/profile';
+import { capabilities, journey, profile, skillCategories, verifiedTechnologies } from '@/data/profile';
 import {
   aboutMeta,
   clinicalAiArticleMeta,
@@ -26,7 +26,7 @@ import {
 const navigation = [
   ['Home', '/'],
   ['About', '/about'],
-  ['Work', '/work'],
+  ['Projects', '/work'],
   ['Blog', '/blog'],
   ['Contact', '/contact'],
 ] as const;
@@ -279,16 +279,15 @@ function HomeHero() {
   return (
     <section className="hero" aria-labelledby="home-title">
       <motion.p className="eyebrow hero__eyebrow" {...step(0)}>
-        AKTHER NAIMUDHEEN · AI APPLICATIONS &amp; SYSTEMS
+        SOFTWARE DEVELOPMENT · AI APPLICATION ENGINEERING
       </motion.p>
 
       <motion.h1 className="hero__title" id="home-title" {...step(0.06)}>
         <span className="hero__title-lead" ref={leadRef}>
-          <span>Akther Naimudheen</span>
+          <span>I build software</span>
         </span>
         <span className="hero__title-sub" ref={subRef}>
-          <span>AI Engineer &amp; Developer Portfolio</span>
-          <span>with validation and review built into every pipeline.</span>
+          <span>that turns complex ideas into working systems.</span>
         </span>
       </motion.h1>
 
@@ -321,18 +320,21 @@ function HomeHero() {
 
       <motion.div className="hero__intro" {...step(0.16)}>
         <p>
-          I'm Akther Naimudheen, an AI Application Engineer and Full-Stack Developer based in Kerala, India. My background includes technical QA on clinical AI documentation pipelines, OCR verification, and developing generative AI tools and web systems.
+          I'm Akther Naimudheen, a software developer focused on full-stack applications and AI-enabled systems. I work across application interfaces, API integrations, data processing, and testing to turn technical ideas into usable software.
+        </p>
+        <p style={{ marginTop: '0.65rem' }}>
+          My projects explore practical AI engineering—from multilingual clinical documentation workflows to automated video creation—alongside modern web application development.
         </p>
         <div className="hero__actions">
           <Link className="btn" to="/work">
-            Explore Engineering Projects <ArrowRight aria-hidden="true" />
+            Explore My Projects <ArrowRight aria-hidden="true" />
           </Link>
           <a className="link-underline" href={profile.githubUrl} target="_blank" rel="noopener noreferrer">
             View GitHub <ArrowUpRight aria-hidden="true" />
           </a>
-          <a className="link-underline" href={profile.resumeUrl} download>
-            Download Résumé <Download aria-hidden="true" />
-          </a>
+          <Link className="link-underline" to="/contact">
+            Contact Me <ArrowRight aria-hidden="true" />
+          </Link>
         </div>
       </motion.div>
 
@@ -340,13 +342,13 @@ function HomeHero() {
       <div className="hero__cues" role="region" aria-label="Featured project highlights">
         <div className="hero__cue-item">
           <div>
-            <strong>iScribe:</strong> <span>Clinical documentation pipeline &amp; schema checks</span>
+            <strong>iScribe:</strong> <span>Experimental clinical documentation &amp; schema guardrails</span>
           </div>
           <Link to="/work/iscribe">Explore Architecture →</Link>
         </div>
         <div className="hero__cue-item">
           <div>
-            <strong>RShorts:</strong> <span>Automated video pipeline (160+ passing tests)</span>
+            <strong>PromptToShort:</strong> <span>AI video automation workflow (160+ passing tests)</span>
           </div>
           <Link to="/work/rshorts">View Pipeline →</Link>
         </div>
@@ -361,12 +363,28 @@ function HomeHero() {
   );
 }
 
+function CredibilityStrip() {
+  return (
+    <section className="credibility-strip" aria-label="Verified technologies and stack">
+      <span className="credibility-strip__label">Verified Technologies &amp; Working Stack</span>
+      <div className="credibility-strip__techs">
+        {verifiedTechnologies.map((tech) => (
+          <span key={tech} className="credibility-strip__tag">
+            {tech}
+          </span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function HomePage() {
   const featured = projects.slice(0, 3);
 
   return (
     <PageFrame meta={homeMeta} path="/">
       <HomeHero />
+      <CredibilityStrip />
 
       <section className="section" aria-labelledby="home-work-title">
         <Reveal className="section-head">
@@ -376,7 +394,7 @@ function HomePage() {
             <br />structure and rigor.
           </h2>
           <p className="lede">
-            Generative AI applications, clinical documentation pipelines, and modern web architectures with concrete engineering scope and test evidence.
+            Practical AI engineering, full-stack web applications, and media workflows with concrete technical scope, validation boundaries, and test evidence.
           </p>
         </Reveal>
 
@@ -413,45 +431,66 @@ function HomePage() {
         </Link>
       </section>
 
-      <section className="section split-section" aria-labelledby="home-capability-title">
+      {/* About section: Engineering at the intersection of software and applied AI */}
+      <section className="section split-section" aria-labelledby="home-about-title">
         <Reveal className="section-head section-head--sticky">
-          <p className="eyebrow">Technical approach</p>
-          <h2 id="home-capability-title">
-            Architecture,
+          <p className="eyebrow">Engineering approach</p>
+          <h2 id="home-about-title">
+            Engineering at
             <br />
-            integration
+            the intersection of
             <br />
-            and reliability.
+            software and applied AI.
           </h2>
         </Reveal>
-        <div className="capability-list">
-          {capabilities.map(({ title, text }, index) => (
-            <Reveal className="capability-row" key={title} amount={0.3} delay={index * 0.05}>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </Reveal>
-          ))}
-        </div>
+        <Reveal className="about-narrative" direction="right" delay={0.05}>
+          <p>
+            My approach to development is to understand the problem first, design a practical solution, and make the implementation testable and maintainable.
+          </p>
+          <p>
+            I enjoy working across the software stack: building user-facing interfaces, connecting APIs and backend services, integrating AI capabilities, validating structured outputs, and investigating edge cases that can affect application reliability.
+          </p>
+          <p>
+            My current project work includes AI-assisted clinical documentation and automated video creation. These projects give me opportunities to explore the engineering challenges behind language processing, structured data, application integration, and software quality.
+          </p>
+          <p>
+            I also bring experience in documentation quality assurance and technical workflows, which informs my interest in validation, traceability, and dependable software behaviour.
+          </p>
+          <div style={{ marginTop: '0.75rem' }}>
+            <Link className="link-underline" to="/about">
+              Read complete background &amp; experience <ArrowUpRight aria-hidden="true" />
+            </Link>
+          </div>
+        </Reveal>
       </section>
 
-      <section className="ink-panel" data-cursor-invert aria-labelledby="home-role-title">
-        <div className="ink-panel__inner">
-          <Reveal>
-            <p className="eyebrow">Engineering discipline</p>
-            <h2 id="home-role-title">
-              Quality-focused
-              <br />
-              systems engineering.
-            </h2>
-          </Reveal>
-          <Reveal className="ink-panel__copy" direction="right">
-            <p>
-              Combining a Computer Engineering foundation with professional experience validating high-volume AI clinical documentation and OCR pipelines, I bring rigor, precision, and architectural discipline to every software project.
-            </p>
-            <Link className="link-underline" to="/about">
-              Read about my background <ArrowUpRight aria-hidden="true" />
-            </Link>
-          </Reveal>
+      {/* Skills section: Categorized engineering competencies */}
+      <section className="section" aria-labelledby="home-skills-title">
+        <Reveal className="section-head">
+          <p className="eyebrow">Technical capabilities</p>
+          <h2 id="home-skills-title">
+            Skills organized by
+            <br />engineering discipline.
+          </h2>
+          <p className="lede">
+            Core competencies across frontend interfaces, backend APIs, applied AI pipelines, and software quality engineering.
+          </p>
+        </Reveal>
+
+        <div className="skills-grid">
+          {skillCategories.map((cat, idx) => (
+            <Reveal key={cat.category} className="skill-card" delay={idx * 0.05}>
+              <p className="eyebrow" style={{ fontSize: '0.68rem', marginBottom: '0.1rem' }}>
+                Discipline 0{idx + 1}
+              </p>
+              <h3>{cat.category}</h3>
+              <ul>
+                {cat.skills.map((skill) => (
+                  <li key={skill}>{skill}</li>
+                ))}
+              </ul>
+            </Reveal>
+          ))}
         </div>
       </section>
 
@@ -527,6 +566,35 @@ function AboutPage() {
         </div>
       </section>
 
+      <section className="section" aria-labelledby="about-skills-title">
+        <Reveal className="section-head">
+          <p className="eyebrow">Technical capabilities</p>
+          <h2 id="about-skills-title">
+            Skills organized by
+            <br />engineering discipline.
+          </h2>
+          <p className="lede">
+            Core competencies across frontend interfaces, backend APIs, applied AI pipelines, and software quality engineering.
+          </p>
+        </Reveal>
+
+        <div className="skills-grid">
+          {skillCategories.map((cat, idx) => (
+            <Reveal key={cat.category} className="skill-card" delay={idx * 0.05}>
+              <p className="eyebrow" style={{ fontSize: '0.68rem', marginBottom: '0.1rem' }}>
+                Discipline 0{idx + 1}
+              </p>
+              <h3>{cat.category}</h3>
+              <ul>
+                {cat.skills.map((skill) => (
+                  <li key={skill}>{skill}</li>
+                ))}
+              </ul>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
       <section className="section split-section" aria-labelledby="about-experience-title">
         <Reveal className="section-head section-head--sticky">
           <p className="eyebrow">Experience &amp; Training</p>
@@ -598,7 +666,7 @@ function WorkPage() {
           />
           <div>
             <span>Featured Architecture · Core Systems</span>
-            <strong>iScribe &amp; RShorts Architecture</strong>
+            <strong>iScribe &amp; PromptToShort Architecture</strong>
             <ArrowUpRight aria-hidden="true" />
           </div>
         </Link>
@@ -783,11 +851,11 @@ function ContactPage() {
         <div className="contact__panel">
           <p className="eyebrow">Contact</p>
           <h1 id="contact-title">
-            <span>Let’s build</span>
-            <span>reliable software.</span>
+            <span>Have a software problem</span>
+            <span>worth solving?</span>
           </h1>
           <p className="lede">
-            Open to Junior AI Application Developer, Full-Stack Developer, and AI Quality Assurance / Implementation roles. Send an email or connect on LinkedIn and GitHub.
+            I'm interested in software development opportunities involving full-stack applications, applied AI, API integrations, and engineering-focused product development. If you're building something useful or looking for a developer who enjoys solving practical technical problems, let's connect.
           </p>
           <div className="contact__actions">
             <a className="btn btn--signal" href={`mailto:${profile.email}`}>
@@ -841,15 +909,26 @@ function CtaSection() {
   return (
     <section className="section cta-band" aria-labelledby="cta-title">
       <Reveal>
-        <p className="eyebrow">Looking for technical contributions?</p>
+        <p className="eyebrow">Connect &amp; Collaborate</p>
         <h2 id="cta-title">
-          Open to AI engineering
+          Have a software problem
           <br />
-          and full-stack roles.
+          worth solving?
         </h2>
-        <Link className="btn" to="/contact">
-          Get in touch <ArrowUpRight aria-hidden="true" />
-        </Link>
+        <p className="lede" style={{ maxWidth: '640px', margin: '1rem 0 1.5rem' }}>
+          I'm interested in software development opportunities involving full-stack applications, applied AI, API integrations, and engineering-focused product development. If you're building something useful or looking for a developer who enjoys solving practical technical problems, let's connect.
+        </p>
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          <Link className="btn" to="/contact">
+            Contact Me <ArrowRight aria-hidden="true" />
+          </Link>
+          <a className="link-underline" href={`mailto:${profile.email}`}>
+            {profile.email} <Mail aria-hidden="true" />
+          </a>
+          <a className="link-underline" href={profile.githubUrl} target="_blank" rel="noopener noreferrer">
+            GitHub <ArrowUpRight aria-hidden="true" />
+          </a>
+        </div>
       </Reveal>
     </section>
   );
@@ -862,6 +941,11 @@ function ClinicalAiArticlePage() {
       <ClinicalAiArticle />
     </PageFrame>
   );
+}
+
+function ProjectsSlugRedirect() {
+  const { slug } = useParams();
+  return <Navigate to={`/work/${slug ?? ''}`} replace />;
 }
 
 function NotFound() {
@@ -888,6 +972,9 @@ function AppRoutes() {
       <Route path="/about" element={<AboutPage />} />
       <Route path="/work" element={<WorkPage />} />
       <Route path="/work/:slug" element={<ProjectPage />} />
+      <Route path="/projects" element={<Navigate to="/work" replace />} />
+      <Route path="/projects/:slug" element={<ProjectsSlugRedirect />} />
+      <Route path="/writing" element={<Navigate to="/blog/building-clinical-ai-beyond-transcription" replace />} />
       <Route path="/blog" element={<Navigate to="/blog/building-clinical-ai-beyond-transcription" replace />} />
       <Route path="/blog/building-clinical-ai-beyond-transcription" element={<ClinicalAiArticlePage />} />
       <Route path="/contact" element={<ContactPage />} />

@@ -39,8 +39,8 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 'iscribe',
-    title: 'iScribe AI Architecture',
-    eyebrow: 'Clinical documentation pipeline · Full-stack application',
+    title: 'iScribe — AI Clinical Documentation',
+    eyebrow: 'AI Clinical Documentation · Experimental System',
     kind: 'ai',
     category: 'ai',
     categoryLabel: 'AI Applications & Pipeline Engineering',
@@ -50,22 +50,24 @@ export const projects: Project[] = [
     status: 'Private case study',
     role: 'Full-stack architecture & LLM pipeline design',
     summary:
-      'Architected an AI-assisted clinical documentation system that transforms consultation audio into structured medical records with multi-stage schema validation and mandatory clinician review.',
-    caseHeading: 'Speech recognition, language processing, and structured clinical schema.',
+      'An experimental AI clinical documentation system exploring how multilingual clinical conversations can be transformed into structured documentation while preserving clinical meaning.',
+    caseHeading: 'Speech-to-text integration, multilingual clinical fact extraction, and deterministic schema guardrails.',
     areas: ['React / TypeScript', 'Firebase', 'Speech-to-Text Pipeline', 'LLM Fact Extraction', 'Schema Validation'],
     caseStudy: [
       {
-        heading: 'Project Overview & Privacy Disclosure',
-        body: 'iScribe is a self-directed engineering project addressing physician documentation burden. Clinical consultations produce dense, conversational speech with rapid terminology and regional code-switching (Malayalam and English). NOTICE: Evaluated strictly using synthetic consultation transcripts and sanitized datasets. No real patient data (PHI) is used, and no live hospital adoption or regulatory certifications (HIPAA/DPDP) are claimed.',
+        heading: 'Project Overview & Problem Statement',
+        body: 'Clinical conversation is not ordinary text. A documentation pipeline must distinguish what a patient reports, what is uncertain, what occurred in the past, and what is merely being recommended or discussed. iScribe is an experimental engineering project exploring how multilingual clinical conversations can be transformed into structured documentation while preserving clinical meaning. NOTICE: Evaluated strictly using synthetic consultation transcripts and sanitized datasets. No real patient data (PHI) is used, and no live hospital adoption, regulatory certification (HIPAA/DPDP), or autonomous clinical use is claimed.',
       },
       {
-        heading: 'Architecture & System Pipeline',
+        heading: 'Engineering Focus & System Architecture',
         items: [
-          'Stage 1 (Audio Ingestion & STT): Processes chunked consultation audio via speech-to-text with timestamped segment boundaries',
-          'Stage 2 (Bilingual & Entity Extraction): Targeted prompt templates isolate chief complaints, symptoms, medications, dosages, and temporal anchors',
-          'Stage 3 (Deterministic Schema Validation): Runtime validation via Zod / Pydantic JSON contracts ensuring strict field typing and range checks',
-          'Stage 4 (Ambiguity & Conflict Handling): Flags contradictory timelines, uncertain diagnoses ("rule out", "suspected"), and missing fields',
-          'Stage 5 (Clinician Review UI): Responsive editing workspace requiring manual physician verification and sign-off before export',
+          'Speech-to-text provider integration and transcription workflows with timestamped boundaries',
+          'Malayalam-English code-switching and phonetic normalization challenges',
+          'Structured clinical fact extraction and semantic validation via strict JSON schema contracts',
+          'Negation, uncertainty, temporality, and clinical-context handling (e.g., distinguishing "denies chest pain")',
+          'Separation of transcription, normalization, extraction, and validation responsibilities',
+          'Automated regression testing and adversarial evaluation of extraction behaviour across dialogue permutations',
+          'Mandatory clinician review UI boundary preventing unverified EHR commits',
         ],
       },
       {
@@ -112,8 +114,8 @@ export const projects: Project[] = [
   },
   {
     id: 'rshorts',
-    title: 'PromptToShort',
-    eyebrow: 'AI video creation platform · Media pipeline',
+    title: 'PromptToShort — AI Video Automation',
+    eyebrow: 'AI Video Automation · Media Pipeline',
     kind: 'ai',
     category: 'ai',
     categoryLabel: 'AI Applications & Pipeline Engineering',
@@ -124,13 +126,13 @@ export const projects: Project[] = [
     role: 'Creator & AI Pipeline Engineer',
     liveUrl: 'https://prompttoshort.online/',
     summary:
-      'Engineered PromptToShort (originally RShorts), an automated AI video creation platform converting prompts and scripts into vertical short-form videos with Deepgram neural voiceover, beat-synced visual pacing, kinetic subtitles, and multi-track NLE timeline export.',
-    caseHeading: 'Transcript segmentation, multi-provider footage selection, and audio-visual assembly.',
+      'An AI-assisted video creation workflow designed to help transform longer video content into shorter, captioned clips.',
+    caseHeading: 'Transcript segmentation, neural speech synthesis, and automated FFmpeg video assembly.',
     areas: ['Python / FastAPI', 'LLM Prompt Engineering', 'Deepgram TTS', 'Multimodal Vision QA', 'FFmpeg Pipeline'],
     caseStudy: [
       {
-        heading: 'Project Overview & Problem Scope',
-        body: 'PromptToShort is an end-to-end generative AI product engineered by Akther Naimudheen to transform prompts and scripts into publish-ready 9:16 vertical short-form videos. The system automates narrative hook synthesis, neural voice narration, semantic footage ranking, kinetic subtitle compilation, and multi-track timeline export for DaVinci Resolve and Premiere Pro.',
+        heading: 'Project Overview & Engineering Scope',
+        body: 'PromptToShort (originally RShorts) is an AI-assisted video creation workflow designed to help transform longer video content into shorter, captioned clips. The system explores Python and FastAPI worker workflows, speech transcription, media-processing integration, kinetic subtitling, and automated multi-track FFmpeg video rendering.',
       },
       {
         heading: 'Personal Contributions',
@@ -143,13 +145,15 @@ export const projects: Project[] = [
         ],
       },
       {
-        heading: 'System Architecture & Workflow',
+        heading: 'Engineering Focus & Workflow Stages',
         items: [
-          'Stage 1 (Transcript Analysis & Hook Detection): Segmenting transcripts into candidate 30–60 second narrative arcs with retention scoring',
-          'Stage 2 (Voice Synthesis & Beat Alignment): Generating master narration audio and word-level timing tables',
-          'Stage 3 (Media Selection & Multimodal QA): Ranking b-roll video candidates and running vision-model relevance checks',
-          'Stage 4 (Dynamic Kinetic Subtitling): Compiling ASS subtitle files with word-level bounding-box highlight bounces',
-          'Stage 5 (FFmpeg Assembly Engine): Multi-track video compositing (A-Roll + B-Roll + Voice + Audio Ducker + Overlays) into 1080x1920 MP4',
+          'Python and FastAPI workflows for request handling and worker coordination',
+          'Speech transcription and media-processing integration with Deepgram Aura neural TTS (<12ms drift)',
+          'Video segmentation, retention-based hook detection, and narrative pacing alignment',
+          'Semantic visual retrieval and multimodal vision-model keyframe verification',
+          'Dynamic kinetic ASS subtitling engine with word-level highlight bounding boxes',
+          'Automated multi-track FFmpeg video compositing into vertical 9:16 MP4 clips',
+          'Comprehensive test harness with 160+ unit and integration tests covering parser boundary conditions and filtergraphs',
         ],
       },
       {
@@ -186,7 +190,7 @@ export const projects: Project[] = [
   {
     id: 'website-projects',
     title: 'Frontend Systems & Web Architecture',
-    eyebrow: 'Component architecture · Modern web systems',
+    eyebrow: 'Full-Stack Web Development · Reusable Components',
     kind: 'web',
     category: 'fullstack',
     categoryLabel: 'Full-Stack Architecture & Systems',

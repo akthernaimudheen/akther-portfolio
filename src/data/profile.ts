@@ -9,6 +9,63 @@ export interface JourneyEntry {
   text: string;
 }
 
+export interface SkillCategory {
+  category: string;
+  skills: string[];
+}
+
+export const verifiedTechnologies = [
+  'Python',
+  'TypeScript & JavaScript',
+  'React & Next.js',
+  'Tailwind CSS',
+  'FastAPI',
+  'REST APIs',
+  'PostgreSQL & Supabase',
+  'LLM & Speech-to-Text',
+  'Automated Testing & Validation',
+] as const;
+
+export const skillCategories: SkillCategory[] = [
+  {
+    category: 'Frontend Development',
+    skills: [
+      'HTML, CSS, JavaScript, TypeScript',
+      'React, Next.js, Tailwind CSS',
+      'Responsive interfaces and reusable components',
+    ],
+  },
+  {
+    category: 'Backend & Integration',
+    skills: [
+      'Python',
+      'FastAPI and REST API integration',
+      'Data validation and structured outputs',
+      'PostgreSQL, Supabase, or Firebase',
+    ],
+  },
+  {
+    category: 'Applied AI',
+    skills: [
+      'LLM API integration',
+      'Prompt and output design',
+      'Speech-processing workflows',
+      'Structured information extraction',
+      'Evaluation and error analysis',
+    ],
+  },
+  {
+    category: 'Quality & Engineering',
+    skills: [
+      'Git and version control',
+      'Unit and regression testing',
+      'Debugging and failure handling',
+      'Input/output schema validation',
+      'Edge-case and adversarial testing',
+    ],
+  },
+];
+
 export interface Capability {
   icon: CapabilityIcon;
   title: string;
@@ -21,7 +78,7 @@ export const profile = {
   /* Single source for the professional positioning. Drives the hero H1's
      accessible name and every route title, so the visible heading and the
      semantic/SEO name can never drift apart. */
-  positioning: 'AI Engineer & Full-Stack Developer Portfolio',
+  positioning: 'Software Developer & AI Application Engineer',
   email: 'akthernaimudheen0@gmail.com',
   githubUrl: 'https://github.com/akthernaimudheen',
   linkedinUrl: 'https://www.linkedin.com/in/akther-naimudheen-3bbb24197/',
