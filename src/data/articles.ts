@@ -57,7 +57,7 @@ export const articles: Article[] = [
     title: 'Building AI Clinical Documentation Beyond Transcription: Engineering Guardrails for Clinical Fact Extraction',
     eyebrow: 'Engineering Case Study · Applied Clinical NLP',
     description:
-      'Speech recognition does not solve medical documentation. An engineering case study on combining deterministic NLP guardrails, verbatim span tracking, and schema validation to extract structured clinical facts while eliminating unprompted model fabrications.',
+      'Speech recognition does not solve medical documentation. An engineering case study on combining deterministic NLP guardrails, verbatim span tracking, and schema validation to extract structured clinical facts while preventing unprompted model fabrications.',
     publishedAt: '2026-10-18',
     updatedAt: '2026-10-19',
     readTime: '14 min read',
@@ -173,7 +173,7 @@ ffmpeg -y -i background_music.mp3 -i narration_voice.wav -filter_complex \\
   },
   {
     slug: 'deterministic-schema-guardrails-llm-apis',
-    title: 'Deterministic Schema Guardrails: Eliminating Hallucinations in LLM API Pipelines',
+    title: 'Deterministic Schema Guardrails: Mitigating Hallucinations in LLM API Pipelines',
     eyebrow: 'Software Quality · API Design',
     description:
       'Why model temperature tuning is not an engineering contract. A practical approach to combining Pydantic runtime schemas, regex boundary checks, and automated retry budgets for structured outputs.',

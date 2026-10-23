@@ -336,21 +336,26 @@ function HomeHero() {
 
       <motion.div className="hero__intro" {...step(0.16)}>
         <p>
-          I'm Akther Naimudheen, a software developer focused on full-stack applications and AI-enabled systems. I work across application interfaces, API integrations, data processing, and testing to turn technical ideas into usable software.
+          I'm Akther Naimudheen, a software developer focused on applied AI systems and full-stack web applications. I design resilient architectures with concrete validation boundaries, automated testing, and dependable API integrations.
         </p>
-        <p style={{ marginTop: '0.65rem' }}>
-          My projects explore practical AI engineering—from multilingual clinical documentation workflows to automated video creation—alongside modern web application development.
+        <p className="hero__intro-sub">
+          Explore practical AI engineering—from multilingual clinical documentation workflows to asynchronous video processing pipelines.
         </p>
         <div className="hero__actions">
           <Link className="btn" to="/work">
-            Explore My Projects <ArrowRight aria-hidden="true" />
+            Explore Engineering Projects <ArrowRight aria-hidden="true" />
           </Link>
-          <a className="link-underline" href={profile.githubUrl} target="_blank" rel="noopener noreferrer">
-            View GitHub <ArrowUpRight aria-hidden="true" />
-          </a>
-          <Link className="link-underline" to="/contact">
-            Contact Me <ArrowRight aria-hidden="true" />
-          </Link>
+          <div className="hero__secondary-actions">
+            <a className="link-underline" href={profile.githubUrl} target="_blank" rel="noopener noreferrer">
+              GitHub <ArrowUpRight aria-hidden="true" />
+            </a>
+            <a className="link-underline" href={profile.resumeUrl} download>
+              Résumé <Download aria-hidden="true" />
+            </a>
+            <Link className="link-underline" to="/contact">
+              Contact <ArrowRight aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </motion.div>
 
@@ -358,7 +363,7 @@ function HomeHero() {
       <div className="hero__cues" role="region" aria-label="Featured project highlights">
         <div className="hero__cue-item">
           <div>
-            <strong>iScribe:</strong> <span>Experimental clinical documentation &amp; schema guardrails</span>
+            <strong>iScribe:</strong> <span>Clinical documentation &amp; schema guardrails</span>
           </div>
           <Link to="/work/iscribe">Explore Architecture →</Link>
         </div>

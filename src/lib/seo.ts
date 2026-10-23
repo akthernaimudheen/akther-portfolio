@@ -2,6 +2,12 @@ import { profile } from '@/data/profile';
 import type { Project } from '@/data/projects';
 import type { Article } from '@/data/articles';
 import { SITE_URL } from '@/lib/site';
+import {
+  staticRouteMetadata,
+  getProjectMetadata,
+  getArticleMetadata,
+  clampDescription,
+} from './routes-meta';
 
 /**
  * Re-exported so every existing `@/lib/seo` import keeps working. The value
@@ -37,43 +43,14 @@ export interface RouteMeta {
 }
 
 const TITLE_SUFFIX = profile.name;
-const DESCRIPTION_LIMIT = 155;
 
-/** Trim to a word boundary so a long summary cannot produce a mid-word cut. */
-function clampDescription(text: string): string {
-  if (text.length <= DESCRIPTION_LIMIT) return text;
-  const cut = text.slice(0, DESCRIPTION_LIMIT);
-  const lastSpace = cut.lastIndexOf(' ');
-  return `${(lastSpace > 60 ? cut.slice(0, lastSpace) : cut).replace(/[,.;:—-]$/, '')}…`;
-}
+export const homeMeta: RouteMeta = staticRouteMetadata['/'];
 
-export const homeMeta: RouteMeta = {
-  title: `${profile.name} | Software Developer & AI Application Engineer`,
-  description:
-    'Software engineering projects, applied AI systems, technical architecture writing, and web development services by Akther Naimudheen.',
-  type: 'profile',
-};
+export const aboutMeta: RouteMeta = staticRouteMetadata['/about'];
 
-export const aboutMeta: RouteMeta = {
-  title: `About — ${TITLE_SUFFIX}`,
-  description:
-    'Background of Akther Naimudheen: AI-focused software developer, full-stack web development, computer engineering diploma, and healthcare documentation QA.',
-  type: 'profile',
-};
+export const workMeta: RouteMeta = staticRouteMetadata['/work'];
 
-export const workMeta: RouteMeta = {
-  title: `Software Projects — ${TITLE_SUFFIX}`,
-  description:
-    'Software engineering projects by Akther Naimudheen across applied AI pipelines, clinical documentation research, full-stack web applications, and automated video workflows.',
-  type: 'website',
-};
-
-export const contactMeta: RouteMeta = {
-  title: `Contact — ${TITLE_SUFFIX}`,
-  description:
-    'Connect with Akther Naimudheen for full-stack software development, applied AI engineering, API integrations, and product development opportunities.',
-  type: 'website',
-};
+export const contactMeta: RouteMeta = staticRouteMetadata['/contact'];
 
 export const notFoundMeta: RouteMeta = {
   title: `Page not found — ${TITLE_SUFFIX}`,
@@ -84,40 +61,18 @@ export const notFoundMeta: RouteMeta = {
 
 /** Built strictly from fields that already exist on the project record. */
 export function projectMeta(project: Project): RouteMeta {
-  return {
-    title: `${project.title} — ${TITLE_SUFFIX}`,
-    description: clampDescription(project.summary),
-    type: 'article',
-  };
+  return getProjectMetadata(project);
 }
 
-export const clinicalAiArticleMeta: RouteMeta = {
-  title: `Building AI Clinical Documentation Beyond Transcription — ${TITLE_SUFFIX}`,
-  description:
-    'An engineering deep dive into deterministic NLP guardrails, verbatim span tracking, and schema validation to solve LLM hallucinations in clinical documentation.',
-  type: 'article',
-};
+export const clinicalAiArticleMeta: RouteMeta =
+  staticRouteMetadata['/blog/building-clinical-ai-beyond-transcription'];
 
-export const blogMeta: RouteMeta = {
-  title: `Technical Publication & Engineering Essays — ${TITLE_SUFFIX}`,
-  description:
-    'Technical case studies, systems architecture breakdowns, and practical engineering notes on applied AI, media automation, and dependable software.',
-  type: 'website',
-};
+export const blogMeta: RouteMeta = staticRouteMetadata['/blog'];
 
-export const servicesMeta: RouteMeta = {
-  title: `Web Engineering & Search Architecture Services — ${TITLE_SUFFIX}`,
-  description:
-    'Engineering-led business website development, technical SEO architecture, and local search visibility for independent businesses and technical teams.',
-  type: 'website',
-};
+export const servicesMeta: RouteMeta = staticRouteMetadata['/services'];
 
 export function buildArticleMeta(article: Article): RouteMeta {
-  return {
-    title: `${article.title} — ${TITLE_SUFFIX}`,
-    description: clampDescription(article.description),
-    type: 'article',
-  };
+  return getArticleMetadata(article);
 }
 
 export function dynamicArticleJsonLd(article: Article): string {
