@@ -19,5 +19,6 @@ export const STATIC_ROUTES = [
   '/contact',
   '/blog',
   '/blog/building-clinical-ai-beyond-transcription',
+  '/blog/hybrid-ai-architecture-cpu-guardrails',
   '/services',
 ] as const;

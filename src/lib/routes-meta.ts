@@ -57,6 +57,12 @@ export const staticRouteMetadata: Record<string, Omit<RouteMetadata, 'canonical'
       'Engineering-led business website development, technical SEO architecture, and local search visibility for independent businesses and technical teams.',
     type: 'website',
   },
+  '/blog/hybrid-ai-architecture-cpu-guardrails': {
+    title: `Hybrid AI Architecture: Deterministic CPU Guardrails for LLMs — ${TITLE_SUFFIX}`,
+    description:
+      'Why treating the neural model as an untrusted coprocessor within a deterministic CPU runtime creates safer, faster, and cheaper AI systems.',
+    type: 'article',
+  },
   '/blog/building-clinical-ai-beyond-transcription': {
     title: `Building AI Clinical Documentation Beyond Transcription — ${TITLE_SUFFIX}`,
     description:

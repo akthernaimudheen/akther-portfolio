@@ -553,6 +553,9 @@ export function ClinicalAiArticle() {
               <strong>Interactive Case Study Overview:</strong> <Link to="/work/iscribe">iScribe Architecture &amp; Visual Walkthrough</Link>
             </li>
             <li>
+              <strong>Architectural Research Monograph:</strong> <Link to="/blog/hybrid-ai-architecture-cpu-guardrails">Hybrid AI Architecture: Deterministic CPU Guardrails for LLMs</Link>
+            </li>
+            <li>
               <strong>Full Engineering Portfolio:</strong> <Link to="/work">Akther Naimudheen — AI Application &amp; QA Engineering</Link>
             </li>
             <li>

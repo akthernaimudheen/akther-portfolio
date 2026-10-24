@@ -40,7 +40,7 @@ export interface Article {
   statusLabel: string;
   featured?: boolean;
   renderMode: 'component' | 'structured';
-  componentName?: 'ClinicalAiArticle';
+  componentName?: 'ClinicalAiArticle' | 'HybridAiArticle';
   sections?: ArticleSection[];
 }
 
@@ -52,6 +52,28 @@ export const articleCategories: ArticleCategory[] = [
 ];
 
 export const articles: Article[] = [
+  {
+    slug: 'hybrid-ai-architecture-cpu-guardrails',
+    title: 'Hybrid AI Architecture: Deterministic CPU Guardrails for LLMs',
+    eyebrow: 'Applied AI Architecture · Systems Engineering',
+    description:
+      'Why treating the neural model as an untrusted coprocessor within a deterministic CPU runtime creates safer, faster, and cheaper AI systems.',
+    publishedAt: '2026-10-24',
+    readTime: '12 min read',
+    category: 'Applied AI & NLP',
+    tags: [
+      'Hybrid AI',
+      'Deterministic Guardrails',
+      'CPU Inference',
+      'Clinical NLP',
+      'Systems Architecture',
+    ],
+    status: 'published-case-study',
+    statusLabel: 'Published Engineering Monograph',
+    featured: true,
+    renderMode: 'component',
+    componentName: 'HybridAiArticle',
+  },
   {
     slug: 'building-clinical-ai-beyond-transcription',
     title: 'Building AI Clinical Documentation Beyond Transcription: Engineering Guardrails for Clinical Fact Extraction',

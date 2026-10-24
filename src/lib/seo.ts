@@ -64,6 +64,9 @@ export function projectMeta(project: Project): RouteMeta {
   return getProjectMetadata(project);
 }
 
+export const hybridAiArticleMeta: RouteMeta =
+  staticRouteMetadata['/blog/hybrid-ai-architecture-cpu-guardrails'];
+
 export const clinicalAiArticleMeta: RouteMeta =
   staticRouteMetadata['/blog/building-clinical-ai-beyond-transcription'];
 

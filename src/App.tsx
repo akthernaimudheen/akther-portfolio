@@ -15,6 +15,7 @@ import {
 } from '@/components/Seo';
 import { ProjectVisualScene } from '@/components/ui/project-visual-scene';
 import { ClinicalAiArticle } from '@/components/ClinicalAiArticle';
+import { HybridAiArticle } from '@/components/HybridAiArticle';
 import { BlogIndex } from '@/components/BlogIndex';
 import { StructuredArticlePage } from '@/components/StructuredArticlePage';
 import { ServicesPage } from '@/components/ServicesPage';
@@ -27,6 +28,7 @@ import {
   blogMeta,
   buildArticleMeta,
   clinicalAiArticleMeta,
+  hybridAiArticleMeta,
   contactMeta,
   homeMeta,
   notFoundMeta,
@@ -1101,6 +1103,16 @@ function BlogPage() {
   );
 }
 
+function HybridAiArticlePage() {
+  const article = getArticleBySlug('hybrid-ai-architecture-cpu-guardrails');
+  return (
+    <PageFrame meta={hybridAiArticleMeta} path="/blog/hybrid-ai-architecture-cpu-guardrails">
+      {article && <DynamicArticleStructuredData article={article} />}
+      <HybridAiArticle />
+    </PageFrame>
+  );
+}
+
 function ClinicalAiArticlePage() {
   return (
     <PageFrame meta={clinicalAiArticleMeta} path="/blog/building-clinical-ai-beyond-transcription">
@@ -1118,8 +1130,13 @@ function DynamicArticlePage() {
   if (!article) return <NotFound />;
 
   // Flagship clinical article: exact preservation of custom component
-  if (article.slug === 'building-clinical-ai-beyond-transcription' || article.renderMode === 'component') {
+  if (article.slug === 'building-clinical-ai-beyond-transcription' || article.componentName === 'ClinicalAiArticle') {
     return <ClinicalAiArticlePage />;
+  }
+
+  // Hybrid AI architecture monograph: exact preservation of custom component
+  if (article.slug === 'hybrid-ai-architecture-cpu-guardrails' || article.componentName === 'HybridAiArticle') {
+    return <HybridAiArticlePage />;
   }
 
   const meta = buildArticleMeta(article);
@@ -1174,6 +1191,7 @@ function AppRoutes() {
       <Route path="/writing" element={<Navigate to="/blog" replace />} />
       <Route path="/blog" element={<BlogPage />} />
       <Route path="/blog/building-clinical-ai-beyond-transcription" element={<ClinicalAiArticlePage />} />
+      <Route path="/blog/hybrid-ai-architecture-cpu-guardrails" element={<HybridAiArticlePage />} />
       <Route path="/blog/:slug" element={<DynamicArticlePage />} />
       <Route path="/services" element={<ServicesRoutePage />} />
       <Route path="/contact" element={<ContactPage />} />
