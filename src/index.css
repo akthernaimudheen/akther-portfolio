@@ -726,7 +726,7 @@ a:focus-visible .project-image img { transform: scale(1.015); }
 .article-code-block {
   margin: 1.5rem 0;
   padding: 1.25rem 1.5rem;
-  background: var(--white);
+  background: #fbfbf9;
   border: 1px solid var(--hairline);
   border-left: 3px solid var(--ink);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -1257,14 +1257,46 @@ a:focus-visible .project-image img { transform: scale(1.015); }
   border-radius: 2px;
   color: #ffffff;
 }
-.article-code-block {
+.article-code-wrapper .article-code-block {
   margin: 0;
-  padding: 1.25rem;
+  padding: 1.25rem 1.4rem;
+  background: #0f0f10;
+  border: none;
+  border-radius: 0;
   overflow-x: auto;
-  font-family: var(--mono);
+  font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
   font-size: 0.85rem;
   line-height: 1.6;
   color: #f4f4f5;
+}
+.article-code-wrapper .article-code-block code {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: transparent;
+}
+.article-code-wrapper .token-key {
+  color: #7dd3fc;
+  font-weight: 500;
+}
+.article-code-wrapper .token-string {
+  color: #86efac;
+}
+.article-code-wrapper .token-boolean,
+.article-code-wrapper .token-number {
+  color: #fca5a5;
+}
+.article-code-wrapper .token-punct,
+.article-code-wrapper .token-brace {
+  color: #a1a1aa;
+}
+.article-code-wrapper .token-label {
+  color: #93c5fd;
+  font-weight: 600;
+}
+.article-code-wrapper .token-error {
+  color: #f87171;
+  font-weight: 600;
 }
 .article-list {
   margin: 1.25rem 0;

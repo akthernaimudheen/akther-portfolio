@@ -278,12 +278,14 @@ Deterministic Gate: Ambiguity or Synthesis Needed?
               <span className="code-lang-tag">json</span>
             </div>
             <pre className="article-code-block">
-<code>{`{
-  "organ": "gallbladder",
-  "status": "normal",
-  "echogenicity": "homogeneous",
-  "calculi": false
-}`}</code>
+<code>
+  <span className="token-brace">{'{'}</span>{'\n'}
+  {'  '}<span className="token-key">"organ"</span><span className="token-punct">:</span> <span className="token-string">"gallbladder"</span><span className="token-punct">,</span>{'\n'}
+  {'  '}<span className="token-key">"status"</span><span className="token-punct">:</span> <span className="token-string">"normal"</span><span className="token-punct">,</span>{'\n'}
+  {'  '}<span className="token-key">"echogenicity"</span><span className="token-punct">:</span> <span className="token-string">"homogeneous"</span><span className="token-punct">,</span>{'\n'}
+  {'  '}<span className="token-key">"calculi"</span><span className="token-punct">:</span> <span className="token-boolean">false</span>{'\n'}
+  <span className="token-brace">{'}'}</span>
+</code>
             </pre>
           </div>
 
@@ -312,13 +314,15 @@ Deterministic Gate: Ambiguity or Synthesis Needed?
               <span className="code-lang-tag">text</span>
             </div>
             <pre className="article-code-block">
-<code>{`Source Sentence: "Patient reports mild nausea yesterday, but strongly denies any chest pain or shortness of breath."
-Candidate Fact from Model:
-{
-  "entity": "chest pain",
-  "verbatim_quote": "chest pain",
-  "status": "confirmed"  <-- CRITICAL POLARITY ERROR
-}`}</code>
+<code>
+  <span className="token-label">Source Sentence:</span> <span className="token-string">"Patient reports mild nausea yesterday, but strongly denies any chest pain or shortness of breath."</span>{'\n'}
+  <span className="token-label">Candidate Fact from Model:</span>{'\n'}
+  <span className="token-brace">{'{'}</span>{'\n'}
+  {'  '}<span className="token-key">"entity"</span><span className="token-punct">:</span> <span className="token-string">"chest pain"</span><span className="token-punct">,</span>{'\n'}
+  {'  '}<span className="token-key">"verbatim_quote"</span><span className="token-punct">:</span> <span className="token-string">"chest pain"</span><span className="token-punct">,</span>{'\n'}
+  {'  '}<span className="token-key">"status"</span><span className="token-punct">:</span> <span className="token-string">"confirmed"</span>  <span className="token-error">&lt;-- CRITICAL POLARITY ERROR</span>{'\n'}
+  <span className="token-brace">{'}'}</span>
+</code>
             </pre>
           </div>
 
