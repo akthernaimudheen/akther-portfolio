@@ -1,7 +1,7 @@
-import { profile } from '@/data/profile';
-import type { Project } from '@/data/projects';
-import type { Article } from '@/data/articles';
-import { SITE_URL } from '@/lib/site';
+import { profile } from '../data/profile';
+import type { Project } from '../data/projects';
+import type { Article } from '../data/articles';
+import { SITE_URL } from './site';
 import {
   staticRouteMetadata,
   getProjectMetadata,
@@ -167,19 +167,66 @@ export function articleJsonLd(): string {
  * Connects the personal identity "Akther Naimudheen" to canonical portfolio,
  * LinkedIn, GitHub, and defines WebSite site-name identity for Google Search.
  */
+/**
+ * Structured data for a portfolio project / case study.
+ * Conforms to schema.org/SoftwareApplication.
+ */
+export function projectJsonLd(project: Project): string {
+  const url = absoluteUrl(`/work/${project.id}`);
+  const authorUrl = absoluteUrl('/about');
+  const image = project.visual ? absoluteUrl(project.visual) : absoluteUrl(OG_IMAGE.path);
+
+  const schema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: project.title,
+    headline: project.caseHeading || project.title,
+    description: project.summary,
+    applicationCategory: project.category === 'ai' ? 'BusinessApplication' : 'WebApplication',
+    operatingSystem: 'Cross-platform',
+    author: {
+      '@type': 'Person',
+      name: profile.name,
+      url: authorUrl,
+      sameAs: [profile.githubUrl, profile.linkedinUrl],
+    },
+    creator: {
+      '@type': 'Person',
+      name: profile.name,
+      url: authorUrl,
+    },
+    keywords: [...project.areas],
+    ...(url ? { url } : {}),
+    ...(project.liveUrl ? { installUrl: project.liveUrl } : {}),
+    ...(image ? { image } : {}),
+  };
+
+  return JSON.stringify(schema);
+}
+
 export function structuredDataJsonLd(): string {
   const url = absoluteUrl('/');
   const personId = url ? `${url}#person` : undefined;
   const websiteId = url ? `${url}#website` : undefined;
+  const profilePageId = url ? `${url}#profilepage` : undefined;
   const image = absoluteUrl(profile.portrait.src);
 
   const graph: Record<string, unknown>[] = [
+    {
+      '@type': 'ProfilePage',
+      ...(profilePageId ? { '@id': profilePageId } : {}),
+      ...(url ? { url } : {}),
+      name: homeMeta.title,
+      ...(websiteId ? { isPartOf: { '@id': websiteId } } : {}),
+      description: homeMeta.description,
+      ...(personId ? { mainEntity: { '@id': personId } } : {}),
+    },
     {
       '@type': 'WebSite',
       ...(websiteId ? { '@id': websiteId } : {}),
       ...(url ? { url } : {}),
       name: 'Akther Naimudheen Portfolio',
-      alternateName: ['Akther Naimudheen', 'Akther V N Portfolio'],
+      alternateName: ['Akther Naimudheen', 'Akther Naimudheen AI Engineer', 'akthernaimudheen', 'Akther V N Portfolio'],
       description: homeMeta.description,
       ...(personId ? { publisher: { '@id': personId } } : {}),
     },
@@ -187,9 +234,11 @@ export function structuredDataJsonLd(): string {
       '@type': 'Person',
       ...(personId ? { '@id': personId } : {}),
       name: profile.name,
-      alternateName: [profile.alternateName, 'Akther'],
-      jobTitle: 'Software Developer & AI Application Engineer',
+      alternateName: profile.alternateNames,
+      jobTitle: 'AI Application Engineer & Software Developer',
       description: homeMeta.description,
+      disambiguatingDescription:
+        'AI-focused software engineer and builder of practical AI products, specializing in clinical NLP guardrails, Python pipelines, and full-stack systems based in Kerala, India.',
       email: `mailto:${profile.email}`,
       address: {
         '@type': 'PostalAddress',
@@ -206,13 +255,17 @@ export function structuredDataJsonLd(): string {
         profile.linkedinUrl,
       ],
       knowsAbout: [
-        'Software Application Development',
+        'Clinical Natural Language Processing',
+        'Deterministic Guardrails',
+        'Artificial Intelligence',
         'AI Application Engineering',
+        'Software Engineering',
         'Full-Stack Web Development',
         'Clinical Documentation Systems',
         'REST API Integration',
         'Speech-to-Text Pipelines',
         'Software Testing & Validation',
+        'Pydantic Schema Validation',
         'TypeScript & JavaScript',
         'React & Next.js',
         'Tailwind CSS',

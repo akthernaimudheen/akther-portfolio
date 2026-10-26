@@ -22,25 +22,25 @@ export function clampDescription(text: string): string {
 
 export const staticRouteMetadata: Record<string, Omit<RouteMetadata, 'canonical'>> = {
   '/': {
-    title: `${TITLE_SUFFIX} | AI Application Engineer & Software Developer`,
+    title: `${TITLE_SUFFIX} | AI-Focused Software Engineer & Portfolio`,
     description:
-      'Software developer and AI application engineer in Kerala, India. Explore applied AI projects, Python systems, software architecture, and engineering case studies.',
+      'Official portfolio of Akther Naimudheen, AI-focused software engineer in Kerala, India. Practical AI projects, clinical NLP guardrails, and Python systems.',
     type: 'profile',
   },
   '/about': {
-    title: `About — ${TITLE_SUFFIX}`,
+    title: `About ${TITLE_SUFFIX} — AI Engineer & Software Developer`,
     description:
-      'Background of Akther Naimudheen: AI-focused software developer, full-stack web development, computer engineering diploma, and healthcare documentation QA.',
+      'Background of Akther Naimudheen: AI-focused software engineer and builder of practical AI products. Diploma in Computer Engineering and healthcare NLP QA.',
     type: 'profile',
   },
   '/work': {
-    title: `Engineering Projects & Case Studies | ${TITLE_SUFFIX}`,
+    title: `AI Projects & Engineering Portfolio — ${TITLE_SUFFIX}`,
     description:
-      'Explore AI engineering projects, Python applications, asynchronous media pipelines, and full-stack systems, with technical decisions and testing evidence.',
+      'Explore AI projects and engineering case studies by Akther Naimudheen: iScribe clinical NLP guardrails, PromptToShort media pipelines, and Python systems.',
     type: 'website',
   },
   '/contact': {
-    title: `Contact — ${TITLE_SUFFIX}`,
+    title: `Contact ${TITLE_SUFFIX} — AI & Software Engineering`,
     description:
       'Connect with Akther Naimudheen for full-stack software development, applied AI engineering, API integrations, and product development opportunities.',
     type: 'website',
@@ -74,17 +74,25 @@ export const staticRouteMetadata: Record<string, Omit<RouteMetadata, 'canonical'
 export function getProjectMetadata(project: Project): Omit<RouteMetadata, 'canonical'> {
   if (project.id === 'iscribe') {
     return {
-      title: `iScribe AI Architecture & Testing | ${TITLE_SUFFIX}`,
+      title: `iScribe: Clinical NLP & AI Guardrails — ${TITLE_SUFFIX}`,
       description:
-        'Explore the engineering behind iScribe: clinical NLP guardrails, schema validation, regression tests, and limitations in Malayalam medical documentation.',
+        'iScribe by Akther Naimudheen: deterministic clinical NLP guardrails, Malayalam-English speech extraction, Pydantic schema validation, and test methodology.',
       type: 'article',
     };
   }
   if (project.id === 'rshorts') {
     return {
-      title: `PromptToShort: Python Media Pipeline | ${TITLE_SUFFIX}`,
+      title: `PromptToShort: Asynchronous Video Pipeline — ${TITLE_SUFFIX}`,
       description:
-        "Explore PromptToShort's Python media pipeline: asynchronous FastAPI processing, headless FFmpeg workflows, subtitle synchronization, and automated tests.",
+        'PromptToShort by Akther Naimudheen: asynchronous FastAPI media pipeline, headless FFmpeg video generation, and subtitle alignment.',
+      type: 'article',
+    };
+  }
+  if (project.id === 'technical-lab') {
+    return {
+      title: `Technical Systems Exploration & Prototypes — ${TITLE_SUFFIX}`,
+      description:
+        'Developer tooling, local LLM inference benchmarks, and experimental engineering prototypes created by Akther Naimudheen.',
       type: 'article',
     };
   }

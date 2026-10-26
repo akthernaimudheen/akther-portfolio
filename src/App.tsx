@@ -10,6 +10,7 @@ import {
   ArticleStructuredData,
   DynamicArticleStructuredData,
   PersonStructuredData,
+  ProjectStructuredData,
   Seo,
   ServicesStructuredData,
 } from '@/components/Seo';
@@ -107,7 +108,7 @@ function SiteHeader() {
     <header className={`site-header${scrolled ? ' is-stuck' : ''}`}>
       <div className="site-header__bar">
         <Link to="/" className="brand" aria-label={`${profile.name}, home`}>
-          AKTHER<span aria-hidden="true">.</span>
+          AKTHER NAIMUDHEEN<span aria-hidden="true">.</span>
         </Link>
         <nav className="desktop-nav" aria-label="Primary">
           {navigation.map(([label, href]) => (
@@ -157,7 +158,7 @@ function SiteFooter() {
       <div className="site-footer__inner">
         <div className="site-footer__mark">
           <Link to="/" className="brand" aria-label={`${profile.name}, home`}>
-            AKTHER<span aria-hidden="true">.</span>
+            AKTHER NAIMUDHEEN<span aria-hidden="true">.</span>
           </Link>
           <p>
             Full-stack web applications, generative AI pipelines, and healthcare documentation quality assurance.
@@ -297,10 +298,11 @@ function HomeHero() {
   return (
     <section className="hero" aria-labelledby="home-title">
       <motion.p className="eyebrow hero__eyebrow" {...step(0)}>
-        SOFTWARE DEVELOPMENT · AI APPLICATION ENGINEERING
+        AKTHER NAIMUDHEEN · AI-FOCUSED SOFTWARE ENGINEER
       </motion.p>
 
       <motion.h1 className="hero__title" id="home-title" {...step(0.06)}>
+        <span className="sr-only">Akther Naimudheen — AI Application Engineer &amp; Software Developer. </span>
         <span className="hero__title-lead" ref={leadRef}>
           <span>I build software</span>
         </span>
@@ -338,10 +340,10 @@ function HomeHero() {
 
       <motion.div className="hero__intro" {...step(0.16)}>
         <p>
-          I'm Akther Naimudheen, a software developer focused on applied AI systems and full-stack web applications. I design resilient architectures with concrete validation boundaries, automated testing, and dependable API integrations.
+          I'm Akther Naimudheen, an AI-focused software engineer and full-stack developer based in Kerala, India. I design resilient architectures with concrete validation boundaries, automated testing, and dependable API integrations.
         </p>
         <p className="hero__intro-sub">
-          Explore practical AI engineering—from multilingual clinical documentation workflows to asynchronous video processing pipelines.
+          Explore practical AI engineering—from multilingual clinical documentation workflows (iScribe) to asynchronous video processing pipelines (PromptToShort).
         </p>
         <div className="hero__actions">
           <Link className="btn" to="/work">
@@ -664,6 +666,7 @@ function AboutPage() {
         <div className="about-hero__copy">
           <p className="eyebrow">About Akther Naimudheen</p>
           <h1 id="about-title">
+            <span className="sr-only">About Akther Naimudheen — AI Engineer &amp; Software Developer. </span>
             <span>Engineering applications</span>
             <span>through structure,</span>
             <span>accuracy and</span>
@@ -797,8 +800,9 @@ function WorkPage() {
 
       <section className="work-hero" aria-labelledby="work-title">
         <div className="work-hero__copy">
-          <p className="eyebrow">Engineering projects</p>
+          <p className="eyebrow">Engineering projects · Akther Naimudheen</p>
           <h1 id="work-title">
+            <span className="sr-only">AI Projects &amp; Software Systems by Akther Naimudheen. </span>
             <span>AI pipelines,</span>
             <span>full-stack systems</span>
             <span>and tested code.</span>
@@ -844,6 +848,7 @@ function ProjectPage() {
 
   return (
     <PageFrame meta={projectMeta(project)} path={`/work/${project.id}`}>
+      <ProjectStructuredData project={project} />
 
       <section className="project-hero" aria-labelledby="project-title">
         <Link to="/work" className="back-link">

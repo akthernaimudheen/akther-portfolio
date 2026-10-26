@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 import { profile } from '@/data/profile';
 import type { Article } from '@/data/articles';
+import type { Project } from '@/data/projects';
 import {
   absoluteUrl,
   articleJsonLd,
   dynamicArticleJsonLd,
   OG_IMAGE,
   personJsonLd,
+  projectJsonLd,
   servicesJsonLd,
   type RouteMeta,
 } from '@/lib/seo';
@@ -76,6 +78,13 @@ export function Seo({ title, description, type, noIndex, path }: SeoProps) {
  * the document, so this stays in the body rather than relying on script
  * hoisting, which React reserves for async scripts.
  */
+/**
+ * SoftwareApplication structured data for project case studies.
+ */
+export function ProjectStructuredData({ project }: { project: Project }) {
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: projectJsonLd(project) }} />;
+}
+
 export function PersonStructuredData() {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: personJsonLd() }} />;
 }

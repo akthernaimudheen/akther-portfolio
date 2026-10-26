@@ -597,11 +597,11 @@ export function ClinicalAiArticle() {
         <div>
           <h3>About the Author</h3>
           <p>
-            <strong>Akther V N</strong> is an AI application and full-stack software engineer based in Kochi, Kerala. His background combines practical software development with direct experience in AI clinical documentation QA (DeepScribe AI project at Ritesource) and OCR medical record verification (Wisedocs). He focuses on deterministic guardrails, applied LLM systems, and reliable software engineering.
+            <strong>Akther Naimudheen (Akther V N)</strong> is an AI application and full-stack software engineer based in Kochi, Kerala. His background combines practical software development with direct experience in AI clinical documentation QA (DeepScribe AI project at Ritesource) and OCR medical record verification (Wisedocs). He focuses on deterministic guardrails, applied LLM systems, and reliable software engineering.
           </p>
           <div className="article-bio-links">
             <Link to="/about" className="link-underline">
-              Read background <ArrowUpRight aria-hidden="true" />
+              About Akther Naimudheen <ArrowUpRight aria-hidden="true" />
             </Link>
             <Link to="/contact" className="link-underline">
               Get in touch <ArrowUpRight aria-hidden="true" />

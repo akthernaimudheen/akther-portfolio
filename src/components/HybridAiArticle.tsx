@@ -616,6 +616,9 @@ Deterministic Gate: Ambiguity or Synthesis Needed?
               <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer">
                 LinkedIn <ArrowUpRight aria-hidden="true" />
               </a>
+              <Link to="/about">
+                About Akther <ArrowRight aria-hidden="true" />
+              </Link>
               <Link to="/contact">
                 Contact <ArrowRight aria-hidden="true" />
               </Link>

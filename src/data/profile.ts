@@ -75,6 +75,7 @@ export interface Capability {
 export const profile = {
   name: 'Akther Naimudheen',
   alternateName: 'Akther V N',
+  alternateNames: ['Akther V N', 'Akther', 'akthernaimudheen'],
   /* Single source for the professional positioning. Drives the hero H1's
      accessible name and every route title, so the visible heading and the
      semantic/SEO name can never drift apart. */
