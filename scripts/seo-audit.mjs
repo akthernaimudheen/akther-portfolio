@@ -24,6 +24,7 @@ import {
   getProjectMetadata,
   getArticleMetadata,
 } from '../src/lib/routes-meta.ts';
+import { SEO_KEYWORD_MAP } from '../src/data/seo-keyword-map.ts';
 import {
   structuredDataJsonLd,
   articleJsonLd,
@@ -211,6 +212,31 @@ check(indexHtml.includes('Akther Naimudheen'), 'index.html missing exact name "A
 check(indexHtml.includes('<noscript>'), 'index.html missing <noscript> semantic crawlable shell');
 check(indexHtml.includes('data-static-seo'), 'index.html missing data-static-seo attributes');
 console.log('✓ Verified index.html static fallback shell');
+
+// 7. Check SEO Keyword Map and Search Intent Differentiation
+const primaryKeywords = new Set();
+check(SEO_KEYWORD_MAP.length >= 8, `Expected at least 8 mapped keyword routes (found: ${SEO_KEYWORD_MAP.length})`);
+
+for (const mapEntry of SEO_KEYWORD_MAP) {
+  check(knownRoutes.has(mapEntry.route), `Keyword map route ${mapEntry.route} is not in knownRoutes`);
+  check(Boolean(mapEntry.primaryKeyword && mapEntry.primaryKeyword.trim()), `Route ${mapEntry.route} has empty primaryKeyword`);
+  check(!primaryKeywords.has(mapEntry.primaryKeyword), `Duplicate primary keyword across routes: "${mapEntry.primaryKeyword}"`);
+  primaryKeywords.add(mapEntry.primaryKeyword);
+
+  check(Array.isArray(mapEntry.supportingCluster) && mapEntry.supportingCluster.length >= 2, `Route ${mapEntry.route} supporting cluster too small`);
+  check(Boolean(mapEntry.searchIntent), `Route ${mapEntry.route} missing searchIntent`);
+
+  for (const link of mapEntry.relevantInternalLinks) {
+    const isValidLink = knownRoutes.has(link) || dynamicPrefixes.some(prefix => link.startsWith(prefix));
+    check(isValidLink, `Keyword map for ${mapEntry.route} contains invalid internal link: "${link}"`);
+  }
+}
+
+// Verify Homepage Specifics for "AI engineer in Kerala"
+const homeMeta = allMetadata['/'];
+check(homeMeta?.title.includes('AI Engineer in Kerala'), `Homepage title does not include "AI Engineer in Kerala": "${homeMeta?.title}"`);
+check(homeMeta?.description.includes('Kerala'), `Homepage description does not mention "Kerala": "${homeMeta?.description}"`);
+console.log(`✓ Verified SEO Keyword Map (${SEO_KEYWORD_MAP.length} routes) and Kerala search intent alignment`);
 
 // Results
 console.log('\n--- Audit Results ---');

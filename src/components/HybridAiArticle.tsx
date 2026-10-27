@@ -565,6 +565,10 @@ Deterministic Gate: Ambiguity or Synthesis Needed?
               <Link to="/work/iscribe">iScribe — Clinical Fact Extraction &amp; Malayalam-English NLP</Link>
             </li>
             <li>
+              <strong>Experimental Systems &amp; Local Benchmarks:</strong>{' '}
+              <Link to="/work/technical-lab">Technical Lab — Local LLM Inference &amp; Guardrail Prototypes</Link>
+            </li>
+            <li>
               <strong>Flagship Clinical Research Monograph:</strong>{' '}
               <Link to="/blog/building-clinical-ai-beyond-transcription">
                 Building AI Clinical Documentation Beyond Transcription: Engineering Guardrails for Clinical Fact Extraction

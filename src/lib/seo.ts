@@ -226,7 +226,7 @@ export function structuredDataJsonLd(): string {
       ...(websiteId ? { '@id': websiteId } : {}),
       ...(url ? { url } : {}),
       name: 'Akther Naimudheen Portfolio',
-      alternateName: ['Akther Naimudheen', 'Akther Naimudheen AI Engineer', 'akthernaimudheen', 'Akther V N Portfolio'],
+      alternateName: ['Akther Naimudheen', 'AI Engineer in Kerala', 'Akther Naimudheen AI Engineer', 'akthernaimudheen', 'Akther V N Portfolio'],
       description: homeMeta.description,
       ...(personId ? { publisher: { '@id': personId } } : {}),
     },
@@ -238,7 +238,7 @@ export function structuredDataJsonLd(): string {
       jobTitle: 'AI Application Engineer & Software Developer',
       description: homeMeta.description,
       disambiguatingDescription:
-        'AI-focused software engineer and builder of practical AI products, specializing in clinical NLP guardrails, Python pipelines, and full-stack systems based in Kerala, India.',
+        'AI engineer and software developer based in Kerala, India, specializing in practical AI systems, clinical NLP guardrails, reliable LLM applications, and full-stack engineering.',
       email: `mailto:${profile.email}`,
       address: {
         '@type': 'PostalAddress',

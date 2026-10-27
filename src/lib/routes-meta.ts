@@ -22,21 +22,21 @@ export function clampDescription(text: string): string {
 
 export const staticRouteMetadata: Record<string, Omit<RouteMetadata, 'canonical'>> = {
   '/': {
-    title: `${TITLE_SUFFIX} | AI-Focused Software Engineer & Portfolio`,
+    title: `AI Engineer in Kerala | Applied AI & NLP Developer — ${TITLE_SUFFIX}`,
     description:
-      'Official portfolio of Akther Naimudheen, AI-focused software engineer in Kerala, India. Practical AI projects, clinical NLP guardrails, and Python systems.',
+      'Akther Naimudheen is an AI engineer in Kerala building practical AI systems, clinical NLP pipelines, and reliable LLM applications with deterministic guardrails.',
     type: 'profile',
   },
   '/about': {
-    title: `About ${TITLE_SUFFIX} — AI Engineer & Software Developer`,
+    title: `About ${TITLE_SUFFIX} — AI Engineer in Kerala & Developer`,
     description:
-      'Background of Akther Naimudheen: AI-focused software engineer and builder of practical AI products. Diploma in Computer Engineering and healthcare NLP QA.',
+      'Background of Akther Naimudheen: AI engineer and software developer in Kerala, India. Applied AI systems, clinical NLP QA, and computer engineering background.',
     type: 'profile',
   },
   '/work': {
-    title: `AI Projects & Engineering Portfolio — ${TITLE_SUFFIX}`,
+    title: `AI Engineering Projects & Systems Portfolio — ${TITLE_SUFFIX}`,
     description:
-      'Explore AI projects and engineering case studies by Akther Naimudheen: iScribe clinical NLP guardrails, PromptToShort media pipelines, and Python systems.',
+      'Explore applied AI engineering projects and systems by Akther Naimudheen in Kerala: iScribe clinical NLP, PromptToShort media pipelines, and Technical Lab.',
     type: 'website',
   },
   '/contact': {
@@ -74,25 +74,25 @@ export const staticRouteMetadata: Record<string, Omit<RouteMetadata, 'canonical'
 export function getProjectMetadata(project: Project): Omit<RouteMetadata, 'canonical'> {
   if (project.id === 'iscribe') {
     return {
-      title: `iScribe: Clinical NLP & AI Guardrails — ${TITLE_SUFFIX}`,
+      title: `iScribe: Clinical NLP & AI Documentation — ${TITLE_SUFFIX}`,
       description:
-        'iScribe by Akther Naimudheen: deterministic clinical NLP guardrails, Malayalam-English speech extraction, Pydantic schema validation, and test methodology.',
+        'iScribe by Akther Naimudheen: clinical NLP guardrails, Malayalam-English speech extraction, deterministic schema validation, and clinical documentation QA.',
       type: 'article',
     };
   }
   if (project.id === 'rshorts') {
     return {
-      title: `PromptToShort: Asynchronous Video Pipeline — ${TITLE_SUFFIX}`,
+      title: `PromptToShort: AI Video Automation Pipeline — ${TITLE_SUFFIX}`,
       description:
-        'PromptToShort by Akther Naimudheen: asynchronous FastAPI media pipeline, headless FFmpeg video generation, and subtitle alignment.',
+        'PromptToShort by Akther Naimudheen: automated AI video processing pipeline, asynchronous FastAPI workers, and headless FFmpeg rendering workflows.',
       type: 'article',
     };
   }
   if (project.id === 'technical-lab') {
     return {
-      title: `Technical Systems Exploration & Prototypes — ${TITLE_SUFFIX}`,
+      title: `Technical Lab: AI Engineering & Prototype Systems — ${TITLE_SUFFIX}`,
       description:
-        'Developer tooling, local LLM inference benchmarks, and experimental engineering prototypes created by Akther Naimudheen.',
+        'Technical Lab by Akther Naimudheen: AI engineering prototypes, local LLM inference benchmarks, deterministic guardrails, and systems architecture.',
       type: 'article',
     };
   }

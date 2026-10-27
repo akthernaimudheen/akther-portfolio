@@ -298,16 +298,16 @@ function HomeHero() {
   return (
     <section className="hero" aria-labelledby="home-title">
       <motion.p className="eyebrow hero__eyebrow" {...step(0)}>
-        AKTHER NAIMUDHEEN · AI-FOCUSED SOFTWARE ENGINEER
+        AKTHER NAIMUDHEEN · AI ENGINEER IN KERALA
       </motion.p>
 
       <motion.h1 className="hero__title" id="home-title" {...step(0.06)}>
-        <span className="sr-only">Akther Naimudheen — AI Application Engineer &amp; Software Developer. </span>
+        <span className="sr-only">Akther Naimudheen — AI Engineer in Kerala. </span>
         <span className="hero__title-lead" ref={leadRef}>
-          <span>I build software</span>
+          <span>Building practical AI,</span>
         </span>
         <span className="hero__title-sub" ref={subRef}>
-          <span>that turns complex ideas into working systems.</span>
+          <span>NLP pipelines and intelligent applications.</span>
         </span>
       </motion.h1>
 
@@ -340,10 +340,10 @@ function HomeHero() {
 
       <motion.div className="hero__intro" {...step(0.16)}>
         <p>
-          I'm Akther Naimudheen, an AI-focused software engineer and full-stack developer based in Kerala, India. I design resilient architectures with concrete validation boundaries, automated testing, and dependable API integrations.
+          I'm Akther Naimudheen, an AI engineer and software developer based in Kerala, India. I build practical AI systems, clinical NLP pipelines, and reliable LLM applications with deterministic guardrails and automated verification.
         </p>
         <p className="hero__intro-sub">
-          Explore practical AI engineering—from multilingual clinical documentation workflows (iScribe) to asynchronous video processing pipelines (PromptToShort).
+          Explore practical AI engineering through clinical NLP, reliable LLM applications, and intelligent automation across projects including iScribe, Technical Lab, and PromptToShort.
         </p>
         <div className="hero__actions">
           <Link className="btn" to="/work">
@@ -367,13 +367,19 @@ function HomeHero() {
       <div className="hero__cues" role="region" aria-label="Featured project highlights">
         <div className="hero__cue-item">
           <div>
-            <strong>iScribe:</strong> <span>Clinical documentation &amp; schema guardrails</span>
+            <strong>iScribe:</strong> <span>Clinical NLP &amp; deterministic guardrails</span>
           </div>
           <Link to="/work/iscribe">Explore Architecture →</Link>
         </div>
         <div className="hero__cue-item">
           <div>
-            <strong>PromptToShort:</strong> <span>AI video automation workflow (160+ passing tests)</span>
+            <strong>Technical Lab:</strong> <span>Local LLM inference &amp; prototype systems</span>
+          </div>
+          <Link to="/work/technical-lab">View Prototypes →</Link>
+        </div>
+        <div className="hero__cue-item">
+          <div>
+            <strong>PromptToShort:</strong> <span>AI video automation workflow (160+ tests)</span>
           </div>
           <Link to="/work/rshorts">View Pipeline →</Link>
         </div>
@@ -664,7 +670,7 @@ function AboutPage() {
 
       <section className="about-hero" aria-labelledby="about-title">
         <div className="about-hero__copy">
-          <p className="eyebrow">About Akther Naimudheen</p>
+          <p className="eyebrow">About Akther Naimudheen · AI Engineer in Kerala</p>
           <h1 id="about-title">
             <span className="sr-only">About Akther Naimudheen — AI Engineer &amp; Software Developer. </span>
             <span>Engineering applications</span>
@@ -930,11 +936,43 @@ function ProjectPage() {
             </>
           )}
           {project.id === 'rshorts' && (
-            <div className="case-notice" role="status">
-              <span style={{ fontSize: '1.25rem', lineHeight: 1 }} aria-hidden="true">✓</span>
-              <div>
-                <strong>Automated Test Benchmark:</strong> 160+ unit and integration tests verify timing precision, subtitle drift within 12ms, and FFmpeg filtergraph construction without manual video editing intervention.
+            <>
+              <div className="case-notice" role="status">
+                <span style={{ fontSize: '1.25rem', lineHeight: 1 }} aria-hidden="true">✓</span>
+                <div>
+                  <strong>Automated Test Benchmark:</strong> 160+ unit and integration tests verify timing precision, subtitle drift within 12ms, and FFmpeg filtergraph construction without manual video editing intervention.
+                </div>
               </div>
+              <div className="article-promo-card">
+                <div>
+                  <span className="eyebrow" style={{ color: 'var(--ink)' }}>Systems Architecture Note</span>
+                  <h3 style={{ margin: '0.25rem 0 0.45rem', fontSize: '1.15rem' }}>
+                    Architecting Asynchronous Video Processing Pipelines
+                  </h3>
+                  <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--muted)' }}>
+                    Explore the FastAPI worker queue architecture, subtitle drift synchronization, and headless FFmpeg filtergraph construction behind PromptToShort.
+                  </p>
+                </div>
+                <Link className="btn btn--signal" to="/blog/architecting-asynchronous-video-pipelines-fastapi-ffmpeg">
+                  Read Systems Note <ArrowRight aria-hidden="true" />
+                </Link>
+              </div>
+            </>
+          )}
+          {project.id === 'technical-lab' && (
+            <div className="article-promo-card">
+              <div>
+                <span className="eyebrow" style={{ color: 'var(--ink)' }}>Published Engineering Monograph</span>
+                <h3 style={{ margin: '0.25rem 0 0.45rem', fontSize: '1.15rem' }}>
+                  Hybrid AI Architecture: Deterministic CPU Guardrails for LLMs
+                </h3>
+                <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--muted)' }}>
+                  Read our published research monograph detailing local CPU inference benchmarks, 4-layer validation topology, and deterministic coprocessor execution.
+                </p>
+              </div>
+              <Link className="btn btn--signal" to="/blog/hybrid-ai-architecture-cpu-guardrails">
+                Read Monograph <ArrowRight aria-hidden="true" />
+              </Link>
             </div>
           )}
           {project.caseStudy.map((section) => (
