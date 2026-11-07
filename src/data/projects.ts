@@ -38,25 +38,25 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: 'iscribe',
-    title: 'iScribe — AI Clinical Documentation',
-    eyebrow: 'AI Clinical Documentation · Experimental System',
+    id: 'clinoria',
+    title: 'CLINORIA — Clinical Intelligence Platform',
+    eyebrow: 'Clinical Intelligence · Beyond Transcription',
     kind: 'ai',
     category: 'ai',
     categoryLabel: 'AI Applications & Pipeline Engineering',
-    visual: '/iscribe-project-preview.svg',
-    caseVisual: '/iscribe-architecture.svg',
-    visualAlt: 'Workflow architecture diagram for AI-assisted clinical documentation: audio intake, transcription, clinical extraction, and structured output.',
-    status: 'Private case study',
+    visual: '/clinoria-project-preview.svg',
+    caseVisual: '/clinoria-architecture.svg',
+    visualAlt: 'Workflow architecture diagram for CLINORIA clinical intelligence: audio intake, transcription, clinical extraction, and structured output.',
+    status: 'Experimental platform',
     role: 'Full-stack architecture & LLM pipeline design',
     summary:
-      'An experimental AI clinical documentation system exploring how multilingual clinical conversations can be transformed into structured documentation while preserving clinical meaning.',
+      'An experimental clinical intelligence platform exploring multilingual clinical documentation, clinical NLP, structured medical information extraction and deterministic validation guardrails.',
     caseHeading: 'Speech-to-text integration, multilingual clinical fact extraction, and deterministic schema guardrails.',
     areas: ['React / TypeScript', 'Firebase', 'Speech-to-Text Pipeline', 'LLM Fact Extraction', 'Schema Validation'],
     caseStudy: [
       {
         heading: 'Project Overview & Problem Statement',
-        body: 'Clinical conversation is not ordinary text. A documentation pipeline must distinguish what a patient reports, what is uncertain, what occurred in the past, and what is merely being recommended or discussed. iScribe is an experimental engineering project exploring how multilingual clinical conversations can be transformed into structured documentation while preserving clinical meaning. NOTICE: Evaluated strictly using synthetic consultation transcripts and sanitized datasets. No real patient data (PHI) is used, and no live hospital adoption, regulatory certification (HIPAA/DPDP), or autonomous clinical use is claimed.',
+        body: 'Clinical conversation is not ordinary text. A documentation pipeline must distinguish what a patient reports, what is uncertain, what occurred in the past, and what is merely being recommended or discussed. CLINORIA is an experimental clinical intelligence platform exploring how multilingual clinical conversations can be transformed into structured documentation while preserving clinical meaning. NOTICE: Evaluated strictly using synthetic consultation transcripts and sanitized datasets. No real patient data (PHI) is used, and no live hospital adoption, regulatory certification (HIPAA/DPDP), or autonomous clinical use is claimed.',
       },
       {
         heading: 'Engineering Focus & System Architecture',
@@ -114,25 +114,24 @@ export const projects: Project[] = [
   },
   {
     id: 'rshorts',
-    title: 'PromptToShort — AI Video Automation',
-    eyebrow: 'AI Video Automation · Media Pipeline',
+    title: 'PromptToShort — Video Automation Pipeline',
+    eyebrow: 'Media Pipeline · Video Automation',
     kind: 'ai',
     category: 'ai',
     categoryLabel: 'AI Applications & Pipeline Engineering',
     visual: '/rshorts-project-preview.svg',
     caseVisual: '/rshorts-pipeline.svg',
     visualAlt: 'Overview of the PromptToShort automated video pipeline: script generation, TTS alignment, b-roll retrieval, and vertical video assembly.',
-    status: 'Live product',
-    role: 'Creator & AI Pipeline Engineer',
-    liveUrl: 'https://prompttoshort.online/',
+    status: 'Engineering initiative',
+    role: 'Author & Pipeline Engineer',
     summary:
-      'An AI-assisted video creation workflow designed to help transform longer video content into shorter, captioned clips.',
+      'An engineering project exploring automated script segmentation, asynchronous processing pipelines and FFmpeg-based video rendering.',
     caseHeading: 'Transcript segmentation, neural speech synthesis, and automated FFmpeg video assembly.',
     areas: ['Python / FastAPI', 'LLM Prompt Engineering', 'Deepgram TTS', 'Multimodal Vision QA', 'FFmpeg Pipeline'],
     caseStudy: [
       {
         heading: 'Project Overview & Engineering Scope',
-        body: 'PromptToShort (originally RShorts) is an AI-assisted video creation workflow designed to help transform longer video content into shorter, captioned clips. The system explores Python and FastAPI worker workflows, speech transcription, media-processing integration, kinetic subtitling, and automated multi-track FFmpeg video rendering.',
+        body: 'PromptToShort is an engineering project exploring automated script segmentation, asynchronous processing pipelines and FFmpeg-based video rendering. The system explores Python and FastAPI worker workflows, speech transcription, media-processing integration, kinetic subtitling, and automated multi-track FFmpeg video rendering.',
       },
       {
         heading: 'Personal Contributions',
@@ -177,7 +176,7 @@ export const projects: Project[] = [
       },
       {
         heading: 'Current Status & Next Steps',
-        body: 'Current phase: Live product operational at prompttoshort.online with automated test suite (160+ passing tests) and asynchronous worker engine. Next steps: web-based interactive timeline editor and local AI video generation model integration.',
+        body: 'Current phase: Open-source media processing initiative exploring automated script segmentation and worker orchestration with an automated test suite (160+ passing tests). Next steps: web-based interactive timeline editor and local AI video generation model integration.'
       },
     ],
     result: [

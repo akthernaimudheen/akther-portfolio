@@ -91,7 +91,6 @@ export const profile = {
   seoLocality: 'Kochi',
   seoRegion: 'Kerala',
   seoCountry: 'India',
-  employer: 'Orestes Technology',
   resumeUrl: '/Akther-V-N-Resume.pdf',
   portrait: {
     src: '/akther-portrait.webp',
@@ -126,29 +125,21 @@ export const profile = {
 
 export const journey: JourneyEntry[] = [
   /* Employment */
-  {
-    year: '2026 — Present',
-    category: 'employment',
-    categoryLabel: 'Professional Employment & Industry Experience',
-    title: 'Web Development & Digital Systems',
-    roleOrCompany: 'Orestes Technology, Infopark',
-    text: 'Developing responsive web applications, modular frontend components, technical SEO architecture, and automation workflows.',
-  },
-  {
+    {
     year: 'Dec 2023 — Mar 2024',
     category: 'employment',
     categoryLabel: 'Professional Employment & Industry Experience',
     title: 'OCR Pipeline QA Specialist',
-    roleOrCompany: 'Wisedocs',
-    text: 'Executed quality assurance and verification on OCR-extracted medical records, ensuring entity classification accuracy under strict turnaround requirements.',
+    roleOrCompany: 'WDG Services',
+    text: 'OCR pipeline verification and document processing quality assurance.',
   },
   {
     year: 'Nov 2022 — Nov 2023',
     category: 'employment',
     categoryLabel: 'Professional Employment & Industry Experience',
     title: 'AI Clinical Documentation QA',
-    roleOrCompany: 'Ritesource Infosystems · DeepScribe AI Project',
-    text: 'Reviewed and audited ambient AI-generated clinical documentation for terminology precision, hallucination detection, schema compliance, and clinical narrative consistency.',
+    roleOrCompany: 'RiteSource Infosystem LLP',
+    text: 'AI documentation quality assurance and clinical documentation review.',
   },
 
   /* Education */
@@ -184,9 +175,9 @@ export const journey: JourneyEntry[] = [
     year: '2026',
     category: 'projects',
     categoryLabel: 'Self-Directed AI Engineering',
-    title: 'AI Systems: iScribe & PromptToShort',
+    title: 'AI Systems: CLINORIA & PromptToShort',
     roleOrCompany: 'Independent Engineering',
-    text: 'Engineered iScribe (clinical documentation pipeline with multi-stage schema validation) and PromptToShort (automated vertical video pipeline with 160+ passing tests).',
+    text: 'Engineered CLINORIA (clinical documentation pipeline with multi-stage schema validation) and PromptToShort (automated vertical video pipeline with 160+ passing tests).',
   },
 ];
 

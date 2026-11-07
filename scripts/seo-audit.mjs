@@ -150,6 +150,7 @@ const filesToScan = [
   path.join(SRC_DIR, 'App.tsx'),
   path.join(SRC_DIR, 'components/ClinicalAiArticle.tsx'),
   path.join(SRC_DIR, 'components/HybridAiArticle.tsx'),
+  path.join(SRC_DIR, 'components/SidekiqSecurityArticle.tsx'),
   path.join(SRC_DIR, 'components/BlogIndex.tsx'),
   path.join(SRC_DIR, 'components/ServicesPage.tsx'),
 ];

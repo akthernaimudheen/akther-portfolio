@@ -2,7 +2,8 @@ export type ArticleCategory =
   | 'Applied AI & NLP'
   | 'Systems & Backend'
   | 'Full-Stack Architecture'
-  | 'Quality & Engineering';
+  | 'Quality & Engineering'
+  | 'Security Research & Responsible Disclosure';
 
 export type ArticleStatus = 'published-case-study' | 'engineering-note';
 
@@ -40,7 +41,7 @@ export interface Article {
   statusLabel: string;
   featured?: boolean;
   renderMode: 'component' | 'structured';
-  componentName?: 'ClinicalAiArticle' | 'HybridAiArticle';
+  componentName?: 'ClinicalAiArticle' | 'HybridAiArticle' | 'SidekiqSecurityArticle';
   sections?: ArticleSection[];
 }
 
@@ -49,9 +50,34 @@ export const articleCategories: ArticleCategory[] = [
   'Systems & Backend',
   'Full-Stack Architecture',
   'Quality & Engineering',
+  'Security Research & Responsible Disclosure',
 ];
 
 export const articles: Article[] = [
+  {
+    slug: 'sidekiq-security-vulnerability-responsible-disclosure',
+    title: 'Exposed Sidekiq Dashboard: An Independent Security Observation and Responsible Disclosure',
+    eyebrow: 'Application Security Research · Responsible Disclosure',
+    description:
+      'An independent security research case study on an exposed Sidekiq dashboard, background job access risks, and responsible disclosure coordination with CERT-In.',
+    publishedAt: '2026-10-28',
+    readTime: '8 min read',
+    category: 'Security Research & Responsible Disclosure',
+    tags: [
+      'Sidekiq Dashboard Exposure',
+      'Sidekiq Security Vulnerability',
+      'Exposed Sidekiq Dashboard',
+      'Responsible Vulnerability Disclosure',
+      'Independent Security Research',
+      'CERT-In Vulnerability Reporting',
+      'Application Security Research',
+    ],
+    status: 'published-case-study',
+    statusLabel: 'Security Research Case Study',
+    featured: true,
+    renderMode: 'component',
+    componentName: 'SidekiqSecurityArticle',
+  },
   {
     slug: 'hybrid-ai-architecture-cpu-guardrails',
     title: 'Hybrid AI Architecture: Deterministic CPU Guardrails for LLMs',
@@ -232,7 +258,7 @@ ffmpeg -y -i background_music.mp3 -i narration_voice.wav -filter_complex \\
         heading: '2. Two-Stage Syntactic and Semantic Validation',
         paragraphs: [
           'Validation must operate at two distinct layers: syntactic structure (is it well-formed JSON matching the expected schema?) and semantic validity (do the values make logical sense within domain constraints?).',
-          'In both iScribe and our backend API systems, we employ strict Pydantic / Zod models with custom field validators that check range limits, format constraints, and mutual exclusions.',
+          'In both CLINORIA and our backend API systems, we employ strict Pydantic / Zod models with custom field validators that check range limits, format constraints, and mutual exclusions.',
         ],
         codeBlock: {
           language: 'python',

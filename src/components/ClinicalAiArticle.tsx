@@ -9,8 +9,8 @@ export function ClinicalAiArticle() {
     <article className="article-container" aria-labelledby="article-title">
       {/* Top Breadcrumb & Navigation */}
       <nav className="article-nav" aria-label="Breadcrumb">
-        <Link to="/work/iscribe" className="back-link">
-          <ArrowLeft aria-hidden="true" /> iScribe Architecture
+        <Link to="/work/clinoria" className="back-link">
+          <ArrowLeft aria-hidden="true" /> CLINORIA Architecture
         </Link>
         <span className="article-nav__separator" aria-hidden="true">/</span>
         <span className="article-nav__current">Engineering Deep Dive</span>
@@ -81,7 +81,7 @@ export function ClinicalAiArticle() {
             When engineering teams attempt to bridge this gap using generative Large Language Models (LLMs) with standard prompt-and-summarize workflows, they encounter the fundamental liability of stochastic text generation: <strong>unprompted clinical hallucinations, dropped negative findings, and invented normal values</strong>. In clinical software, omitting a reported allergy or hallucinating a normal contralateral limb is not a minor bug—it is an unacceptable patient safety hazard.
           </p>
           <p>
-            This case study examines the architecture and evaluation of <strong>iScribe</strong>, an AI clinical documentation prototype engineered to extract structured clinical facts from consultation dialogues using a <strong>dual-engine pipeline</strong>: combining semantic language processing with deterministic NLP guardrails, strict JSON schema validation, verbatim provenance tracking, and a fail-closed clinician-in-the-loop review interface.
+            This case study examines the architecture and evaluation of <strong>CLINORIA</strong>, an experimental clinical intelligence platform engineered to extract structured clinical facts from consultation dialogues using a <strong>dual-engine pipeline</strong>: combining semantic language processing with deterministic NLP guardrails, strict JSON schema validation, verbatim provenance tracking, and a fail-closed clinician-in-the-loop review interface.
           </p>
 
           <div className="case-notice" role="alert">
@@ -158,11 +158,11 @@ export function ClinicalAiArticle() {
             <div>
               <strong>Mandatory Disclosures &amp; Safety Boundaries:</strong>
               <ul>
-                <li><strong>Synthetic Evaluation Only:</strong> iScribe was developed and evaluated strictly using synthetic clinical dialogue fixtures and sanitized benchmark datasets. Zero real-patient health records (PHI) were accessed, processed, or stored.</li>
+                <li><strong>Synthetic Evaluation Only:</strong> CLINORIA was developed and evaluated strictly using synthetic clinical dialogue fixtures and sanitized benchmark datasets. Zero real-patient health records (PHI) were accessed, processed, or stored.</li>
                 <li><strong>Zero Clinical Adoption Claims:</strong> This project is a self-directed engineering prototype. It has not been deployed in active clinical hospital environments, and no patient health outcomes are claimed.</li>
                 <li><strong>Regulatory Transparency:</strong> No compliance certifications—such as HIPAA (Health Insurance Portability and Accountability Act) or India's DPDP (Digital Personal Data Protection Act)—or medical device regulatory clearances (FDA/CDSCO) are claimed.</li>
                 <li><strong>Heuristic Privacy Safeguards:</strong> The pipeline incorporates automated input filters to detect synthetic identifiers (such as regex-based detection of SSN, MRN, phone numbers, and dates of birth). However, <strong>these filters are heuristic regex safeguards</strong> and must never be misconstrued as an exhaustive, mathematically guaranteed de-identification solution.</li>
-                <li><strong>Mandatory Clinician-in-the-Loop:</strong> iScribe is an assistive draft generator. Application state strictly prohibits automated EHR commits; every generated note remains gated until verified and signed off by a licensed human physician.</li>
+                <li><strong>Mandatory Clinician-in-the-Loop:</strong> CLINORIA is an assistive draft generator. Application state strictly prohibits automated EHR commits; every generated note remains gated until verified and signed off by a licensed human physician.</li>
               </ul>
             </div>
           </div>
@@ -177,23 +177,23 @@ export function ClinicalAiArticle() {
 
           <div className="article-plate">
             <ProjectVisualScene
-              src="/iscribe-architecture.svg"
-              alt="iScribe 4-stage clinical documentation architecture diagram"
+              src="/clinoria-architecture.svg"
+              alt="CLINORIA 4-stage clinical documentation architecture diagram"
               interactive
               eager
             />
             <p className="article-caption">
-              Figure 1: Architectural schematic of the iScribe clinical documentation pipeline illustrating audio intake, entity extraction, deterministic guardrails, and mandatory physician review.
+              Figure 1: Architectural schematic of the CLINORIA clinical intelligence pipeline illustrating audio intake, entity extraction, deterministic guardrails, and mandatory physician review.
             </p>
           </div>
 
           <h3>Reconciling the Pipeline Stages</h3>
           <ul>
             <li>
-              <strong>The 4 Diagram Stages (<a href="/iscribe-architecture.svg" target="_blank" rel="noopener noreferrer"><code>iscribe-architecture.svg</code></a>):</strong> Categorizes the lifecycle into four visual physical zones: Stage 01 (Ingestion), Stage 02 (Extraction), Stage 03 (Deterministic Guardrails), and Stage 04 (Clinician Review).
+              <strong>The 4 Diagram Stages (<a href="/clinoria-architecture.svg" target="_blank" rel="noopener noreferrer"><code>clinoria-architecture.svg</code></a>):</strong> Categorizes the lifecycle into four visual physical zones: Stage 01 (Ingestion), Stage 02 (Extraction), Stage 03 (Deterministic Guardrails), and Stage 04 (Clinician Review).
             </li>
             <li>
-              <strong>The 5 Code Steps (<a href="/work/iscribe"><code>projects.ts</code></a>):</strong> Represents the sequential software execution passes. Step 1 maps to Stage 01; Step 2 maps to Stage 02; <strong>Steps 3 (Schema Validation) and 4 (Ambiguity &amp; Conflict Handling) represent the two internal sub-passes of Stage 03</strong>; and Step 5 maps to Stage 04.
+              <strong>The 5 Code Steps (<a href="/work/clinoria"><code>projects.ts</code></a>):</strong> Represents the sequential software execution passes. Step 1 maps to Stage 01; Step 2 maps to Stage 02; <strong>Steps 3 (Schema Validation) and 4 (Ambiguity &amp; Conflict Handling) represent the two internal sub-passes of Stage 03</strong>; and Step 5 maps to Stage 04.
             </li>
             <li>
               <strong>The "4 Layers" Defensive Boundary Metric:</strong> Represents the concentric defensive boundaries protecting the clinical output:
@@ -211,7 +211,7 @@ export function ClinicalAiArticle() {
         <section className="article-section" id="deterministic-extraction">
           <h2>5. Deterministic Extraction and Structured Validation</h2>
           <p>
-            At the core of iScribe's verified engine is a deterministic NLP pipeline implemented in pure Python, utilizing spaCy for tokenization and entity boundary parsing, combined with targeted pattern matchers and <a href="/work/iscribe"><code>radiology_facts_adapter.py</code></a>.
+            At the core of CLINORIA's verified engine is a deterministic NLP pipeline implemented in pure Python, utilizing spaCy for tokenization and entity boundary parsing, combined with targeted pattern matchers and <a href="/work/clinoria"><code>radiology_facts_adapter.py</code></a>.
           </p>
 
           <h3>The Anatomy of an Extracted Fact</h3>
@@ -447,7 +447,7 @@ export function ClinicalAiArticle() {
         <section className="article-section" id="defensive-boundaries">
           <h2>9. Failure Handling, Clinician Review, and Defensive Boundaries</h2>
           <p>
-            In safety-critical systems, how software fails is more important than how it succeeds under ideal conditions. iScribe employs a defense-in-depth architecture across four operational boundaries:
+            In safety-critical systems, how software fails is more important than how it succeeds under ideal conditions. CLINORIA employs a defense-in-depth architecture across four operational boundaries:
           </p>
 
           <div className="article-diagram-card">
@@ -520,7 +520,7 @@ export function ClinicalAiArticle() {
         <section className="article-section" id="engineering-lessons">
           <h2>11. Engineering Lessons Relevant to Applied AI and NLP</h2>
           <p>
-            Building iScribe yielded several core tenets applicable across applied machine learning and software engineering:
+            Building CLINORIA yielded several core tenets applicable across applied machine learning and software engineering:
           </p>
 
           <div className="article-takeaways-grid">
@@ -550,7 +550,7 @@ export function ClinicalAiArticle() {
           <h3>Internal Project Resources</h3>
           <ul>
             <li>
-              <strong>Interactive Case Study Overview:</strong> <Link to="/work/iscribe">iScribe Architecture &amp; Visual Walkthrough</Link>
+              <strong>Interactive Case Study Overview:</strong> <Link to="/work/clinoria">CLINORIA Architecture &amp; Visual Walkthrough</Link>
             </li>
             <li>
               <strong>Architectural Research Monograph:</strong> <Link to="/blog/hybrid-ai-architecture-cpu-guardrails">Hybrid AI Architecture: Deterministic CPU Guardrails for LLMs</Link>
@@ -600,7 +600,7 @@ export function ClinicalAiArticle() {
         <div>
           <h3>About the Author</h3>
           <p>
-            <strong>Akther Naimudheen (Akther V N)</strong> is an AI application and full-stack software engineer based in Kochi, Kerala. His background combines practical software development with direct experience in AI clinical documentation QA (DeepScribe AI project at Ritesource) and OCR medical record verification (Wisedocs). He focuses on deterministic guardrails, applied LLM systems, and reliable software engineering.
+            <strong>Akther Naimudheen (Akther V N)</strong> is an AI application and full-stack software engineer based in Kochi, Kerala. His background combines practical software development with direct experience in AI documentation quality assurance and clinical documentation review at RiteSource Infosystem LLP, and OCR pipeline verification and document processing quality assurance at WDG Services. He focuses on deterministic guardrails, applied LLM systems, and reliable software engineering.
           </p>
           <div className="article-bio-links">
             <Link to="/about" className="link-underline">

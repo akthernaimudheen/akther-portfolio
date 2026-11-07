@@ -17,6 +17,7 @@ import {
 import { ProjectVisualScene } from '@/components/ui/project-visual-scene';
 import { ClinicalAiArticle } from '@/components/ClinicalAiArticle';
 import { HybridAiArticle } from '@/components/HybridAiArticle';
+import { SidekiqSecurityArticle } from '@/components/SidekiqSecurityArticle';
 import { BlogIndex } from '@/components/BlogIndex';
 import { StructuredArticlePage } from '@/components/StructuredArticlePage';
 import { ServicesPage } from '@/components/ServicesPage';
@@ -30,6 +31,7 @@ import {
   buildArticleMeta,
   clinicalAiArticleMeta,
   hybridAiArticleMeta,
+  sidekiqSecurityArticleMeta,
   contactMeta,
   homeMeta,
   notFoundMeta,
@@ -343,7 +345,7 @@ function HomeHero() {
           I'm Akther Naimudheen, an AI engineer and software developer based in Kerala, India. I build practical AI systems, clinical NLP pipelines, and reliable LLM applications with deterministic guardrails and automated verification.
         </p>
         <p className="hero__intro-sub">
-          Explore practical AI engineering through clinical NLP, reliable LLM applications, and intelligent automation across projects including iScribe, Technical Lab, and PromptToShort.
+          Explore practical AI engineering through clinical NLP, reliable LLM applications, and intelligent automation across projects including CLINORIA, Technical Lab, and PromptToShort.
         </p>
         <div className="hero__actions">
           <Link className="btn" to="/work">
@@ -367,9 +369,9 @@ function HomeHero() {
       <div className="hero__cues" role="region" aria-label="Featured project highlights">
         <div className="hero__cue-item">
           <div>
-            <strong>iScribe:</strong> <span>Clinical NLP &amp; deterministic guardrails</span>
+            <strong>CLINORIA:</strong> <span>Clinical Intelligence. Beyond Transcription.</span>
           </div>
-          <Link to="/work/iscribe">Explore Architecture →</Link>
+          <Link to="/work/clinoria">Explore Architecture →</Link>
         </div>
         <div className="hero__cue-item">
           <div>
@@ -379,7 +381,7 @@ function HomeHero() {
         </div>
         <div className="hero__cue-item">
           <div>
-            <strong>PromptToShort:</strong> <span>AI video automation workflow (160+ tests)</span>
+            <strong>PromptToShort:</strong> <span>Asynchronous video processing pipeline (160+ tests)</span>
           </div>
           <Link to="/work/rshorts">View Pipeline →</Link>
         </div>
@@ -682,7 +684,7 @@ function AboutPage() {
             I build full-stack web applications and integrate generative AI pipelines with a focus on reliability, clear system boundaries, and factual validation.
           </p>
           <p>
-            I’m based in Kochi, Kerala. My background includes a Diploma in Computer Engineering from Maharajas Technological Institute, rigorous AI medical documentation quality assurance on the DeepScribe AI project, OCR pipeline verification at Wisedocs, and web application development at Orestes Technology.
+            I’m based in Kochi, Kerala. My background includes a Diploma in Computer Engineering from Maharajas Technological Institute, AI documentation quality assurance and clinical documentation review at RiteSource Infosystem LLP, and OCR pipeline verification and document processing quality assurance at WDG Services.
           </p>
           <div className="about-hero__actions" style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', marginTop: '1.25rem' }}>
             <a className="link-underline" href={profile.resumeUrl} download>
@@ -763,7 +765,7 @@ function AboutPage() {
             and quality discipline.
           </h2>
           <p className="lede">
-            Working directly on AI medical documentation at DeepScribe and OCR verification at Wisedocs established my core engineering discipline: generative outputs must be treated as untrusted boundaries requiring strict schema contracts, deterministic regression testing, and clear human-review boundaries.
+            Working on AI documentation quality assurance at RiteSource Infosystem LLP and OCR pipeline verification at WDG Services established my core engineering discipline: generative outputs must be treated as untrusted boundaries requiring strict schema contracts, deterministic regression testing, and clear human-review boundaries.
           </p>
         </Reveal>
         <div className="experience-list">
@@ -826,7 +828,7 @@ function WorkPage() {
           />
           <div>
             <span>Featured Architecture · Core Systems</span>
-            <strong>iScribe &amp; PromptToShort Architecture</strong>
+            <strong>CLINORIA &amp; PromptToShort Architecture</strong>
             <ArrowUpRight aria-hidden="true" />
           </div>
         </Link>
@@ -911,7 +913,7 @@ function ProjectPage() {
           <h2 id="case-title">{project.caseHeading}</h2>
         </Reveal>
         <Reveal className="case-copy" direction="right" delay={0.05}>
-          {project.id === 'iscribe' && (
+          {project.id === 'clinoria' && (
             <>
               <div className="case-notice" role="alert">
                 <span style={{ fontSize: '1.25rem', lineHeight: 1 }} aria-hidden="true">⚠</span>
@@ -1165,6 +1167,17 @@ function ClinicalAiArticlePage() {
   );
 }
 
+
+function SidekiqSecurityArticlePage() {
+  const article = getArticleBySlug('sidekiq-security-vulnerability-responsible-disclosure');
+  return (
+    <PageFrame meta={sidekiqSecurityArticleMeta} path="/blog/sidekiq-security-vulnerability-responsible-disclosure">
+      {article && <DynamicArticleStructuredData article={article} />}
+      <SidekiqSecurityArticle />
+    </PageFrame>
+  );
+}
+
 function DynamicArticlePage() {
   const { slug } = useParams();
   if (!slug) return <NotFound />;
@@ -1175,6 +1188,11 @@ function DynamicArticlePage() {
   // Flagship clinical article: exact preservation of custom component
   if (article.slug === 'building-clinical-ai-beyond-transcription' || article.componentName === 'ClinicalAiArticle') {
     return <ClinicalAiArticlePage />;
+  }
+
+  // Sidekiq security research case study: exact preservation of custom component
+  if (article.slug === 'sidekiq-security-vulnerability-responsible-disclosure' || article.componentName === 'SidekiqSecurityArticle') {
+    return <SidekiqSecurityArticlePage />;
   }
 
   // Hybrid AI architecture monograph: exact preservation of custom component
@@ -1228,6 +1246,7 @@ function AppRoutes() {
       <Route path="/" element={<HomePage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/work" element={<WorkPage />} />
+      <Route path="/work/iscribe" element={<Navigate to="/work/clinoria" replace />} />
       <Route path="/work/:slug" element={<ProjectPage />} />
       <Route path="/projects" element={<Navigate to="/work" replace />} />
       <Route path="/projects/:slug" element={<ProjectsSlugRedirect />} />
@@ -1235,6 +1254,7 @@ function AppRoutes() {
       <Route path="/blog" element={<BlogPage />} />
       <Route path="/blog/building-clinical-ai-beyond-transcription" element={<ClinicalAiArticlePage />} />
       <Route path="/blog/hybrid-ai-architecture-cpu-guardrails" element={<HybridAiArticlePage />} />
+      <Route path="/blog/sidekiq-security-vulnerability-responsible-disclosure" element={<SidekiqSecurityArticlePage />} />
       <Route path="/blog/:slug" element={<DynamicArticlePage />} />
       <Route path="/services" element={<ServicesRoutePage />} />
       <Route path="/contact" element={<ContactPage />} />

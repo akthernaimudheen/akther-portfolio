@@ -70,6 +70,9 @@ export const hybridAiArticleMeta: RouteMeta =
 export const clinicalAiArticleMeta: RouteMeta =
   staticRouteMetadata['/blog/building-clinical-ai-beyond-transcription'];
 
+export const sidekiqSecurityArticleMeta: RouteMeta =
+  staticRouteMetadata['/blog/sidekiq-security-vulnerability-responsible-disclosure'];
+
 export const blogMeta: RouteMeta = staticRouteMetadata['/blog'];
 
 export const servicesMeta: RouteMeta = staticRouteMetadata['/services'];
@@ -112,7 +115,7 @@ export function dynamicArticleJsonLd(article: Article): string {
 }
 
 /**
- * TechArticle structured data for the in-depth iScribe engineering study.
+ * TechArticle structured data for the in-depth CLINORIA engineering study.
  * Conforms to schema.org/TechArticle specification.
  */
 export function articleJsonLd(): string {
@@ -245,10 +248,6 @@ export function structuredDataJsonLd(): string {
         addressLocality: profile.seoLocality,
         addressRegion: profile.seoRegion,
         addressCountry: profile.seoCountry,
-      },
-      worksFor: {
-        '@type': 'Organization',
-        name: profile.employer,
       },
       sameAs: [
         profile.githubUrl,

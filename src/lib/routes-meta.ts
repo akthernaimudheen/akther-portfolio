@@ -36,7 +36,7 @@ export const staticRouteMetadata: Record<string, Omit<RouteMetadata, 'canonical'
   '/work': {
     title: `AI Engineering Projects & Systems Portfolio — ${TITLE_SUFFIX}`,
     description:
-      'Explore applied AI engineering projects and systems by Akther Naimudheen in Kerala: iScribe clinical NLP, PromptToShort media pipelines, and Technical Lab.',
+      'Explore applied AI engineering projects and systems by Akther Naimudheen in Kerala: CLINORIA clinical NLP, PromptToShort media pipelines, and Technical Lab.',
     type: 'website',
   },
   '/contact': {
@@ -69,22 +69,28 @@ export const staticRouteMetadata: Record<string, Omit<RouteMetadata, 'canonical'
       'An engineering deep dive into deterministic NLP guardrails, verbatim span tracking, and schema validation to mitigate LLM hallucinations in clinical notes.',
     type: 'article',
   },
+  '/blog/sidekiq-security-vulnerability-responsible-disclosure': {
+    title: `Exposed Sidekiq Dashboard: Security Observation & Disclosure — ${TITLE_SUFFIX}`,
+    description:
+      'An independent security research case study on an exposed Sidekiq dashboard, background job access risks, and responsible disclosure coordination with CERT-In.',
+    type: 'article',
+  },
 };
 
 export function getProjectMetadata(project: Project): Omit<RouteMetadata, 'canonical'> {
-  if (project.id === 'iscribe') {
+  if (project.id === 'clinoria') {
     return {
-      title: `iScribe: Clinical NLP & AI Documentation — ${TITLE_SUFFIX}`,
+      title: `CLINORIA: Clinical Intelligence & NLP — ${TITLE_SUFFIX}`,
       description:
-        'iScribe by Akther Naimudheen: clinical NLP guardrails, Malayalam-English speech extraction, deterministic schema validation, and clinical documentation QA.',
+        'CLINORIA by Akther Naimudheen: clinical intelligence platform, Malayalam-English clinical NLP, deterministic schema validation, and guardrails.',
       type: 'article',
     };
   }
   if (project.id === 'rshorts') {
     return {
-      title: `PromptToShort: AI Video Automation Pipeline — ${TITLE_SUFFIX}`,
+      title: `PromptToShort: Video Automation Pipeline — ${TITLE_SUFFIX}`,
       description:
-        'PromptToShort by Akther Naimudheen: automated AI video processing pipeline, asynchronous FastAPI workers, and headless FFmpeg rendering workflows.',
+        'PromptToShort by Akther Naimudheen: video processing pipeline, asynchronous FastAPI workers, and headless FFmpeg rendering workflows.',
       type: 'article',
     };
   }

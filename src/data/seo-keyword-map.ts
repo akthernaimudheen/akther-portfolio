@@ -24,7 +24,7 @@ export const SEO_KEYWORD_MAP: RouteKeywordDefinition[] = [
     ],
     searchIntent: 'Local Professional Discovery',
     relevantInternalLinks: [
-      '/work/iscribe',
+      '/work/clinoria',
       '/work/technical-lab',
       '/work/rshorts',
       '/about',
@@ -33,7 +33,7 @@ export const SEO_KEYWORD_MAP: RouteKeywordDefinition[] = [
     ],
   },
   {
-    route: '/work/iscribe',
+    route: '/work/clinoria',
     primaryKeyword: 'clinical NLP and AI documentation',
     supportingCluster: [
       'Malayalam-English NLP',
@@ -75,7 +75,7 @@ export const SEO_KEYWORD_MAP: RouteKeywordDefinition[] = [
     searchIntent: 'Technical Systems Exploration',
     relevantInternalLinks: [
       '/blog/hybrid-ai-architecture-cpu-guardrails',
-      '/work/iscribe',
+      '/work/clinoria',
       '/work',
     ],
   },
@@ -90,7 +90,7 @@ export const SEO_KEYWORD_MAP: RouteKeywordDefinition[] = [
     ],
     searchIntent: 'Technical Research Monograph',
     relevantInternalLinks: [
-      '/work/iscribe',
+      '/work/clinoria',
       '/work/technical-lab',
       '/about',
     ],
@@ -106,7 +106,7 @@ export const SEO_KEYWORD_MAP: RouteKeywordDefinition[] = [
     ],
     searchIntent: 'Clinical Research Monograph',
     relevantInternalLinks: [
-      '/work/iscribe',
+      '/work/clinoria',
       '/blog/hybrid-ai-architecture-cpu-guardrails',
       '/about',
     ],
@@ -122,7 +122,7 @@ export const SEO_KEYWORD_MAP: RouteKeywordDefinition[] = [
     ],
     searchIntent: 'Professional Background & Credibility',
     relevantInternalLinks: [
-      '/work/iscribe',
+      '/work/clinoria',
       '/work/technical-lab',
       '/contact',
       '/services',
@@ -139,9 +139,30 @@ export const SEO_KEYWORD_MAP: RouteKeywordDefinition[] = [
     ],
     searchIntent: 'Engineering Systems Portfolio',
     relevantInternalLinks: [
-      '/work/iscribe',
+      '/work/clinoria',
       '/work/rshorts',
       '/work/technical-lab',
+    ],
+  },
+  {
+    route: '/blog/sidekiq-security-vulnerability-responsible-disclosure',
+    primaryKeyword: 'Sidekiq Dashboard Exposure',
+    supportingCluster: [
+      'Sidekiq Security Vulnerability',
+      'Exposed Sidekiq Dashboard',
+      'Responsible Vulnerability Disclosure',
+      'Independent Security Research',
+      'CERT-In Vulnerability Reporting',
+      'Application Security Research',
+    ],
+    searchIntent: 'Security Research Case Study & Responsible Disclosure',
+    relevantInternalLinks: [
+      '/blog',
+      '/work/clinoria',
+      '/about',
+      '/contact',
+      '/blog/architecting-asynchronous-video-pipelines-fastapi-ffmpeg',
+      '/blog/hybrid-ai-architecture-cpu-guardrails',
     ],
   },
 ];

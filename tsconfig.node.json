@@ -12,6 +12,9 @@
     "vite.config.ts",
     "src/data/projects.ts",
     "src/data/articles.ts",
-    "src/lib/site.ts"
+    "src/data/profile.ts",
+    "src/lib/site.ts",
+    "src/lib/routes-meta.ts",
+    "src/lib/seo.ts"
   ]
 }

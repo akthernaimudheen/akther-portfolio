@@ -423,7 +423,7 @@ Deterministic Gate: Ambiguity or Synthesis Needed?
           <h4>Two Critical Engineering Lessons from the Pilot:</h4>
           <ol className="article-numbered-list">
             <li>
-              <strong>Schema Validation Does Not Repair Factual Errors:</strong> Notice that in the table above, <strong>Approach C also recorded 7 prohibited hallucination hits and 4 review-flagged cases—identical to Approach B</strong>. While Approach C enforced rigid JSON structure, post-hoc schema validation could not magically repair ungrounded completions without dropping findings. When the model hallucinated normal findings for unexamined organs (such as liver and gallbladder findings in Cases <code>US-DEV-02</code> and <code>US-DEV-03</code>), the schema validator accepted them because they were formatted correctly. <em>(Note: The underlying code and execution logs reside in the private iScribe repository and cannot be independently verified from public portfolio files alone).</em>
+              <strong>Schema Validation Does Not Repair Factual Errors:</strong> Notice that in the table above, <strong>Approach C also recorded 7 prohibited hallucination hits and 4 review-flagged cases—identical to Approach B</strong>. While Approach C enforced rigid JSON structure, post-hoc schema validation could not magically repair ungrounded completions without dropping findings. When the model hallucinated normal findings for unexamined organs (such as liver and gallbladder findings in Cases <code>US-DEV-02</code> and <code>US-DEV-03</code>), the schema validator accepted them because they were formatted correctly. <em>(Note: The underlying code and execution logs reside in the private CLINORIA repository and cannot be independently verified from public portfolio files alone).</em>
             </li>
             <li>
               <strong>The 54.2-Second Latency Bottleneck:</strong> Running an unconstrained 7B-class model (<code>qwen-coder-abliterated:latest</code>) on local CPU via Ollama required an average of <strong>54.2 seconds</strong> per consultation note. Against my proposed <strong>1,500 ms real-time consultation target</strong>, this measured result was approximately <strong>36.1× the target budget</strong>.
@@ -562,7 +562,7 @@ Deterministic Gate: Ambiguity or Synthesis Needed?
           <ul className="article-list">
             <li>
               <strong>Related Clinical Documentation Prototype:</strong>{' '}
-              <Link to="/work/iscribe">iScribe — Clinical Fact Extraction &amp; Malayalam-English NLP</Link>
+              <Link to="/work/clinoria">CLINORIA — Clinical Fact Extraction &amp; Malayalam-English NLP</Link>
             </li>
             <li>
               <strong>Experimental Systems &amp; Local Benchmarks:</strong>{' '}
