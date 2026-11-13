@@ -15,6 +15,8 @@
     "src/data/profile.ts",
     "src/lib/site.ts",
     "src/lib/routes-meta.ts",
-    "src/lib/seo.ts"
+    "src/lib/seo.ts",
+    "src/data/services.ts",
+    "src/lib/static-route-content.ts"
   ]
 }

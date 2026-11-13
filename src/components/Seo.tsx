@@ -38,7 +38,7 @@ function useStaticMetadataCleanup() {
  * hook. Canonical and og:url are emitted only when a production URL exists.
  */
 export function Seo({ title, description, type, noIndex, path }: SeoProps) {
-  const canonical = absoluteUrl(path);
+  const canonical = noIndex ? undefined : absoluteUrl(path);
   const image = absoluteUrl(OG_IMAGE.path);
   useStaticMetadataCleanup();
 

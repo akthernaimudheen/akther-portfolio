@@ -48,6 +48,51 @@
       "source": "/work/iscribe",
       "destination": "/work/clinoria",
       "permanent": true
+    },
+    {
+      "source": "/projects",
+      "destination": "/work",
+      "permanent": true
+    },
+    {
+      "source": "/projects/iscribe",
+      "destination": "/work/clinoria",
+      "permanent": true
+    },
+    {
+      "source": "/projects/clinoria",
+      "destination": "/work/clinoria",
+      "permanent": true
+    },
+    {
+      "source": "/projects/rshorts",
+      "destination": "/work/rshorts",
+      "permanent": true
+    },
+    {
+      "source": "/projects/website-projects",
+      "destination": "/work/website-projects",
+      "permanent": true
+    },
+    {
+      "source": "/projects/technical-lab",
+      "destination": "/work/technical-lab",
+      "permanent": true
+    },
+    {
+      "source": "/projects/seaking-restaurant",
+      "destination": "/work/seaking-restaurant",
+      "permanent": true
+    },
+    {
+      "source": "/projects/seaking-suites",
+      "destination": "/work/seaking-suites",
+      "permanent": true
+    },
+    {
+      "source": "/writing",
+      "destination": "/blog",
+      "permanent": true
     }
   ]
 }

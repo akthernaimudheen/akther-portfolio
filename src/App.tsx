@@ -260,7 +260,7 @@ function PageFrame({ meta, path, children }: PageFrameProps) {
         Skip to content
       </a>
       <Seo {...meta} path={path} />
-      <PersonStructuredData />
+      {!meta.noIndex && <PersonStructuredData />}
       <SiteHeader />
       <AnimatePresence mode="wait">
         <motion.main

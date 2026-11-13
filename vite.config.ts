@@ -9,6 +9,10 @@ import { articles } from './src/data/articles.ts';
 import { SITE_URL, STATIC_ROUTES } from './src/lib/site.ts';
 import { getAllRoutesMetadata } from './src/lib/routes-meta.ts';
 import { articleJsonLd, dynamicArticleJsonLd } from './src/lib/seo.ts';
+import {
+  getStaticRouteContent,
+  renderStaticRootHtml,
+} from './src/lib/static-route-content.ts';
 
 /**
  * Emits sitemap.xml and robots.txt at build time.
@@ -81,7 +85,6 @@ function seoFiles(): Plugin {
  */
 function perRouteHtml(): Plugin {
   let outDir: string;
-  let indexHtmlTemplate: string;
 
   return {
     name: 'akther-per-route-html',
@@ -97,15 +100,47 @@ function perRouteHtml(): Plugin {
         console.warn('[akther-per-route-html] dist/index.html not found — skipping per-route HTML generation.');
         return;
       }
-      indexHtmlTemplate = fs.readFileSync(indexPath, 'utf-8');
+      const rawIndexTemplate = fs.readFileSync(indexPath, 'utf-8');
 
       const allMeta = getAllRoutesMetadata();
 
       const escapeHtml = (str: string) =>
         str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
+      const HEAD_META_RE = /<!-- STATIC_HEAD_META_START -->[\s\S]*?<!-- STATIC_HEAD_META_END -->/;
+      const ROUTE_SHELL_RE = /<!-- STATIC_ROUTE_SHELL_START -->[\s\S]*?<!-- STATIC_ROUTE_SHELL_END -->/;
+      const ARTICLE_JSONLD_SLOT = '<!-- STATIC_ARTICLE_JSONLD_SLOT -->';
+
+      const replaceRequired = (
+        source: string,
+        matcher: RegExp | string,
+        replacement: string,
+        label: string
+      ): string => {
+        const found = typeof matcher === 'string' ? source.includes(matcher) : matcher.test(source);
+        if (!found) {
+          throw new Error(`[akther-per-route-html] Missing required template marker or pattern: ${label}`);
+        }
+        return source.replace(matcher, replacement);
+      };
+
+      // Validate all unambiguous template markers upfront so build fails loudly if index.html drifts.
+      replaceRequired(rawIndexTemplate, HEAD_META_RE, '', 'STATIC_HEAD_META_START/END');
+      replaceRequired(rawIndexTemplate, ROUTE_SHELL_RE, '', 'STATIC_ROUTE_SHELL_START/END');
+      replaceRequired(rawIndexTemplate, ARTICLE_JSONLD_SLOT, '', 'STATIC_ARTICLE_JSONLD_SLOT');
+
+      // 1. Normalize homepage in dist/index.html with route-specific static body content
+      const homeContent = getStaticRouteContent('/');
+      const updatedIndexHtml = replaceRequired(
+        replaceRequired(rawIndexTemplate, ROUTE_SHELL_RE, renderStaticRootHtml(homeContent), 'home route shell'),
+        ARTICLE_JSONLD_SLOT,
+        '',
+        'home article JSON-LD slot'
+      );
+      fs.writeFileSync(indexPath, updatedIndexHtml, 'utf-8');
+
+      // 2. Generate per-route HTML for all non-home canonical routes
       for (const [route, meta] of Object.entries(allMeta)) {
-        // Skip the homepage — dist/index.html already has correct homepage metadata.
         if (route === '/') continue;
 
         const title = escapeHtml(meta.title);
@@ -114,101 +149,39 @@ function perRouteHtml(): Plugin {
         const ogType = meta.type === 'profile' ? 'profile' : meta.type === 'article' ? 'article' : 'website';
 
         // Replace all data-static-seo tags in the template with route-specific values.
-        // We replace the entire block between the comment markers.
-        let routeHtml = indexHtmlTemplate
-          // <title>
-          .replace(
-            /(<title data-static-seo>)[^<]*(<\/title>)/,
-            `$1${title}$2`
-          )
-          // <meta name="description">
-          .replace(
-            /(<meta\s[^>]*data-static-seo[^>]*name="description"[^>]*content=")[^"]*(")/,
-            `$1${description}$2`
-          )
-          .replace(
-            /(<meta\s[^>]*name="description"\s[^>]*data-static-seo[^>]*content=")[^"]*(")/,
-            `$1${description}$2`
-          )
-          // og:title
-          .replace(
-            /(<meta\s[^>]*data-static-seo[^>]*property="og:title"[^>]*content=")[^"]*(")/,
-            `$1${title}$2`
-          )
-          .replace(
-            /(<meta\s[^>]*property="og:title"\s[^>]*data-static-seo[^>]*content=")[^"]*(")/,
-            `$1${title}$2`
-          )
-          // og:description
-          .replace(
-            /(<meta\s[^>]*data-static-seo[^>]*property="og:description"[^>]*content=")[^"]*(")/,
-            `$1${description}$2`
-          )
-          .replace(
-            /(<meta\s[^>]*property="og:description"\s[^>]*data-static-seo[^>]*content=")[^"]*(")/,
-            `$1${description}$2`
-          )
-          // og:url
-          .replace(
-            /(<meta\s[^>]*data-static-seo[^>]*property="og:url"[^>]*content=")[^"]*(")/,
-            `$1${canonical}$2`
-          )
-          .replace(
-            /(<meta\s[^>]*property="og:url"\s[^>]*data-static-seo[^>]*content=")[^"]*(")/,
-            `$1${canonical}$2`
-          )
-          // og:type
-          .replace(
-            /(<meta\s[^>]*data-static-seo[^>]*property="og:type"[^>]*content=")[^"]*(")/,
-            `$1${ogType}$2`
-          )
-          .replace(
-            /(<meta\s[^>]*property="og:type"\s[^>]*data-static-seo[^>]*content=")[^"]*(")/,
-            `$1${ogType}$2`
-          )
-          // twitter:title
-          .replace(
-            /(<meta\s[^>]*data-static-seo[^>]*name="twitter:title"[^>]*content=")[^"]*(")/,
-            `$1${title}$2`
-          )
-          .replace(
-            /(<meta\s[^>]*name="twitter:title"\s[^>]*data-static-seo[^>]*content=")[^"]*(")/,
-            `$1${title}$2`
-          )
-          // twitter:description
-          .replace(
-            /(<meta\s[^>]*data-static-seo[^>]*name="twitter:description"[^>]*content=")[^"]*(")/,
-            `$1${description}$2`
-          )
-          .replace(
-            /(<meta\s[^>]*name="twitter:description"\s[^>]*data-static-seo[^>]*content=")[^"]*(")/,
-            `$1${description}$2`
-          )
-          // canonical link
-          .replace(
-            /(<link\s[^>]*data-static-seo[^>]*rel="canonical"[^>]*href=")[^"]*(")/,
-            `$1${canonical}$2`
-          )
-          .replace(
-            /(<link\s[^>]*rel="canonical"\s[^>]*data-static-seo[^>]*href=")[^"]*(")/,
-            `$1${canonical}$2`
-          );
+        let routeHtml = rawIndexTemplate
+          .replace(/(<title data-static-seo>)[^<]*(<\/title>)/, `$1${title}$2`)
+          .replace(/(<meta\s[^>]*data-static-seo[^>]*name="description"[^>]*content=")[^"]*(")/, `$1${description}$2`)
+          .replace(/(<meta\s[^>]*name="description"\s[^>]*data-static-seo[^>]*content=")[^"]*(")/, `$1${description}$2`)
+          .replace(/(<meta\s[^>]*data-static-seo[^>]*property="og:title"[^>]*content=")[^"]*(")/, `$1${title}$2`)
+          .replace(/(<meta\s[^>]*property="og:title"\s[^>]*data-static-seo[^>]*content=")[^"]*(")/, `$1${title}$2`)
+          .replace(/(<meta\s[^>]*data-static-seo[^>]*property="og:description"[^>]*content=")[^"]*(")/, `$1${description}$2`)
+          .replace(/(<meta\s[^>]*property="og:description"\s[^>]*data-static-seo[^>]*content=")[^"]*(")/, `$1${description}$2`)
+          .replace(/(<meta\s[^>]*data-static-seo[^>]*property="og:url"[^>]*content=")[^"]*(")/, `$1${canonical}$2`)
+          .replace(/(<meta\s[^>]*property="og:url"\s[^>]*data-static-seo[^>]*content=")[^"]*(")/, `$1${canonical}$2`)
+          .replace(/(<meta\s[^>]*data-static-seo[^>]*property="og:type"[^>]*content=")[^"]*(")/, `$1${ogType}$2`)
+          .replace(/(<meta\s[^>]*property="og:type"\s[^>]*data-static-seo[^>]*content=")[^"]*(")/, `$1${ogType}$2`)
+          .replace(/(<meta\s[^>]*data-static-seo[^>]*name="twitter:title"[^>]*content=")[^"]*(")/, `$1${title}$2`)
+          .replace(/(<meta\s[^>]*name="twitter:title"\s[^>]*data-static-seo[^>]*content=")[^"]*(")/, `$1${title}$2`)
+          .replace(/(<meta\s[^>]*data-static-seo[^>]*name="twitter:description"[^>]*content=")[^"]*(")/, `$1${description}$2`)
+          .replace(/(<meta\s[^>]*name="twitter:description"\s[^>]*data-static-seo[^>]*content=")[^"]*(")/, `$1${description}$2`)
+          .replace(/(<link\s[^>]*data-static-seo[^>]*rel="canonical"[^>]*href=")[^"]*(")/, `$1${canonical}$2`)
+          .replace(/(<link\s[^>]*rel="canonical"\s[^>]*data-static-seo[^>]*href=")[^"]*(")/, `$1${canonical}$2`);
 
-                // If this route is an article, emit its TechArticle JSON-LD with data-static-seo
-        // so non-JS crawlers receive valid structured data, and useStaticMetadataCleanup
-        // safely removes it upon React hydration to prevent duplicate live DOM scripts.
+        // Inject TechArticle JSON-LD for articles at the dedicated slot, or remove the slot.
         const article = articles.find((a) => `/blog/${a.slug}` === route);
-        if (article) {
-          const articleSchema =
-            article.slug === 'building-clinical-ai-beyond-transcription'
-              ? articleJsonLd()
-              : dynamicArticleJsonLd(article);
+        const articleSlotReplacement = article
+          ? `<script data-static-seo type="application/ld+json">\n    ${
+              article.slug === 'building-clinical-ai-beyond-transcription'
+                ? articleJsonLd()
+                : dynamicArticleJsonLd(article)
+            }\n    </script>`
+          : '';
+        routeHtml = replaceRequired(routeHtml, ARTICLE_JSONLD_SLOT, articleSlotReplacement, `${route} article JSON-LD slot`);
 
-          routeHtml = routeHtml.replace(
-            /(<\/head>)/,
-            `    <script data-static-seo type="application/ld+json">\n    ${articleSchema}\n    </script>\n  $1`
-          );
-        }
+        // Inject single canonical visible static body inside #root
+        const routeBodyData = getStaticRouteContent(route);
+        routeHtml = replaceRequired(routeHtml, ROUTE_SHELL_RE, renderStaticRootHtml(routeBodyData), `${route} route shell`);
 
         const cleanPath = route.replace(/^\//, '');
         // 1. Write flat .html file for cleanUrls on Vercel and preview servers (e.g. dist/about.html, dist/work/clinoria.html)
@@ -222,7 +195,19 @@ function perRouteHtml(): Plugin {
         fs.writeFileSync(path.resolve(routeDir, 'index.html'), routeHtml, 'utf-8');
       }
 
-      console.log(`[akther-per-route-html] Generated per-route HTML (both flat .html and directory/index.html) for ${Object.keys(allMeta).length - 1} non-home routes.`);
+      // 3. Generate static 404.html cleanly stripped of homepage canonical, OG, Twitter, and @graph JSON-LD
+      const notFoundData = getStaticRouteContent('/404');
+      const notFoundHeadMeta = [
+        '<title data-static-seo>Page Not Found — Akther Naimudheen</title>',
+        '    <meta data-static-seo name="description" content="The page you are looking for does not exist or has moved." />',
+        '    <meta data-static-seo name="robots" content="noindex, follow" />',
+      ].join('\n');
+      let notFoundHtml = replaceRequired(rawIndexTemplate, HEAD_META_RE, notFoundHeadMeta, '404 head metadata block');
+      notFoundHtml = replaceRequired(notFoundHtml, ARTICLE_JSONLD_SLOT, '', '404 article JSON-LD slot');
+      notFoundHtml = replaceRequired(notFoundHtml, ROUTE_SHELL_RE, renderStaticRootHtml(notFoundData), '404 route shell');
+      fs.writeFileSync(path.resolve(outDir, '404.html'), notFoundHtml, 'utf-8');
+
+      console.log(`[akther-per-route-html] Generated per-route HTML (both flat .html and directory/index.html) for ${Object.keys(allMeta).length - 1} non-home routes, plus 404.html.`);
     },
   };
 }
