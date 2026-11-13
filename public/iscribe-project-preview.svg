@@ -10,7 +10,7 @@
       .text-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; fill: #595959; }
       .line { stroke: #0a0a0a; stroke-width: 1.5; fill: none; }
     </style>
-    <clipPath id="iscribe-audio-clip">
+    <clipPath id="clinoria-audio-clip">
       <rect x="2" y="2" width="316" height="54" rx="3" />
     </clipPath>
   </defs>
@@ -29,7 +29,7 @@
     <!-- Waveform Input -->
     <g transform="translate(30, 20)">
       <rect x="0" y="0" width="320" height="58" rx="4" fill="#faf9f5" stroke="rgba(10,10,10,0.1)" />
-      <g clip-path="url(#iscribe-audio-clip)">
+      <g clip-path="url(#clinoria-audio-clip)">
         <path d="M 15 39 Q 25 35, 35 39 Q 45 43, 55 39 Q 65 33, 75 39 Q 85 45, 95 39 Q 105 30, 115 39 Q 125 47, 135 39 Q 145 34, 155 39 Q 165 43, 175 39 Q 185 28, 195 39 Q 205 50, 215 39 Q 225 31, 235 39 Q 245 46, 255 39 Q 265 34, 275 39 Q 285 42, 295 39 Q 302 37, 310 39" fill="none" stroke="#0a0a0a" stroke-width="1.8" />
       </g>
       <rect x="12" y="7" width="80" height="15" rx="2" class="badge-yellow" />
@@ -62,38 +62,40 @@
     </g>
 
     <!-- Right Side: Structured Note Output (SOAP format) -->
-    <g transform="translate(380, 20)">
-      <rect x="0" y="0" width="310" height="326" rx="4" fill="#ffffff" stroke="rgba(10,10,10,0.18)" />
+    <g transform="translate(370, 20)">
+      <rect x="0" y="0" width="320" height="338" rx="4" fill="#ffffff" stroke="rgba(10,10,10,0.18)" />
       
       <!-- Top Title -->
-      <rect x="0" y="0" width="310" height="32" rx="4" fill="#f0eee6" />
+      <rect x="0" y="0" width="320" height="32" rx="4" fill="#f0eee6" />
       <text x="14" y="20" class="text-tag" fill="#0a0a0a">STRUCTURED CLINICAL NOTE · SOAP</text>
-      <rect x="220" y="8" width="76" height="16" rx="2" fill="#22863a" />
-      <text x="226" y="19" font-size="7.5px" font-weight="700" fill="#ffffff" letter-spacing="0.06em">SCHEMA VALID</text>
+      <rect x="230" y="8" width="76" height="16" rx="2" fill="#22863a" />
+      <text x="236" y="19" font-size="7.5px" font-weight="700" fill="#ffffff" letter-spacing="0.06em">SCHEMA VALID</text>
 
       <!-- SOAP Content -->
-      <g transform="translate(14, 42)">
-        <text x="0" y="14" class="text-code" font-weight="700" fill="#0a0a0a">[S] SUBJECTIVE:</text>
-        <text x="0" y="28" class="text-code" fill="#595959">Chief Complaint: Recurrent headache × 3 days.</text>
-        <text x="0" y="42" class="text-code" fill="#595959">Associated: Mild photophobia. Denies nausea.</text>
+      <g transform="translate(14, 40)">
+        <text x="0" y="13" class="text-code" font-weight="700" fill="#0a0a0a">[S] SUBJECTIVE:</text>
+        <text x="0" y="26" class="text-code" fill="#595959">Chief Complaint: Recurrent headache × 3 days.</text>
+        <text x="0" y="39" class="text-code" fill="#595959">Associated: Mild photophobia. Denies nausea.</text>
 
-        <text x="0" y="68" class="text-code" font-weight="700" fill="#0a0a0a">[O] OBJECTIVE:</text>
-        <text x="0" y="82" class="text-code" fill="#595959">BP: 124/82 mmHg | HR: 74 bpm | SpO2: 98%</text>
-        <text x="0" y="96" class="text-code" fill="#595959">Neuro: Cranial nerves II-XII intact.</text>
+        <text x="0" y="62" class="text-code" font-weight="700" fill="#0a0a0a">[O] OBJECTIVE:</text>
+        <text x="0" y="75" class="text-code" fill="#595959">BP: 124/82 mmHg | HR: 74 bpm | SpO2: 98%</text>
+        <text x="0" y="88" class="text-code" fill="#595959">Neuro: Cranial nerves II-XII intact.</text>
 
-        <text x="0" y="122" class="text-code" font-weight="700" fill="#0a0a0a">[A] ASSESSMENT:</text>
-        <text x="0" y="136" class="text-code" fill="#595959">Tension-type headache vs migraine variant.</text>
+        <text x="0" y="111" class="text-code" font-weight="700" fill="#0a0a0a">[A] ASSESSMENT:</text>
+        <text x="0" y="124" class="text-code" fill="#595959">Tension-type headache vs migraine variant.</text>
 
-        <text x="0" y="162" class="text-code" font-weight="700" fill="#0a0a0a">[P] PLAN &amp; RX:</text>
-        <text x="0" y="176" class="text-code" fill="#595959">1. Paracetamol 500mg PO PRN q6h (max 2g/d)</text>
-        <text x="0" y="190" class="text-code" fill="#595959">2. Hydration counseling, sleep hygiene</text>
-        <text x="0" y="204" class="text-code" fill="#595959">3. Return precautions for focal deficits</text>
+        <text x="0" y="147" class="text-code" font-weight="700" fill="#0a0a0a">[P] PLAN &amp; RX:</text>
+        <text x="0" y="160" class="text-code" fill="#595959">1. Paracetamol 500mg PO PRN q6h (max 2g/d)</text>
+        <text x="0" y="173" class="text-code" fill="#595959">2. Hydration counseling, sleep hygiene</text>
+        <text x="0" y="186" class="text-code" fill="#595959">3. Return precautions for focal deficits</text>
 
         <!-- Synthetic Illustration Disclosure Box -->
-        <rect x="0" y="222" width="282" height="46" rx="3" fill="#faf9f5" stroke="rgba(10,10,10,0.12)" />
-        <text x="8" y="235" class="text-tag" font-size="7.5px" fill="#0a0a0a">SYNTHETIC ILLUSTRATION ONLY · 0 PHI</text>
-        <text x="8" y="248" class="text-code" font-size="7.5px" fill="#595959">Sanitized dialogue scenario for technical pipeline evaluation.</text>
-        <text x="8" y="259" class="text-code" font-size="7px" fill="#8c8c8c">Not a real clinical record, medical diagnosis, or clinical advice.</text>
+        <rect x="0" y="202" width="292" height="82" rx="4" fill="#faf9f5" stroke="rgba(10,10,10,0.12)" />
+        <text x="10" y="217" class="text-tag" font-size="7.5px" font-weight="700" fill="#0a0a0a">SYNTHETIC ILLUSTRATION ONLY · 0 PHI</text>
+        <text x="10" y="231" class="text-code" font-size="7.5px" fill="#595959">Sanitized dialogue scenario for technical</text>
+        <text x="10" y="242" class="text-code" font-size="7.5px" fill="#595959">pipeline evaluation.</text>
+        <text x="10" y="258" class="text-code" font-size="7px" fill="#8c8c8c">Not a real clinical record, medical diagnosis,</text>
+        <text x="10" y="269" class="text-code" font-size="7px" fill="#8c8c8c">or clinical advice.</text>
       </g>
     </g>
   </g>

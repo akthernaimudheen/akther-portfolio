@@ -1067,9 +1067,6 @@ function ContactPage() {
             <a className="btn btn--signal" href={emailHref}>
               Email Akther Naimudheen <Mail aria-hidden="true" />
             </a>
-            <a className="link-underline" href={profile.resumeUrl} download>
-              Technical résumé <Download aria-hidden="true" />
-            </a>
           </div>
           <dl className="contact__details">
             <div>
@@ -1247,6 +1244,8 @@ function AppRoutes() {
       <Route path="/about" element={<AboutPage />} />
       <Route path="/work" element={<WorkPage />} />
       <Route path="/work/iscribe" element={<Navigate to="/work/clinoria" replace />} />
+      <Route path="/work/seaking-restaurant" element={<Navigate to="/work" replace />} />
+      <Route path="/work/seaking-suites" element={<Navigate to="/work" replace />} />
       <Route path="/work/:slug" element={<ProjectPage />} />
       <Route path="/projects" element={<Navigate to="/work" replace />} />
       <Route path="/projects/:slug" element={<ProjectsSlugRedirect />} />

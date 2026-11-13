@@ -1,5 +1,5 @@
 export type ProjectKind = 'ai' | 'signal' | 'hotel' | 'web' | 'lab';
-export type ProjectCategory = 'ai' | 'fullstack' | 'delivery';
+export type ProjectCategory = 'ai' | 'fullstack';
 
 /**
  * One block of a project's case study, rendered in array order.
@@ -251,64 +251,4 @@ export const projects: Project[] = [
     ],
     note: 'Self-directed technical experiments and architectural prototypes.',
   },
-  {
-    id: 'seaking-restaurant',
-    title: 'SeaKing Restaurant',
-    eyebrow: 'Client delivery · Kochi',
-    kind: 'signal',
-    category: 'delivery',
-    categoryLabel: 'Client Web Delivery & Hospitality',
-    visual: '/project-seaking-restaurant.webp',
-    visualAlt: 'Kerala dishes served in brass and stoneware bowls on a dark wood table in a restaurant dining room',
-    status: 'Archived',
-    role: 'Digital delivery & web systems',
-    summary:
-      'Client-facing digital project coordinating web presence, local search optimization, content strategy, and performance analytics reporting.',
-    caseHeading: 'Search, web presence, and analytics reporting.',
-    areas: ['Web Optimization', 'Local SEO', 'Google Business Profile', 'Performance Analytics'],
-    caseStudy: [
-      {
-        heading: 'Work & Scope',
-        items: [
-          'Website coordination and digital optimization',
-          'Local SEO and Google Business Profile management',
-          'Campaign coordination and performance reporting',
-          'Cross-functional client delivery',
-        ],
-      },
-    ],
-    result: [
-      { label: 'Content views', value: '37,250+' },
-      { label: 'Accounts reached', value: '8,808' },
-    ],
-    note: 'Client project demonstrating business context, customer delivery, and reporting.',
-  },
-  {
-    id: 'seaking-suites',
-    title: 'SeaKing Suites',
-    eyebrow: 'Client delivery · MG Road, Kochi',
-    kind: 'hotel',
-    category: 'delivery',
-    categoryLabel: 'Client Web Delivery & Hospitality',
-    visual: '/project-seaking-suites.webp',
-    visualAlt: 'Hotel lobby with a stone reception desk, lounge seating and full-height windows onto greenery',
-    status: 'Archived',
-    role: 'Hotel web presence & digital delivery',
-    summary:
-      'Digital presence and web optimization work for a hotel brand in Kochi, integrating local search visibility and website SEO planning.',
-    caseHeading: 'Search, website presence, and digital delivery.',
-    areas: ['Website optimization', 'Local SEO', 'Search visibility', 'SEO planning'],
-    caseStudy: [
-      {
-        heading: 'Digital Work',
-        items: [
-          'Website optimization and planning',
-          'Local SEO and search visibility',
-          'Google Business Profile integration',
-          'Performance tracking and reporting',
-        ],
-      },
-    ],
-    note: 'Client project demonstrating customer delivery and search visibility.',
-  },
-];
+  ];

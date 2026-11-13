@@ -170,7 +170,7 @@ export function getStaticRouteContent(route: string): StaticRouteBodyData {
       eyebrow: 'Selected Work',
       h1: 'AI Projects & Software Systems by Akther Naimudheen. AI pipelines, full-stack systems and tested code.',
       introParagraphs: [
-        `Explore applied AI engineering projects, clinical NLP pipelines, concurrency architectures, and client web solutions built by ${profile.name} in Kerala.`,
+        `Explore applied AI engineering projects, clinical NLP pipelines, concurrency architectures, and full-stack systems built by ${profile.name} in Kerala.`,
         'Each case study documents real system constraints, schema validation boundaries, automated test coverage, and implementation trade-offs.',
       ],
       sectionHeading: 'Featured Case Studies & Systems',
@@ -234,8 +234,8 @@ export function getStaticRouteContent(route: string): StaticRouteBodyData {
       })),
       internalLinks: [
         { href: '/work/website-projects', label: 'Frontend Systems Portfolio' },
-        { href: '/work/seaking-restaurant', label: 'Restaurant Website Case Study' },
-        { href: '/work/seaking-suites', label: 'Hospitality Platform Case Study' },
+        { href: '/work/clinoria', label: 'CLINORIA Clinical Case Study' },
+        { href: '/work/rshorts', label: 'PromptToShort Video Pipeline' },
         { href: '/about', label: 'About the Engineer' },
         { href: '/contact', label: 'Request Service Consultation' },
       ],

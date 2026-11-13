@@ -61,7 +61,6 @@ export function ProjectGallery() {
   const categories: { key: ProjectCategory; title: string; count: string }[] = [
     { key: 'ai', title: 'AI Applications & Pipeline Engineering', count: '02 Projects' },
     { key: 'fullstack', title: 'Full-Stack Architecture & Systems', count: '02 Systems' },
-    { key: 'delivery', title: 'Client Web Delivery & Hospitality', count: '02 Projects' },
   ];
 
   return (

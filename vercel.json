@@ -80,18 +80,28 @@
       "permanent": true
     },
     {
+      "source": "/writing",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/work/seaking-restaurant",
+      "destination": "/work",
+      "permanent": true
+    },
+    {
+      "source": "/work/seaking-suites",
+      "destination": "/work",
+      "permanent": true
+    },
+    {
       "source": "/projects/seaking-restaurant",
-      "destination": "/work/seaking-restaurant",
+      "destination": "/work",
       "permanent": true
     },
     {
       "source": "/projects/seaking-suites",
-      "destination": "/work/seaking-suites",
-      "permanent": true
-    },
-    {
-      "source": "/writing",
-      "destination": "/blog",
+      "destination": "/work",
       "permanent": true
     }
   ]
